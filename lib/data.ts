@@ -42,12 +42,12 @@ export const IMG = {
     "https://images.unsplash.com/photo-1579165466949-3180a3d056d5?auto=format&fit=crop&w=800&q=80",
   // aboutA backs the guided finder, aboutB the process band. Both are warm
   // studio shots so the full-bleed sections sit in the same light as the page.
-  aboutA: "/new-images/find.png",
-  aboutB: "/new-images/The Rigor-bg.png",
+  aboutA: "/new-images/find.webp",
+  aboutB: "/new-images/The Rigor-bg.webp",
 
   // Real Vora Labs product imagery (saved locally in /public/images/products)
   tirz: "/images/products/tirzepatide.jpeg",
-  reta20: "/images/products/retatrutide-20.jpeg",
+  reta20: "/images/products/retatrutide-20.webp",
   reta40: "/images/products/retatrutide-40.jpeg",
   glow: "/images/products/glow.jpeg",
   bpc: "/images/products/bpc.jpeg",
@@ -56,18 +56,18 @@ export const IMG = {
 
   // Capability imagery. fac1/3/4 back the process cards, fac2 the story
   // split, fac3/5/6 the category tiles — all shot in the same warm light.
-  fac1: "/images/update-img/fac1-warm.png",
-  fac2: "/images/update-img/suite-warm.png",
-  fac3: "/images/update-img/fac3-warm.png",
-  fac4: "/images/update-img/fac4-warm.png",
-  fac5: "/images/update-img/tile3-warm.png",
-  fac6: "/images/update-img/tile4-warm.png",
-  tile1: "/images/update-img/tile1-warm.png",
-  tile2: "/images/update-img/tile2-warm.png",
+  fac1: "/images/update-img/fac1-warm.webp",
+  fac2: "/images/update-img/suite-warm.webp",
+  fac3: "/images/update-img/fac3-warm.webp",
+  fac4: "/images/update-img/fac4-warm.webp",
+  fac5: "/images/update-img/tile3-warm.webp",
+  fac6: "/images/update-img/tile4-warm.webp",
+  tile1: "/images/update-img/tile1-warm.webp",
+  tile2: "/images/update-img/tile2-warm.webp",
   // Journal cards run 3:4, so these are the 4:5 portraits cropped lightly.
-  blog1: "/new-images/journal1.png",
-  blog2: "/new-images/journal4.png",
-  blog3: "/new-images/journal2.png",
+  blog1: "/new-images/journal1.webp",
+  blog2: "/new-images/journal4.webp",
+  blog3: "/new-images/journal2.webp",
   // Subscription still backs the commitment band — same 3200px master
   // treatment as the hero so the full-bleed crop stays sharp.
   cta: "/new-images/subscription@2x.webp",
@@ -77,10 +77,10 @@ export const IMG = {
 };
 
 export const AVATARS = [
-  "/new-images/review/Smiling by the breakfast window-2.png",
-  "/new-images/review/Relaxed Woman in Bedroom Doorway-2.png",
-  "/new-images/review/Soft morning sofa selfie-3.png",
-  "/new-images/review/Thoughtful smile by the doorway-4.png",
+  "/new-images/review/Smiling by the breakfast window-2.webp",
+  "/new-images/review/Relaxed Woman in Bedroom Doorway-2.webp",
+  "/new-images/review/Soft morning sofa selfie-3.webp",
+  "/new-images/review/Thoughtful smile by the doorway-4.webp",
 ];
 
 // Research compounds (Products section — sticky stacking cards)

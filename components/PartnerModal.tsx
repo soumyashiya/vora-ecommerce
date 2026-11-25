@@ -42,7 +42,7 @@ const COPY = {
   secondary: { label: "How we verify", href: "/why-us" },
 };
 
-const PANEL_IMAGE = "/new-images/bpc/Luxury cream carton and capped pen-3 (1).png";
+const PANEL_IMAGE = "/new-images/bpc/Luxury cream carton and capped pen-3 (1).webp";
 
 /**
  * Entry panel announcing the Alluvi partnership. A warm packshot on the left,

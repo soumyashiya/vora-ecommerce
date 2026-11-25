@@ -19,22 +19,22 @@ const TILES: Tile[] = [
   {
     title: "Weight Management",
     href: "/products?category=weight-management",
-    img: "/new-images/weigh-management.png",
+    img: "/new-images/weigh-management.webp",
   },
   {
     title: "Recovery & Repair",
     href: "/products?category=recovery-repair",
-    img: "/new-images/recovery.png",
+    img: "/new-images/recovery.webp",
   },
   {
     title: "Fitness & Endurance",
     href: "/products?category=fitness-endurance",
-    img: "/new-images/fitness.png",
+    img: "/new-images/fitness.webp",
   },
   {
     title: "Energy & Longevity",
     href: "/products?category=energy-longevity",
-    img: "/new-images/energy.png",
+    img: "/new-images/energy.webp",
   },
 ];
 

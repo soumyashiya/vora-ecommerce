@@ -10,18 +10,30 @@ export default function Preloader() {
   const [gone, setGone] = useState(false); // fully unmounted
   const [pct, setPct] = useState(0);
 
-  // progress counter
+  // progress counter — the intro plays once per visit; later page loads in
+  // the same session skip straight to the content.
   useEffect(() => {
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem("vora-intro") === "1";
+      sessionStorage.setItem("vora-intro", "1");
+    } catch {}
+    if (seen) {
+      setDone(true);
+      setGone(true);
+      return;
+    }
+
     let n = 0;
     const iv = setInterval(() => {
-      n = Math.min(100, n + Math.floor(Math.random() * 9) + 5);
+      n = Math.min(100, n + Math.floor(Math.random() * 8) + 14);
       setPct(n);
       if (n >= 100) {
         clearInterval(iv);
-        setTimeout(() => setDone(true), 380);
+        setTimeout(() => setDone(true), 150);
       }
-    }, 55);
-    const safety = setTimeout(() => setDone(true), 3500);
+    }, 45);
+    const safety = setTimeout(() => setDone(true), 1500);
     return () => {
       clearInterval(iv);
       clearTimeout(safety);
@@ -31,7 +43,7 @@ export default function Preloader() {
   // unmount after the curtain finishes opening
   useEffect(() => {
     if (!done) return;
-    const t = setTimeout(() => setGone(true), 1000);
+    const t = setTimeout(() => setGone(true), 800);
     return () => clearTimeout(t);
   }, [done]);
 
@@ -53,14 +65,14 @@ export default function Preloader() {
       <motion.div
         initial={{ x: 0 }}
         animate={{ x: done ? "-101%" : 0 }}
-        transition={{ duration: 0.95, ease: EASE }}
+        transition={{ duration: 0.75, ease: EASE }}
         className="absolute inset-y-0 left-0 w-[51%] bg-espresso"
       />
       {/* RIGHT curtain panel */}
       <motion.div
         initial={{ x: 0 }}
         animate={{ x: done ? "101%" : 0 }}
-        transition={{ duration: 0.95, ease: EASE }}
+        transition={{ duration: 0.75, ease: EASE }}
         className="absolute inset-y-0 right-0 w-[51%] bg-espresso"
       />
 

@@ -12,12 +12,12 @@ const FEATURES = [
   {
     title: "How we verify every batch",
     href: "/why-us",
-    img: "/new-images/rigor-card1.png",
+    img: "/new-images/rigor-card1.webp",
   },
   {
     title: "Our story",
     href: "/about",
-    img: "/new-images/ourstory.png",
+    img: "/new-images/ourstory.webp",
   },
 ];
 

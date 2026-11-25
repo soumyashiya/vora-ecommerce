@@ -19,9 +19,9 @@ const fadeUp = {
  * no photo implies who a team member is — swap in real portraits later.
  */
 const TEAM_IMAGES = [
-  "/new-images/tirzepatide/Tirzepatide carton and pen gym still life-3.png",
-  "/new-images/reta/ALLUVI packaging and pen on ivory tray-1.png",
-  "/new-images/nad/ALLUVI NAD+ in golden sunlight-1.png",
+  "/new-images/tirzepatide/Tirzepatide carton and pen gym still life-3.webp",
+  "/new-images/reta/ALLUVI packaging and pen on ivory tray-1.webp",
+  "/new-images/nad/ALLUVI NAD+ in golden sunlight-1.webp",
 ];
 
 /** What each role owns, taken from the process steps they lead. */
@@ -32,10 +32,10 @@ const TEAM_REMITS = [
 ];
 
 const STEP_IMAGES = [
-  "/new-images/cjc/ALLUVI CJC-1295 Carton and Pen-2.png",
-  "/new-images/tessa/Carton and pen on sculptural ivory plinth-3.png",
-  "/new-images/nad/ALLUVI NAD+ carton and pen hero-2.png",
-  "/new-images/bpc/Luxury cream carton and capped pen-3 (1).png",
+  "/new-images/cjc/ALLUVI CJC-1295 Carton and Pen-2.webp",
+  "/new-images/tessa/Carton and pen on sculptural ivory plinth-3.webp",
+  "/new-images/nad/ALLUVI NAD+ carton and pen hero-2.webp",
+  "/new-images/bpc/Luxury cream carton and capped pen-3 (1).webp",
 ];
 
 /**
@@ -97,7 +97,7 @@ export default function AboutContent() {
           className="relative aspect-[4/3] overflow-hidden rounded-[10px] bg-beige lg:aspect-[5/3]"
         >
           <Image
-            src="/new-images/ourstory.png"
+            src="/new-images/ourstory.webp"
             alt="Training beside the Vora Labs BPC-157 & TB-500 kit"
             fill
             quality={90}
@@ -142,7 +142,7 @@ export default function AboutContent() {
           className="sticky top-[40px] grid aspect-[4/5] place-items-end justify-items-center overflow-hidden sm:place-items-center rounded-[12px] bg-espresso sm:aspect-[16/10] lg:aspect-[15/8]"
         >
           <Image
-            src="/new-images/bpc/Woman Holding Alluvi Carton and Pen.png"
+            src="/new-images/bpc/Woman Holding Alluvi Carton and Pen.webp"
             alt=""
             fill
             quality={90}

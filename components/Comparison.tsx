@@ -12,22 +12,22 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const POINTS = [
   {
     label: "Independent Janoshik Testing",
-    img: "/new-images/where vora labs/Sunlit Garden Tirzepatide Portrait-2.png",
+    img: "/new-images/where vora labs/Sunlit Garden Tirzepatide Portrait-2.webp",
     tags: ["Janoshik tested", "Batch COA", "Published results"],
   },
   {
     label: "99%+ HPLC Verified Purity",
-    img: "/new-images/where vora labs/Sunlit garden portrait with BPC-157 & TB-500-3.png",
+    img: "/new-images/where vora labs/Sunlit garden portrait with BPC-157 & TB-500-3.webp",
     tags: ["HPLC verified", "99%+ purity", "Identity confirmed"],
   },
   {
     label: "Pre-Filled Precision Pens",
-    img: "/new-images/where vora labs/Golden Lemons with Carton and Pen-3.png",
+    img: "/new-images/where vora labs/Golden Lemons with Carton and Pen-3.webp",
     tags: ["Exact concentration", "No reconstitution", "Dose increments"],
   },
   {
     label: "56-Day Stability Hold",
-    img: "/new-images/where vora labs/Golden hour CJC-1295 garden portrait-1.png",
+    img: "/new-images/where vora labs/Golden hour CJC-1295 garden portrait-1.webp",
     tags: ["Room-temp hold", "2–8°C storage", "Batch traceable"],
   },
 ];

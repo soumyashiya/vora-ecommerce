@@ -11,10 +11,11 @@ const nextConfig = {
     ];
   },
   images: {
-    // Without this Next only ever emits WebP. AVIF is offered first and the
-    // browser falls back to WebP on its own via content negotiation, so older
-    // clients are unaffected.
-    formats: ["image/avif", "image/webp"],
+    // WebP only: AVIF encoding is many times slower, so every first view of
+    // an image size waited on the encoder. WebP is nearly as small.
+    formats: ["image/webp"],
+    // Optimised files are reused for 30 days instead of being re-encoded.
+    minimumCacheTTL: 2592000,
     // Next 16 requires every `quality` passed to <Image> to be declared here.
     // 40 is for images that ship blurred as decoration and are never read.
     qualities: [40, 75, 90, 95],

@@ -25,7 +25,7 @@ export default function Team() {
             className="relative aspect-[4/3] overflow-hidden rounded-[6px] bg-beige sm:aspect-[16/11]"
           >
             <Image
-              src="/new-images/our-story-new.png"
+              src="/new-images/our-story-new.webp"
               alt="Athlete on a training bench holding the Retatrutide 40mg kit"
               fill
               sizes="(max-width:1024px) 100vw, 58vw"

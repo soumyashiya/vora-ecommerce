@@ -88,7 +88,7 @@ export const WHY_US_PAGE: InfoContent = {
   lead: "Choosing a research peptide supplier should not come down to a product label alone. Vora Labs focuses on the information behind every batch, giving researchers greater visibility into sourcing, testing, and product quality.",
   paragraphs: [],
   image: {
-    src: "/new-images/whyus.png",
+    src: "/new-images/whyus.webp",
     alt: "Vora Labs CJC-1295 pre-filled research kit and pen",
     wide: true,
   },

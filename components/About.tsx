@@ -35,7 +35,7 @@ const TABS: {
     title: "Vora Labs Purity You Can Verify",
     intro:
       "Every fill is analysed in house and independently confirmed before it is released.",
-    bg: "/new-images/purity.png",
+    bg: "/new-images/purity.webp",
     // Head sits at the top edge of the shot, so anchor the crop to the top
     // on wide screens; on phones centre on the pen and face.
     bgPos: "object-[58%_center] lg:object-[70%_top]",
@@ -46,7 +46,7 @@ const TABS: {
     title: "Every Vora Labs Batch, Traceable",
     intro:
       "Each compound carries a batch number you can match to its published certificate of analysis.",
-    bg: "/new-images/tracability-bg.png",
+    bg: "/new-images/tracability-bg.webp",
   },
 ];
 
@@ -55,17 +55,17 @@ const CARDS = [
   {
     title: "100% Batches Tested",
     body: "Each batch is analysed for purity, identity and verified content before any unit is released.",
-    img: "/new-images/rigor-card1.png",
+    img: "/new-images/rigor-card1.webp",
   },
   {
     title: "99%+ HPLC Verified",
     body: "Analytical HPLC confirms purity percentage and content against specification on every fill.",
-    img: "/new-images/riger-card2.png",
+    img: "/new-images/riger-card2.webp",
   },
   {
     title: "Batch-Level Certificates",
     body: "Representative samples are independently certified by Janoshik, and every COA is published.",
-    img: "/new-images/rigor-card3.png",
+    img: "/new-images/rigor-card3.webp",
     pos: "object-[center_100%]",
   },
 ];
@@ -92,16 +92,16 @@ const CHECKS = [
 
 /** Traceability tab: product cards that step through with the arrow. */
 const TRACE = [
-  { slug: "retatrutide-40mg", img: "/new-images/tracability-card.png" },
+  { slug: "retatrutide-40mg", img: "/new-images/tracability-card.webp" },
   {
     slug: "tirzepatide-40mg",
-    img: "/new-images/tirzepatide/Tirzepatide cartons with orange-accented pen-1.png",
+    img: "/new-images/tirzepatide/Tirzepatide cartons with orange-accented pen-1.webp",
   },
-  { slug: "nad-1000mg", img: "/new-images/nad/ALLUVI NAD+ carton and pen hero-2.png" },
-  { slug: "glow-70mg", img: "/new-images/glow/Alluvi Glow GHK-CU Carton and Pen-3.png" },
+  { slug: "nad-1000mg", img: "/new-images/nad/ALLUVI NAD+ carton and pen hero-2.webp" },
+  { slug: "glow-70mg", img: "/new-images/glow/Alluvi Glow GHK-CU Carton and Pen-3.webp" },
   {
     slug: "bpc-157-tb-500-40mg",
-    img: "/new-images/bpc/Luxury cream carton and capped pen-3 (1).png",
+    img: "/new-images/bpc/Luxury cream carton and capped pen-3 (1).webp",
   },
 ]
   .map((t) => ({ ...t, product: getProduct(t.slug) }))

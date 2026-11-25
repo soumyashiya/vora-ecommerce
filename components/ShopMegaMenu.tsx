@@ -12,7 +12,7 @@ const DIR = "/new-images/header-shop-hover";
 
 /** Photograph for each collection tile, keyed by collection slug. */
 const GOAL_IMAGES: Record<string, string> = {
-  "weight-management": "/new-images/weight (2).png",
+  "weight-management": "/new-images/weight (2).webp",
   "fitness-endurance": `${DIR}/Alluvi MOTS-C Box and Pen (1).png`,
   "growth-performance": `${DIR}/Golden tagliatelle and Alluvi studio set-4.png`,
   "energy-longevity": `${DIR}/MOTS-C Carton with Amber Iced Coffees-3.png`,
@@ -66,7 +66,7 @@ export default function ShopMegaMenu({ onNavigate }: { onNavigate: () => void })
         >
           <div className="relative w-[22%] min-w-[160px] flex-none">
             <Image
-              src="/new-images/ALLUVI-Cocoa-Retatrutide-20mg.png"
+              src="/new-images/ALLUVI-Cocoa-Retatrutide-20mg.webp"
               alt=""
               fill
               sizes="22vw"

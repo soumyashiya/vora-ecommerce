@@ -27,6 +27,9 @@ const VIDEOS = [
   "custom_boss-five-v3-real-settings-2026-11-07_outdoor-v3-trench-park-video (1).mp4",
 ].map((f) => encodeURI(`${VIDEO_DIR}/${f}`));
 
+/** Still frames pulled from each clip, shown until the clip is played. */
+const POSTERS = VIDEOS.map((_, i) => `${VIDEO_DIR}/posters/review-${i}.webp`);
+
 /** Each card rests on a different frame so the row doesn't look uniform. */
 // Picked by hand: each lands on a different scene (wall, doorway, gym mat,
 // porch post, shoreline, tulips) rather than the product hold.
@@ -83,6 +86,7 @@ export default function Loved() {
               <div className="relative aspect-[3/4] overflow-hidden rounded-[8px] bg-beige">
                 <ReviewVideo
                   src={VIDEOS[i % VIDEOS.length]}
+                  poster={POSTERS[i % POSTERS.length]}
                   stillAt={STILL_AT[i % STILL_AT.length]}
                   label={t.name}
                 />
@@ -109,10 +113,12 @@ export default function Loved() {
 /** Rests on its own still frame; tap to play or pause, with a sound toggle. */
 function ReviewVideo({
   src,
+  poster,
   stillAt,
   label,
 }: {
   src: string;
+  poster: string;
   stillAt: number;
   label: string;
 }) {
@@ -151,10 +157,13 @@ function ReviewVideo({
       <video
         ref={ref}
         src={`${src}#t=${stillAt}`}
+        poster={poster}
         muted={muted}
         loop
         playsInline
-        preload="metadata"
+        // ~10MB per clip: show the poster frame and download nothing until
+        // the shopper presses play.
+        preload="none"
         onLoadedMetadata={showStill}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}

@@ -15,7 +15,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const COLLECTIONS = [ALL_CATEGORY, ...SHOP_CATEGORIES];
 
 /** One banner image for every collection. */
-const SHOP_BANNER = "/new-images/shop-banner.png";
+const SHOP_BANNER = "/new-images/shop-banner.webp";
 
 const SORTS = [
   { key: "featured", label: "Featured" },
@@ -251,7 +251,7 @@ function PromoTile() {
       className="group relative col-span-2 block min-h-[300px] overflow-hidden rounded-[6px] bg-[#2B150C] sm:min-h-[340px]"
     >
       <Image
-        src="/new-images/every-batch.png"
+        src="/new-images/every-batch.webp"
         alt=""
         fill
         // The tile is taller than the still, so `cover` scales to its height
