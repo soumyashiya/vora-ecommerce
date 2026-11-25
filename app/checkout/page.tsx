@@ -162,11 +162,8 @@ export default function CheckoutPage() {
         <div className="container-x flex flex-col items-center py-24 text-center">
           <h1 className="font-serif text-3xl text-navy">Nothing to check out</h1>
           <p className="mt-3 text-navy/60">Your cart is empty.</p>
-          <Link href="/#products" className="btn-lime mt-8">
-            Browse Products
-            <span className="icon-circle">
-              <FiArrowRight size={16} />
-            </span>
+          <Link href="/products" className="btn-solid mt-8">
+            Browse compounds
           </Link>
         </div>
         <Footer />
@@ -191,7 +188,7 @@ export default function CheckoutPage() {
           {/* ---------- Left: details ---------- */}
           <div className="flex flex-col gap-6">
             {/* Contact */}
-            <section className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+            <section className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
               <SectionTitle>Contact</SectionTitle>
               <div className="mt-5 grid gap-4">
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -226,7 +223,7 @@ export default function CheckoutPage() {
             </section>
 
             {/* Billing */}
-            <section className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+            <section className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
               <SectionTitle>Billing address</SectionTitle>
               <div className="mt-5 grid gap-4">
                 <Field
@@ -263,7 +260,7 @@ export default function CheckoutPage() {
                   <select
                     value={form.country}
                     onChange={set("country")}
-                    className="w-full rounded-xl border border-sand bg-white px-4 py-3 text-[15px] text-navy outline-none transition-colors focus:border-navy/40"
+                    className="field-box"
                   >
                     <option>United Kingdom</option>
                     <option>Ireland</option>
@@ -281,7 +278,7 @@ export default function CheckoutPage() {
 
           {/* ---------- Right: order summary ---------- */}
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <div className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+            <div className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
               <h2 className="font-serif text-2xl text-navy">Your order</h2>
 
               <div className="mt-6 flex flex-col gap-4">
@@ -311,7 +308,7 @@ export default function CheckoutPage() {
 
               {/* promo code */}
               {appliedPromo ? (
-                <div className="mb-5 flex items-center justify-between rounded-2xl bg-lime/40 px-4 py-3">
+                <div className="mb-5 flex items-center justify-between rounded-[10px] bg-chartreuse/45 px-4 py-3">
                   <span className="flex items-center gap-2 text-[14px] font-medium text-navy">
                     <FiTag size={15} /> {appliedPromo} applied
                     <span className="text-navy/55">· {appliedPromoPercent}% off</span>
@@ -320,7 +317,7 @@ export default function CheckoutPage() {
                     type="button"
                     onClick={removePromo}
                     aria-label="Remove promo code"
-                    className="grid h-9 w-9 place-items-center rounded-full text-navy/55 hover:bg-white hover:text-navy"
+                    className="grid h-9 w-9 place-items-center rounded-full text-clay transition-colors hover:bg-cream hover:text-espresso"
                   >
                     <FiX size={15} />
                   </button>
@@ -328,7 +325,7 @@ export default function CheckoutPage() {
               ) : (
                 <div className="mb-5">
                   <div className="flex gap-2">
-                    <div className="flex flex-1 items-center rounded-xl border border-sand bg-white px-3 transition-colors focus-within:border-navy/40">
+                    <div className="flex flex-1 items-center rounded-[8px] border border-sand bg-cream px-3 transition-colors focus-within:border-espresso">
                       <FiTag className="text-navy/35" size={15} />
                       <input
                         value={promoInput}
@@ -380,7 +377,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={loading || !items.length}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-lime-btn px-8 py-4 font-semibold text-navy transition-all duration-500 ease-smooth hover:-translate-y-0.5 hover:bg-[#e6f9a6] disabled:opacity-70"
+                className="btn-solid mt-6 w-full disabled:opacity-70"
               >
                 {loading ? (
                   <>
@@ -455,7 +452,7 @@ function Field({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-sand bg-white px-4 py-3 text-[15px] text-navy outline-none transition-colors placeholder:text-navy/30 focus:border-navy/40"
+        className="field-box"
       />
     </label>
   );

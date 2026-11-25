@@ -1,117 +1,82 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { LuFlaskConical, LuSnowflake, LuShieldCheck, LuTruck } from "react-icons/lu";
-import { BENEFITS } from "@/lib/data";
-import { SectionHeading } from "./ui/Bits";
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { FiArrowRight } from "react-icons/fi";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-const ICONS = [LuShieldCheck, LuSnowflake, LuFlaskConical, LuTruck];
+/**
+ * Category entry points sitting directly under the catalogue rail.
+ * Styled product photographs on warm dark grounds, a bold uppercase label
+ * top-left and a light arrow control top-right.
+ */
+type Tile = { title: string; href: string; img: string };
+
+/** Home shows four featured categories. */
+const TILES: Tile[] = [
+  {
+    title: "Weight Management",
+    href: "/products?category=weight-management",
+    img: "/new-images/weigh-management.png",
+  },
+  {
+    title: "Recovery & Repair",
+    href: "/products?category=recovery-repair",
+    img: "/new-images/recovery.png",
+  },
+  {
+    title: "Fitness & Endurance",
+    href: "/products?category=fitness-endurance",
+    img: "/new-images/fitness.png",
+  },
+  {
+    title: "Energy & Longevity",
+    href: "/products?category=energy-longevity",
+    img: "/new-images/energy.png",
+  },
+];
 
 export default function Benefits() {
-  const root = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      const cards = gsap.utils.toArray<HTMLElement>(".why-card");
-      if (!cards.length) return;
-
-      const prefersReduced = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-
-      if (prefersReduced || !isDesktop) {
-        // Mobile / reduced-motion: simple in-place fade, no pinning.
-        gsap.set(cards, { xPercent: 0, opacity: 1 });
-        gsap.from(cards, {
-          opacity: 0,
-          y: 40,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.12,
-          scrollTrigger: { trigger: root.current, start: "top 75%" },
-        });
-        return;
-      }
-
-      // Alternate start side: even cards from the left, odd from the right.
-      cards.forEach((c, i) =>
-        gsap.set(c, { xPercent: i % 2 === 0 ? -140 : 140, opacity: 0 })
-      );
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: root.current,
-          start: "top top",
-          end: "+=" + cards.length * 60 + "%",
-          pin: true,
-          scrub: 1,
-        },
-      });
-
-      cards.forEach((c, i) => {
-        tl.to(
-          c,
-          { xPercent: 0, opacity: 1, ease: "power2.out", duration: 1 },
-          i
-        );
-      });
-    },
-    { scope: root }
-  );
-
   return (
-    <section
-      id="why"
-      ref={root}
-      className="relative flex flex-col overflow-hidden bg-ivory pb-10 pt-20 lg:min-h-screen lg:justify-center"
-    >
-      <div className="absolute inset-0 topo-grid opacity-60" />
-      <div className="container-x relative">
-        <SectionHeading eyebrow="Why Vora Labs" title="Verified Quality" />
+    <section className="pb-[clamp(40px,5vw,80px)]">
+      <div className="container-x">
+        <div className="snap-rail no-scrollbar -mx-[max(20px,3.2vw)] flex gap-3 overflow-x-auto px-[max(20px,3.2vw)] xs:gap-4 lg:mx-0 lg:grid lg:grid-cols-4 lg:gap-5 lg:overflow-visible lg:px-0">
+          {TILES.map((tile, i) => (
+            <motion.div
+              key={tile.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.65, delay: i * 0.06, ease: EASE }}
+              className="w-[72vw] flex-none xs:w-[58vw] sm:w-[42vw] md:w-[34vw] lg:w-auto"
+            >
+              <Link
+                href={tile.href}
+                className="group relative block aspect-[16/10] overflow-hidden rounded-[8px] bg-espresso"
+              >
+                <Image
+                  src={tile.img}
+                  alt=""
+                  fill
+                  sizes="(max-width:1024px) 72vw, 25vw"
+                  quality={90}
+                  className="object-cover transition-transform duration-[1.4s] ease-smooth group-hover:scale-105"
+                />
+                {/* Keeps the label legible over lighter parts of the photo */}
+                <span className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/35 to-transparent" />
 
-        <div className="relative mt-14">
-          {/* Centred round focal graphic — stays put while cards fly in */}
-          <div className="pointer-events-none absolute inset-0 z-0 grid place-items-center">
-            {[640, 480, 330].map((s) => (
-              <span
-                key={s}
-                className="absolute rounded-full border border-navy/10"
-                style={{ width: s, height: s, maxWidth: "90vw", maxHeight: "90vw" }}
-              />
-            ))}
-            <span className="grid h-[92px] w-[92px] place-items-center rounded-full bg-navy text-lime shadow-[0_30px_60px_-30px_rgba(4,52,96,0.6)]">
-              <LuFlaskConical size={36} />
-            </span>
-          </div>
+                <span className="absolute left-4 right-14 top-4 z-10 font-sans [text-shadow:0_1px_8px_rgba(0,0,0,0.35)] text-[14px] font-semibold uppercase leading-tight tracking-[0.04em] text-cream xs:text-[15px] sm:left-5 sm:top-5 sm:text-[17px] lg:text-[15px] xl:text-[17px]">
+                  {tile.title}
+                </span>
 
-          {/* Cards fly in from the sides, around the round (diagonally staggered) */}
-          <div className="relative z-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:items-start lg:gap-x-[42%] lg:gap-y-10">
-            {BENEFITS.map((b, i) => {
-              const Icon = ICONS[i];
-              return (
-                <div
-                  key={b.title}
-                  className={`why-card rounded-[26px] bg-white p-7 shadow-[0_35px_75px_-45px_rgba(4,52,96,0.5)] ${
-                    i % 2 === 1 ? "lg:mt-[7rem]" : ""
-                  }`}
-                >
-                  <span className="mb-5 grid h-16 w-16 place-items-center rounded-2xl bg-[#cdee7a] text-navy">
-                    <Icon size={28} />
-                  </span>
-                  <h3 className="font-serif text-2xl text-navy">{b.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-navy/70">
-                    {b.desc}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+                <span className="absolute right-4 top-4 z-10 grid h-8 w-8 place-items-center rounded-[6px] bg-cream/85 text-espresso transition-colors duration-300 group-hover:bg-chartreuse sm:right-5 sm:top-5 sm:h-9 sm:w-9">
+                  <FiArrowRight size={15} />
+                </span>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

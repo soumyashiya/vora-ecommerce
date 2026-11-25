@@ -61,11 +61,8 @@ export default function ForgotPasswordPage() {
             <FiMail size={26} />
           </span>
           <p className="mt-5 text-[15px] text-navy/70">{sent}</p>
-          <Link href="/login" className="btn-lime mt-7 w-full justify-center">
+          <Link href="/login" className="btn-solid mt-7 w-full">
             Back to sign in
-            <span className="icon-circle">
-              <FiArrowRight size={16} />
-            </span>
           </Link>
         </div>
       ) : (
@@ -84,7 +81,7 @@ export default function ForgotPasswordPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-lime-btn px-8 py-4 font-semibold text-navy transition-all duration-500 ease-smooth hover:-translate-y-0.5 hover:bg-[#e6f9a6] disabled:opacity-70"
+            className="btn-solid mt-1 w-full disabled:opacity-70"
           >
             {loading ? (
               <>

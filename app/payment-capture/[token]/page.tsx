@@ -33,7 +33,7 @@ import {
 import type { PaymentCaptureValidateResponse, PaymentCaptureStatus } from "@/types/api";
 
 const INPUT =
-  "w-full rounded-2xl border border-sand bg-white px-4 py-3 text-[15px] text-navy placeholder:text-navy/30 transition-colors focus:border-navy/40 focus:outline-none";
+  "field-box";
 
 // Maps the OCR verification service's documented reason codes to plain-English copy.
 function explainRejection(reasons: string[] | undefined): string[] {
@@ -162,11 +162,8 @@ export default function PaymentCapturePage() {
           <p className="mt-3 max-w-md text-navy/60">{loadError || "Payment link not found."}</p>
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/track" className="btn-lime">
+            <Link href="/track" className="btn-solid">
               Track an order
-              <span className="icon-circle">
-                <FiPackage size={16} />
-              </span>
             </Link>
             <Link href="/#products" className="btn-ghost">
               Back to shop
@@ -218,11 +215,8 @@ export default function PaymentCapturePage() {
             </a>
           )}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href={`/track?order=${encodeURIComponent(orderNumber)}`} className="btn-lime">
+            <Link href={`/track?order=${encodeURIComponent(orderNumber)}`} className="btn-solid">
               Track order
-              <span className="icon-circle">
-                <FiPackage size={16} />
-              </span>
             </Link>
             <Link href="/" className="btn-ghost">
               Back to home
@@ -258,7 +252,7 @@ export default function PaymentCapturePage() {
           {/* Left — order summary + amount + bank details */}
           <div className="flex flex-col gap-6">
             {data.items.length > 0 && (
-              <Reveal className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+              <Reveal className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
                 <h2 className="flex items-center gap-2 font-serif text-xl text-navy">
                   <FiPackage size={16} className="text-navy/50" /> Order summary
                 </h2>
@@ -301,7 +295,7 @@ export default function PaymentCapturePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="rounded-[28px] bg-navy p-7 text-ivory"
+              className="rounded-[14px] bg-espresso p-7 text-cream"
             >
               <p className="flex items-center gap-2 text-[12px] uppercase tracking-[0.2em] text-ivory/60">
                 <FiCreditCard size={14} /> Amount due
@@ -314,7 +308,7 @@ export default function PaymentCapturePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col gap-3 rounded-[28px] border border-sand bg-beige p-6"
+              className="flex flex-col gap-3 rounded-[14px] bg-beige p-6"
             >
               <BankRow
                 icon={FiHome}
@@ -350,7 +344,7 @@ export default function PaymentCapturePage() {
             </motion.div>
 
             {data.allowPromo && (
-              <Reveal className="rounded-[28px] border border-sand bg-white p-7">
+              <Reveal className="rounded-[14px] border border-sand bg-cream p-7">
                 <h2 className="flex items-center gap-2 font-serif text-xl text-navy">
                   <FiTag size={16} className="text-navy/50" /> Promo code
                 </h2>
@@ -374,7 +368,7 @@ export default function PaymentCapturePage() {
                     type="button"
                     onClick={applyPromo}
                     disabled={promoLoading}
-                    className="shrink-0 rounded-2xl border border-sand bg-white px-5 text-[15px] font-semibold text-navy transition-colors hover:border-navy/40 disabled:opacity-60"
+                    className="shrink-0 rounded-[8px] border border-sand bg-cream px-5 text-[14px] font-medium text-espresso transition-colors hover:border-espresso disabled:opacity-60"
                   >
                     {promoLoading ? "…" : "Apply"}
                   </button>
@@ -385,7 +379,7 @@ export default function PaymentCapturePage() {
           </div>
 
           {/* Right — upload proof */}
-          <Reveal className="h-fit rounded-[28px] border border-sand bg-white p-7 lg:sticky lg:top-28">
+          <Reveal className="h-fit rounded-[14px] border border-sand bg-cream p-7 lg:sticky lg:top-[82px]">
             <h2 className="flex items-center gap-2 font-serif text-xl text-navy">
               <FiUploadCloud size={18} className="text-navy/50" /> Upload payment screenshot
             </h2>
@@ -403,7 +397,7 @@ export default function PaymentCapturePage() {
                 pickFile(e.dataTransfer.files?.[0]);
               }}
               className={cn(
-                "mt-5 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-colors",
+                "mt-5 flex cursor-pointer flex-col items-center justify-center gap-2 rounded-[10px] border border-dashed px-6 py-10 text-center transition-colors",
                 dragOver ? "border-navy/50 bg-beige" : "border-sand bg-ivory hover:border-navy/30"
               )}
             >
@@ -461,7 +455,7 @@ export default function PaymentCapturePage() {
               type="button"
               onClick={uploadScreenshot}
               disabled={!file || uploadStatus === "uploading"}
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-lime-btn py-4 text-[15px] font-semibold text-navy transition-all duration-500 ease-smooth hover:-translate-y-0.5 hover:bg-[#e6f9a6] disabled:cursor-not-allowed disabled:opacity-60"
+              className="btn-solid mt-6 w-full disabled:cursor-not-allowed disabled:opacity-60"
             >
               {uploadStatus === "uploading" ? (
                 <>
@@ -496,7 +490,7 @@ function BankRow({
   copied: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl border border-sand bg-white px-4 py-3.5">
+    <div className="flex items-center justify-between gap-4 rounded-[10px] border border-sand bg-cream px-4 py-3.5">
       <div className="flex min-w-0 items-center gap-3">
         <span className="grid h-9 w-9 flex-none place-items-center rounded-full bg-beige text-navy/70">
           <Icon size={16} />
@@ -548,7 +542,7 @@ function StatusBanner({
   return (
     <div
       className={cn(
-        "mt-4 flex items-start gap-2.5 rounded-2xl border px-4 py-3 text-[13px] font-medium",
+        "mt-4 flex items-start gap-2.5 rounded-[10px] border px-4 py-3 text-[13px] font-medium",
         styles[tone]
       )}
     >

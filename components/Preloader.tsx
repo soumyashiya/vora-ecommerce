@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { LuAtom } from "react-icons/lu";
 
 const EASE = [0.76, 0, 0.24, 1] as const;
 
@@ -55,14 +54,14 @@ export default function Preloader() {
         initial={{ x: 0 }}
         animate={{ x: done ? "-101%" : 0 }}
         transition={{ duration: 0.95, ease: EASE }}
-        className="absolute inset-y-0 left-0 w-[51%] bg-navy"
+        className="absolute inset-y-0 left-0 w-[51%] bg-espresso"
       />
       {/* RIGHT curtain panel */}
       <motion.div
         initial={{ x: 0 }}
         animate={{ x: done ? "101%" : 0 }}
         transition={{ duration: 0.95, ease: EASE }}
-        className="absolute inset-y-0 right-0 w-[51%] bg-navy"
+        className="absolute inset-y-0 right-0 w-[51%] bg-espresso"
       />
 
       {/* centre content — fades out as the curtains part */}
@@ -71,45 +70,31 @@ export default function Preloader() {
         transition={{ duration: 0.4, ease: EASE }}
         className="absolute inset-0 flex flex-col items-center justify-center"
       >
-        {/* faint radial rings */}
-        <div className="pointer-events-none absolute inset-0 grid place-items-center opacity-[0.12]">
-          {[640, 460, 300].map((s) => (
-            <span
-              key={s}
-              className="absolute rounded-full border border-lime"
-              style={{ width: s, height: s, maxWidth: "92vw", maxHeight: "92vw" }}
-            />
-          ))}
-        </div>
-
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex items-center gap-3"
+          className="relative flex items-baseline gap-2.5"
         >
-          <span className="grid h-12 w-12 place-items-center rounded-2xl bg-lime text-navy">
-            <LuAtom size={26} className="animate-spinslow" />
+          <span className="font-serif text-[clamp(44px,8vw,76px)] lowercase leading-none tracking-[0.01em] text-cream">
+            vora
           </span>
-          <span className="flex flex-col leading-none">
-            <span className="text-3xl font-extrabold tracking-tight text-ivory">
-              VORA
-            </span>
-            <span className="mt-1 text-[12px] font-semibold uppercase tracking-[0.36em] text-ivory/55">
-              Labs
-            </span>
+          <span className="label-xs text-[12px] tracking-[0.3em] text-cream/55">
+            labs
           </span>
         </motion.div>
 
-        <div className="relative mt-12 h-px w-56 overflow-hidden bg-white/15">
+        <div className="relative mt-12 h-px w-56 overflow-hidden bg-cream/20">
           <div
-            className="h-full bg-lime transition-[width] duration-100 ease-linear"
+            className="h-full bg-chartreuse transition-[width] duration-100 ease-linear"
             style={{ width: `${pct}%` }}
           />
         </div>
-        <div className="relative mt-5 flex w-56 items-center justify-between text-ivory/60">
-          <span className="text-[12px] uppercase tracking-[0.2em]">Loading</span>
-          <span className="font-serif text-lg tabular-nums text-ivory">{pct}%</span>
+        <div className="relative mt-5 flex w-56 items-center justify-between">
+          <span className="label-xs text-[11px] text-cream/60">Loading</span>
+          <span className="font-serif text-[18px] tabular-nums text-cream">
+            {pct}%
+          </span>
         </div>
       </motion.div>
     </div>

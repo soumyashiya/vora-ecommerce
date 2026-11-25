@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 
-const inputCls =
-  "w-full rounded-xl border border-sand bg-white px-4 py-3 text-[15px] text-navy outline-none transition-colors placeholder:text-navy/30 focus:border-navy/40";
+const labelCls = "label-xs mb-2 block text-clay";
 
 export function AuthField({
   label,
@@ -24,9 +23,7 @@ export function AuthField({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[13px] font-medium text-navy/70">
-        {label}
-      </span>
+      <span className={labelCls}>{label}</span>
       <input
         required={required}
         type={type}
@@ -34,7 +31,7 @@ export function AuthField({
         onChange={onChange}
         placeholder={placeholder}
         autoComplete={autoComplete}
-        className={inputCls}
+        className="field-box"
       />
     </label>
   );
@@ -53,10 +50,8 @@ export function AuthSelect({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[13px] font-medium text-navy/70">
-        {label}
-      </span>
-      <select value={value} onChange={onChange} className={inputCls}>
+      <span className={labelCls}>{label}</span>
+      <select value={value} onChange={onChange} className="field-box">
         {options.map((o) => (
           <option key={o}>{o}</option>
         ))}
@@ -83,18 +78,18 @@ export function PasswordField({
   const [show, setShow] = useState(false);
   return (
     <label className="block">
-      <span className="mb-1.5 flex items-center justify-between text-[13px] font-medium text-navy/70">
+      <span className={`${labelCls} flex items-center justify-between`}>
         {label}
         {forgotHref && (
           <a
             href={forgotHref}
-            className="font-medium text-navy/55 hover:text-navy"
+            className="normal-case tracking-normal text-clay underline underline-offset-4 transition-colors hover:text-espresso"
           >
             Forgot?
           </a>
         )}
       </span>
-      <div className="flex items-center rounded-xl border border-sand bg-white pr-2 transition-colors focus-within:border-navy/40">
+      <div className="flex items-center rounded-[8px] border border-sand bg-cream pr-2 transition-colors focus-within:border-espresso">
         <input
           required
           type={show ? "text" : "password"}
@@ -102,12 +97,12 @@ export function PasswordField({
           onChange={onChange}
           placeholder={placeholder}
           autoComplete={autoComplete}
-          className="w-full rounded-xl bg-transparent px-4 py-3 text-[15px] text-navy outline-none placeholder:text-navy/30"
+          className="w-full bg-transparent px-4 py-[14px] text-[15px] text-espresso outline-none placeholder:text-taupe"
         />
         <button
           type="button"
           onClick={() => setShow((s) => !s)}
-          className="rounded-lg px-3 py-1.5 text-[13px] font-semibold text-navy/55 transition-colors hover:bg-beige hover:text-navy"
+          className="rounded-[6px] px-3 py-1.5 text-[12px] font-medium uppercase tracking-[0.06em] text-clay transition-colors hover:bg-beige hover:text-espresso"
         >
           {show ? "Hide" : "Show"}
         </button>

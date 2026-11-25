@@ -10,6 +10,10 @@ import Testimonials from "@/components/Testimonials";
 import Facilities from "@/components/Facilities";
 import Marquee from "@/components/Marquee";
 import Team from "@/components/Team";
+import Blog from "@/components/Blog";
+import Comparison from "@/components/Comparison";
+import Loved from "@/components/Loved";
+import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
@@ -26,14 +30,21 @@ export default function Home() {
       <Navbar />
       <Hero />
       <ClientsBar />
-      <About />
+      {/* Catalogue rail + photographic entry points */}
       <Programs />
       <Benefits />
-      <Testimonials />
+      {/* Commitment band, then the guided route into the catalogue */}
+      <CTA />
       <Facilities />
+      {/* Process, proof, origin */}
+      <About />
+      <Testimonials />
       <Marquee />
       <Team />
-      <CTA />
+      <Blog />
+      <Comparison />
+      <Loved />
+      <FAQ />
       <Footer />
     </main>
   );

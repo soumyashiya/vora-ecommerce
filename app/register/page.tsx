@@ -172,7 +172,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-lime-btn px-8 py-4 font-semibold text-navy transition-all duration-500 ease-smooth hover:-translate-y-0.5 hover:bg-[#e6f9a6] disabled:opacity-70"
+          className="btn-solid mt-2 w-full disabled:opacity-70"
         >
           {loading ? (
             <>

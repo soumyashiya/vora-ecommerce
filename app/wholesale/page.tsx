@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { LuSparkles } from "react-icons/lu";
 import { pageMetadata } from "@/lib/seo";
 import ShopHeader from "@/components/cart/ShopHeader";
 import Footer from "@/components/Footer";
@@ -21,8 +20,7 @@ export default function WholesalePage() {
         <div className="absolute inset-0 topo-grid opacity-50" />
         <div className="container-x relative">
           <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-            <span className="eyebrow">
-              <LuSparkles size={15} />
+            <span className="eyebrow text-clay">
               Wholesale Enquiries
             </span>
             <h1 className="display-2-sm mt-6 text-navy">

@@ -90,7 +90,7 @@ function TrackOrder() {
           }}
           className="mt-8 flex max-w-xl gap-2"
         >
-          <div className="flex flex-1 items-center rounded-full border border-sand bg-white px-4 transition-colors focus-within:border-navy/40">
+          <div className="flex flex-1 items-center rounded-full border border-sand bg-cream px-4 transition-colors focus-within:border-espresso">
             <FiSearch className="text-navy/35" size={18} />
             <input
               value={query}
@@ -102,14 +102,14 @@ function TrackOrder() {
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-lime-btn px-7 py-3.5 font-semibold text-navy transition-all duration-500 ease-smooth hover:-translate-y-0.5 hover:bg-[#e6f9a6] disabled:opacity-70"
+            className="btn-solid disabled:opacity-70"
           >
             {loading ? <FiLoader className="animate-spin" size={18} /> : "Track"}
           </button>
         </form>
 
         {error && (
-          <div className="mt-8 max-w-xl rounded-2xl border border-sand bg-white p-6 text-center">
+          <div className="mt-8 max-w-xl rounded-[10px] bg-beige p-6 text-center">
             <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-beige text-navy/60">
               <FiPackage size={22} />
             </span>
@@ -118,7 +118,7 @@ function TrackOrder() {
         )}
 
         {!loading && !error && !order && (
-          <div className="mt-14 flex flex-col items-center rounded-[28px] border border-sand bg-white px-6 py-16 text-center sm:py-20">
+          <div className="mt-14 flex flex-col items-center rounded-[14px] bg-beige px-6 py-16 text-center sm:py-20">
             <span className="grid h-16 w-16 place-items-center rounded-full bg-beige text-navy/60">
               <FiPackage size={26} />
             </span>
@@ -174,7 +174,7 @@ function TrackOrder() {
           >
             {/* Left: status + items */}
             <div className="flex flex-col gap-6">
-              <section className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+              <section className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <p className="text-[13px] uppercase tracking-wider text-navy/50">
@@ -222,7 +222,7 @@ function TrackOrder() {
               </section>
 
               {data.items.length > 0 && (
-                <section className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+                <section className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
                   <h2 className="font-serif text-2xl text-navy">Items</h2>
                   <div className="mt-5 flex flex-col divide-y divide-sand">
                     {data.items.map((it) => (
@@ -245,7 +245,7 @@ function TrackOrder() {
 
             {/* Right: customer + shipping + totals */}
             <aside className="flex flex-col gap-6">
-              <section className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+              <section className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
                 <h2 className="font-serif text-2xl text-navy">Summary</h2>
                 <dl className="mt-5 space-y-3 text-[15px]">
                   <div className="flex justify-between">
@@ -271,7 +271,7 @@ function TrackOrder() {
                 </dl>
               </section>
 
-              <section className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+              <section className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
                 <h2 className="font-serif text-2xl text-navy">Billing to</h2>
                 <div className="mt-4 space-y-1 text-[15px] text-navy/75">
                   <p className="text-navy">{order.customer_name}</p>

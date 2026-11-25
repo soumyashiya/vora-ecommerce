@@ -3,13 +3,19 @@
 import { motion, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
 
+/**
+ * Entrance motion for this design system is deliberately quiet: a short
+ * fade with a small upward drift, no blur and no scale. Editorial pages
+ * should feel like they settle, not like they animate.
+ */
+const EASE = [0.22, 1, 0.36, 1] as const;
+
 const variants: Variants = {
-  hidden: { opacity: 0, y: 38, filter: "blur(6px)" },
+  hidden: { opacity: 0, y: 22 },
   show: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.75, ease: EASE },
   },
 };
 
@@ -17,7 +23,7 @@ export default function Reveal({
   children,
   delay = 0,
   className,
-  y = 38,
+  y = 22,
   once = true,
 }: {
   children: ReactNode;
@@ -31,14 +37,13 @@ export default function Reveal({
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once, amount: 0.25 }}
+      viewport={{ once, amount: 0.2 }}
       variants={{
-        hidden: { opacity: 0, y, filter: "blur(6px)" },
+        hidden: { opacity: 0, y },
         show: {
           opacity: 1,
           y: 0,
-          filter: "blur(0px)",
-          transition: { duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] },
+          transition: { duration: 0.75, delay, ease: EASE },
         },
       }}
     >
@@ -51,7 +56,7 @@ export function Stagger({
   children,
   className,
   delayChildren = 0,
-  stagger = 0.09,
+  stagger = 0.07,
 }: {
   children: ReactNode;
   className?: string;
@@ -63,7 +68,7 @@ export function Stagger({
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.15 }}
       variants={{
         hidden: {},
         show: {

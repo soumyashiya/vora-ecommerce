@@ -15,7 +15,14 @@ export type Product = {
   priceLabel: string; // "$129.00"
   image: string;
   gallery: string[];
+  /**
+   * "natural" shows lifestyle shots uncropped at their own proportions;
+   * default "contain" pads packshots inside fixed frames.
+   */
+  galleryFit?: "contain" | "natural";
   category: string;
+  /** Flags a recent addition — the catalogue card carries a "New" pill. */
+  isNew?: boolean;
   tagline: string;
   description: string;
   specs: { label: string; value: string }[];
@@ -40,13 +47,13 @@ export const PRODUCTS: Product[] = [
     name: "Tirzepatide 40mg",
     price: 129,
     priceLabel: "$129.00",
-    image: "/images/products/tirzepatide.jpeg",
+    image: "/new-images/ALLUVI-Tirzepatide-40mg.png",
     gallery: [
-      "/images/products/tirzepatide.jpeg",
-      "/images/products/tirzepatide-2.jpeg",
-      "/images/products/tirzepatide-3.jpeg",
-      "/images/products/tirzepatide-4.jpeg",
+      "/new-images/tirzepatide/Tirzepatide cartons with orange-accented pen-1.png",
+      "/new-images/tirzepatide/Fitness portrait with tirzepatide carton and pen-2.png",
+      "/new-images/tirzepatide/Tirzepatide carton and pen gym still life-3.png",
     ],
+    galleryFit: "natural",
     category: "GLP-1 / GIP",
     tagline: "Dual agonist of GLP-1 & GIP receptors, pre-filled for research.",
     description:
@@ -87,13 +94,13 @@ export const PRODUCTS: Product[] = [
     name: "Retatrutide 20mg",
     price: 129,
     priceLabel: "$129.00",
-    image: "/images/products/retatrutide-20.jpeg",
+    image: "/new-images/ALLUVI-Retatrutide-20mg (1).png",
     gallery: [
-      "/images/products/retatrutide-20.jpeg",
-      "/images/products/retatrutide-20-2.jpeg",
-      "/images/products/retatrutide-20-3.jpeg",
-      "/images/products/retatrutide-20-4.jpeg",
+      "/new-images/reta20/Alluvi Retatrutide Carton and Pen-2.png",
+      "/new-images/reta20/Auburn beauty with Alluvi products-3.png",
+      "/new-images/reta20/Alluvi Retatrutide on Sunlit Sand-1.png",
     ],
+    galleryFit: "natural",
     category: "GLP-1 / GIP / Glucagon",
     tagline: "Triple agonist research compound in an entry research quantity.",
     description:
@@ -133,13 +140,13 @@ export const PRODUCTS: Product[] = [
     name: "Retatrutide 40mg",
     price: 229,
     priceLabel: "$229.00",
-    image: "/images/products/retatrutide-40.jpeg",
+    image: "/new-images/ALLUVI-Retatrutide-40mg (1).png",
     gallery: [
-      "/images/products/retatrutide-40.jpeg",
-      "/images/products/retatrutide-40-2.jpeg",
-      "/images/products/retatrutide-40-3.jpeg",
-      "/images/products/retatrutide-40-4.jpeg",
+      "/new-images/reta/Alluvi 40mg carton and pen-3.png",
+      "/new-images/reta/Alluvi carton and pen on a café table-2.png",
+      "/new-images/reta/ALLUVI packaging and pen on ivory tray-1.png",
     ],
+    galleryFit: "natural",
     category: "GLP-1 / GIP / Glucagon",
     tagline: "Extended research quantity at the highest fill concentration.",
     description:
@@ -179,13 +186,15 @@ export const PRODUCTS: Product[] = [
     name: "BPC-157 & TB-500 40mg",
     price: 169,
     priceLabel: "$169.00",
-    image: "/images/products/bpc.jpeg",
+    image: "/new-images/ALLUVI-BPC-157-TB-500-40mg.png",
     gallery: [
-      "/images/products/bpc.jpeg",
-      "/images/products/bpc-2.jpeg",
-      "/images/products/bpc-3.jpeg",
-      "/images/products/bpc-4.jpeg",
+      // Portraits first (shown side by side), landscapes after (full width).
+      "/new-images/bpc/Luxury cream carton and capped pen-3 (1).png",
+      "/new-images/bpc/Woman with carton and upright pen.png",
+      "/new-images/bpc/ALLUVI pen, carton, and lemons-2.png",
+      "/new-images/bpc/Woman Holding Alluvi Carton and Pen.png",
     ],
+    galleryFit: "natural",
     category: "Structural & Tissue Research",
     tagline: "Dual-compound structural and tissue-biology research blend.",
     description:
@@ -226,13 +235,13 @@ export const PRODUCTS: Product[] = [
     name: "Glow 70mg",
     price: 129,
     priceLabel: "$129.00",
-    image: "/images/products/glow.jpeg",
+    image: "/new-images/ALLUVI-Glow-70mg.png",
     gallery: [
-      "/images/products/glow.jpeg",
-      "/images/products/glow-2.jpeg",
-      "/images/products/glow-3.jpeg",
-      "/images/products/glow-4.jpeg",
+      "/new-images/glow/Alluvi Glow GHK-CU Carton and Pen-3.png",
+      "/new-images/glow/Alluvi Glow carton in ivory catchall-2.png",
+      "/new-images/glow/Woman holding Alluvi Glow carton and pen-1.png",
     ],
+    galleryFit: "natural",
     category: "GHK-Cu Blend",
     tagline: "Multi-peptide GHK-Cu research blend for dermal and connective-tissue study.",
     description:
@@ -274,13 +283,13 @@ export const PRODUCTS: Product[] = [
     name: "NAD+ 1,000mg",
     price: 179,
     priceLabel: "$179.00",
-    image: "/images/products/nad.jpeg",
+    image: "/new-images/ALLUVI-NAD-Plus-1000mg.png",
     gallery: [
-      "/images/products/nad.jpeg",
-      "/images/products/nad-2.jpeg",
-      "/images/products/nad-3.jpeg",
-      "/images/products/nad-4.jpeg",
+      "/new-images/nad/ALLUVI NAD+ carton and pen hero-2.png",
+      "/new-images/nad/Freckled portrait holding ALLUVI NAD+ carton-3.png",
+      "/new-images/nad/ALLUVI NAD+ in golden sunlight-1.png",
     ],
+    galleryFit: "natural",
     category: "Cellular Research",
     tagline: "High-dose NAD+ research compound for cellular metabolism study.",
     description:
@@ -309,6 +318,125 @@ export const PRODUCTS: Product[] = [
       "Store refrigerated at 2–8°C for long-term stability. The formulation is validated to hold verified purity and pH for 56 days at controlled room temperature during active research use. Protect from direct light and avoid freeze/thaw cycles.",
     supplyChain:
       "Synthesised to specification, filled in a controlled environment, HPLC analysed in-house, then independently verified by Janoshik before release. Every unit is batch-referenced end-to-end and released only after passing identity, purity and appearance criteria.",
+  },
+
+  // New releases. Lab fields (batch, purity, analytes, COA) stay empty until
+  // the Janoshik results are in — the product page hides those panels.
+  // TODO: confirm prices before launch.
+  {
+    slug: "mots-c-40mg",
+    id: "RP 07",
+    name: "MOTS-C 40mg",
+    price: 149,
+    priceLabel: "$149.00",
+    image: "/new-images/ALLUVI-MOTS-C-40mg.png",
+    gallery: [
+      "/new-images/motc/Warm beige hero shot_ pen and carton-3.png",
+      "/new-images/motc/Capped 10 mg pen on steel plinth-2.png",
+      "/new-images/motc/Gym tote with branded purple carton-1.png",
+    ],
+    galleryFit: "natural",
+    category: "Mitochondrial Research",
+    isNew: true,
+    tagline: "Mitochondrial-derived peptide for metabolic and endurance research.",
+    description:
+      "Vora Labs MOTS-C 40mg is a mitochondrial-derived research peptide supplied in a pre-filled research format at exact concentration. Produced exclusively for controlled laboratory research and in-vitro study.",
+    specs: [
+      { label: "Form", value: "Pre-filled research pen" },
+      { label: "Concentration", value: "40 mg total · 4 x 10 mg increments" },
+      { label: "Storage", value: "2–8°C, protect from light" },
+    ],
+    tags: ["Pre-Filled Format", "Batch Traceable", "R&D Only"],
+    batchNumber: "",
+    fillVolume: "",
+    purity: "",
+    analytes: [],
+    janoshikUrl: "",
+    packageContents: [
+      "Pre-filled research pen (40 mg MOTS-C)",
+      "Research handling & storage sheet",
+    ],
+    storageLogic:
+      "Store refrigerated at 2–8°C. Protect from direct light and avoid freeze/thaw cycles.",
+    supplyChain:
+      "Synthesised to specification and filled in a controlled environment. Every unit is batch-referenced end-to-end and released only after passing identity and appearance criteria.",
+  },
+  {
+    slug: "tesamorelin-20mg",
+    id: "RP 08",
+    name: "Tesamorelin 20mg",
+    price: 149,
+    priceLabel: "$149.00",
+    image: "/new-images/ALLUVI-Tesamorelin-20mg.png",
+    gallery: [
+      "/new-images/tessa/Champagne-lit 20mg carton and 2mg pen-1.png",
+      "/new-images/tessa/Carton and pen on sculptural ivory plinth-3.png",
+      "/new-images/tessa/Soft-focus vanity product portrait-2.png",
+    ],
+    galleryFit: "natural",
+    category: "Growth Hormone Research",
+    isNew: true,
+    tagline: "GHRH analogue for body-composition and lean-mass research.",
+    description:
+      "Vora Labs Tesamorelin 20mg is a growth hormone–releasing hormone analogue supplied in a pre-filled research format at exact concentration. Produced exclusively for controlled laboratory research and in-vitro study.",
+    specs: [
+      { label: "Form", value: "Pre-filled research pen" },
+      { label: "Concentration", value: "20 mg total · 10 x 2 mg increments" },
+      { label: "Storage", value: "2–8°C, protect from light" },
+    ],
+    tags: ["Pre-Filled Format", "Batch Traceable", "R&D Only"],
+    batchNumber: "",
+    fillVolume: "",
+    purity: "",
+    analytes: [],
+    janoshikUrl: "",
+    packageContents: [
+      "Pre-filled research pen (20 mg Tesamorelin)",
+      "Research handling & storage sheet",
+    ],
+    storageLogic:
+      "Store refrigerated at 2–8°C. Protect from direct light and avoid freeze/thaw cycles.",
+    supplyChain:
+      "Synthesised to specification and filled in a controlled environment. Every unit is batch-referenced end-to-end and released only after passing identity and appearance criteria.",
+  },
+  {
+    slug: "cjc-1295-10mg",
+    id: "RP 09",
+    name: "CJC-1295 10mg",
+    price: 119,
+    priceLabel: "$119.00",
+    image: "/new-images/ALLUVI-CJC-1295-10mg.png",
+    gallery: [
+      // Portraits first (shown side by side), landscape after (full width).
+      "/new-images/cjc/ALLUVI CJC-1295 Carton and Pen-2.png",
+      "/new-images/cjc/ALLUVI CJC-1295 in Coral Light-3.png",
+      "/new-images/cjc/ALLUVI CJC-1295 in a sunlit red coupe-1.png",
+    ],
+    galleryFit: "natural",
+    category: "Growth Hormone Research",
+    isNew: true,
+    tagline: "CJC-1295 without DAC for GH-release and lean-mass research.",
+    description:
+      "Vora Labs CJC-1295 (without DAC) 10mg is a GHRH analogue research peptide supplied in a pre-filled research format at exact concentration. Produced exclusively for controlled laboratory research and in-vitro study.",
+    specs: [
+      { label: "Form", value: "Pre-filled research pen" },
+      { label: "Concentration", value: "10 mg total · 25 x 400 mcg increments" },
+      { label: "Storage", value: "2–8°C, protect from light" },
+    ],
+    tags: ["Without DAC", "Pre-Filled Format", "R&D Only"],
+    batchNumber: "",
+    fillVolume: "",
+    purity: "",
+    analytes: [],
+    janoshikUrl: "",
+    packageContents: [
+      "Pre-filled research pen (10 mg CJC-1295 without DAC)",
+      "Research handling & storage sheet",
+    ],
+    storageLogic:
+      "Store refrigerated at 2–8°C. Protect from direct light and avoid freeze/thaw cycles.",
+    supplyChain:
+      "Synthesised to specification and filled in a controlled environment. Every unit is batch-referenced end-to-end and released only after passing identity and appearance criteria.",
   },
 ];
 

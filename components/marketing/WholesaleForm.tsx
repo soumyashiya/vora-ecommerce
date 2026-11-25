@@ -7,7 +7,7 @@ import { FiCheck } from "react-icons/fi";
 type Status = "idle" | "loading" | "success" | "error";
 
 const FIELD =
-  "h-12 w-full rounded-2xl border border-sand bg-white px-4 text-[15px] text-navy placeholder:text-navy/40 focus:border-navy/40 focus:outline-none disabled:opacity-60";
+  "field-box h-12 py-0 disabled:opacity-60";
 
 const LABEL = "block text-[13px] font-semibold uppercase tracking-[0.1em] text-navy/55";
 
@@ -91,8 +91,8 @@ export default function WholesaleForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-[28px] border border-sand bg-white p-8 sm:p-10">
-        <span className="grid h-14 w-14 place-items-center rounded-2xl bg-[#cdee7a] text-navy">
+      <div className="rounded-[14px] border border-sand bg-cream p-8 sm:p-10">
+        <span className="grid h-12 w-12 place-items-center rounded-full bg-chartreuse text-espresso">
           <FiCheck size={26} />
         </span>
         <h3 className="mt-6 font-serif text-3xl text-navy">Inquiry received</h3>
@@ -123,7 +123,7 @@ export default function WholesaleForm() {
   return (
     <form
       onSubmit={submit}
-      className="rounded-[28px] border border-sand bg-white p-7 sm:p-9"
+      className="rounded-[14px] border border-sand bg-cream p-7 sm:p-9"
     >
       {/* honeypot — hidden from people, tempting to bots */}
       <input
@@ -225,7 +225,7 @@ export default function WholesaleForm() {
         </div>
       </div>
 
-      <p className="mt-6 rounded-2xl bg-beige/60 px-4 py-3 text-[13px] leading-relaxed text-navy/70">
+      <p className="mt-6 rounded-[8px] bg-beige px-4 py-3 text-[13px] font-light leading-relaxed text-clay">
         By submitting this form you confirm the products are intended for
         laboratory R&amp;D use only, and not for human or veterinary
         consumption.
@@ -241,7 +241,7 @@ export default function WholesaleForm() {
         whileTap={{ scale: 0.98 }}
         type="submit"
         disabled={status === "loading"}
-        className="mt-6 h-14 w-full rounded-2xl bg-navy text-[16px] font-semibold text-ivory transition-colors hover:bg-navy/90 disabled:opacity-60"
+        className="btn-solid mt-6 h-14 w-full disabled:opacity-60"
       >
         {status === "loading" ? "Sending…" : "Submit Inquiry"}
       </motion.button>

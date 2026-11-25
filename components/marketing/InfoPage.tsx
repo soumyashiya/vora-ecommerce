@@ -1,9 +1,8 @@
 import Image from "next/image";
-import { LuSparkles } from "react-icons/lu";
 import type { InfoContent } from "@/lib/pages";
 import ShopHeader from "@/components/cart/ShopHeader";
 import Footer from "@/components/Footer";
-import { LimeButton, GhostButton } from "@/components/ui/Bits";
+import { SolidButton, GhostButton } from "@/components/ui/Bits";
 
 export default function InfoPage({ content }: { content: InfoContent }) {
   // Pick the column count that divides evenly — 6 features sit as 3×2, 4 sit as
@@ -15,46 +14,48 @@ export default function InfoPage({ content }: { content: InfoContent }) {
   const [firstClosing, ...restClosing] = content.closingParagraphs ?? [];
 
   return (
-    <main className="min-h-screen bg-ivory">
-      <ShopHeader backHref="/" backLabel="Back to Home" />
+    <main className="min-h-screen bg-cream">
+      <ShopHeader />
 
-      {/* Intro — heading and body sit side by side so the right half isn't empty */}
-      <section className="section-pad-sm relative overflow-hidden">
-        <div className="absolute inset-0 topo-grid opacity-50" />
-        <div className="container-x relative">
+      {/* Intro — display heading left, body column right */}
+      <section className="pb-[clamp(40px,5vw,72px)] pt-[clamp(40px,5vw,72px)]">
+        <div className="container-x">
           <div className="grid gap-8 lg:grid-cols-2 lg:items-end lg:gap-16">
             <div>
-              <span className="eyebrow">
-                <LuSparkles size={15} />
-                {content.eyebrow}
-              </span>
-              <h1 className="display-2-sm mt-6 max-w-[16ch] text-navy">
+              <p className="eyebrow text-clay">{content.eyebrow}</p>
+              <h1 className="display-2 mt-5 max-w-[16ch] font-serif text-espresso">
                 {content.title}
               </h1>
             </div>
 
             <div>
-              <p className="text-[17px] leading-relaxed text-navy/70">
+              <p className="text-[17px] font-light leading-relaxed text-clay">
                 {content.lead}
               </p>
               {content.paragraphs.map((p) => (
-                <p key={p} className="mt-4 text-[17px] leading-relaxed text-navy/70">
+                <p
+                  key={p}
+                  className="mt-4 text-[16px] font-light leading-relaxed text-clay"
+                >
                   {p}
                 </p>
               ))}
             </div>
           </div>
 
-          {/* 16:9 matches the source frame, so the composition isn't cropped */}
           {content.image && (
-            <div className="relative mt-12 aspect-[16/9] w-full overflow-hidden rounded-[28px] lg:mt-14">
+            <div
+              className={`relative mt-12 w-full overflow-hidden rounded-[10px] bg-beige lg:mt-16 ${
+                content.image.wide ? "aspect-[4/3] sm:aspect-[16/7]" : "aspect-[16/9]"
+              }`}
+            >
               <Image
                 src={content.image.src}
                 alt={content.image.alt}
                 fill
                 priority
                 quality={90}
-                sizes="(max-width: 1320px) 100vw, 1320px"
+                sizes="(max-width: 1440px) 100vw, 1440px"
                 className="object-cover object-center"
               />
             </div>
@@ -63,14 +64,14 @@ export default function InfoPage({ content }: { content: InfoContent }) {
       </section>
 
       {/* Features */}
-      <section className="bg-beige/50 py-16 lg:py-20">
+      <section className="bg-beige py-[clamp(48px,6vw,88px)]">
         <div className="container-x">
-          <div className="max-w-2xl">
-            <h2 className="font-serif text-3xl text-navy lg:text-4xl">
+          <div className="max-w-[44ch]">
+            <h2 className="display-3 font-serif text-espresso">
               {content.featuresTitle}
             </h2>
             {content.featuresIntro && (
-              <p className="mt-4 text-[16px] leading-relaxed text-navy/70">
+              <p className="mt-4 text-[16px] font-light leading-relaxed text-clay">
                 {content.featuresIntro}
               </p>
             )}
@@ -82,13 +83,15 @@ export default function InfoPage({ content }: { content: InfoContent }) {
               return (
                 <div
                   key={f.title}
-                  className="rounded-[26px] border border-sand bg-white p-7"
+                  className="rounded-[10px] bg-cream p-7 transition-shadow duration-500 hover:shadow-card"
                 >
-                  <span className="mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-[#cdee7a] text-navy">
-                    <Icon size={26} />
+                  <span className="mb-6 grid h-11 w-11 place-items-center rounded-full bg-chartreuse text-espresso">
+                    <Icon size={20} />
                   </span>
-                  <h3 className="font-serif text-2xl text-navy">{f.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-navy/70">
+                  <h3 className="font-serif text-[24px] leading-tight tracking-display text-espresso">
+                    {f.title}
+                  </h3>
+                  <p className="mt-3 text-[15px] font-light leading-relaxed text-clay">
                     {f.body}
                   </p>
                 </div>
@@ -98,31 +101,30 @@ export default function InfoPage({ content }: { content: InfoContent }) {
         </div>
       </section>
 
-      {/* Closing — copy left, actions right, so the card doesn't run empty */}
+      {/* Closing */}
       {firstClosing && (
-        <section className="py-16 lg:py-20">
+        <section className="py-[clamp(48px,6vw,88px)]">
           <div className="container-x">
-            <div className="rounded-[28px] border border-sand bg-white p-8 sm:p-10 lg:flex lg:items-center lg:justify-between lg:gap-12">
-              <div className="max-w-2xl">
+            <div className="lg:flex lg:items-end lg:justify-between lg:gap-14">
+              <div className="max-w-[60ch]">
                 {content.closingTitle ? (
                   <>
-                    <h2 className="font-serif text-3xl text-navy lg:text-4xl">
+                    <h2 className="display-3 font-serif text-espresso">
                       {content.closingTitle}
                     </h2>
-                    <p className="mt-5 text-[17px] leading-relaxed text-navy/70">
+                    <p className="mt-5 text-[16px] font-light leading-relaxed text-clay">
                       {firstClosing}
                     </p>
                   </>
                 ) : (
-                  // no heading — let the statement itself carry the block
-                  <p className="font-serif text-2xl text-navy lg:text-3xl">
+                  <p className="display-3 font-serif text-espresso">
                     {firstClosing}
                   </p>
                 )}
                 {restClosing.map((p) => (
                   <p
                     key={p}
-                    className="mt-4 text-[17px] leading-relaxed text-navy/70"
+                    className="mt-4 text-[16px] font-light leading-relaxed text-clay"
                   >
                     {p}
                   </p>
@@ -130,12 +132,12 @@ export default function InfoPage({ content }: { content: InfoContent }) {
               </div>
 
               <div className="mt-8 flex flex-wrap items-center gap-3 lg:mt-0 lg:flex-none">
-                <LimeButton href="/products">Browse peptides</LimeButton>
-                <GhostButton href="/wholesale">Wholesale Enquiries</GhostButton>
+                <SolidButton href="/products">Browse compounds</SolidButton>
+                <GhostButton href="/wholesale">Wholesale</GhostButton>
               </div>
             </div>
 
-            <p className="mt-10 text-[12px] uppercase tracking-[0.14em] text-navy/45">
+            <p className="label-xs mt-12 border-t border-sand pt-6 text-[11px] text-taupe">
               {content.kicker}
             </p>
           </div>

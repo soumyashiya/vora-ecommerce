@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FiLoader, FiPackage, FiArrowRight, FiLogOut } from "react-icons/fi";
+import { FiLoader, FiPackage, FiLogOut } from "react-icons/fi";
 import ShopHeader from "@/components/cart/ShopHeader";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/hooks/useAuth";
@@ -81,7 +81,7 @@ export default function AccountPage() {
           </div>
           <button
             onClick={doLogout}
-            className="inline-flex items-center gap-2 rounded-full border border-navy/15 bg-white px-5 py-2.5 text-[14px] font-semibold text-navy transition-colors hover:bg-navy hover:text-ivory"
+            className="btn-outline btn-sm"
           >
             <FiLogOut size={15} /> Log out
           </button>
@@ -89,7 +89,7 @@ export default function AccountPage() {
 
         <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.6fr] lg:items-start">
           {/* Profile */}
-          <section className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+          <section className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
             <h2 className="font-serif text-2xl text-navy">Profile</h2>
             <dl className="mt-6 space-y-4 text-[15px]">
               <Detail label="Name" value={user.name} />
@@ -102,7 +102,7 @@ export default function AccountPage() {
           </section>
 
           {/* Order history */}
-          <section className="rounded-[28px] border border-sand bg-white p-7 sm:p-8">
+          <section className="rounded-[14px] border border-sand bg-cream p-7 sm:p-8">
             <h2 className="font-serif text-2xl text-navy">Order history</h2>
 
             {ordersLoading ? (
@@ -112,17 +112,14 @@ export default function AccountPage() {
             ) : error ? (
               <p className="mt-6 text-navy/65">{error}</p>
             ) : orders.length === 0 ? (
-              <div className="mt-6 flex flex-col items-center rounded-2xl border border-sand bg-ivory py-14 text-center">
+              <div className="mt-6 flex flex-col items-center rounded-[10px] bg-beige py-14 text-center">
                 <span className="grid h-14 w-14 place-items-center rounded-full bg-beige text-navy/60">
                   <FiPackage size={22} />
                 </span>
                 <p className="mt-4 font-serif text-xl text-navy">No orders yet</p>
                 <p className="mt-1 text-navy/55">Your orders will appear here.</p>
-                <Link href="/#products" className="btn-lime mt-6">
-                  Browse Products
-                  <span className="icon-circle">
-                    <FiArrowRight size={16} />
-                  </span>
+                <Link href="/products" className="btn-solid mt-6">
+                  Browse compounds
                 </Link>
               </div>
             ) : (
@@ -139,7 +136,7 @@ export default function AccountPage() {
                     >
                       <Link
                         href={`/track?order=${encodeURIComponent(o.order_number)}`}
-                        className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-sand bg-ivory px-5 py-4 transition-colors hover:border-navy/30"
+                        className="flex flex-wrap items-center justify-between gap-3 rounded-[10px] border border-sand bg-cream px-5 py-4 transition-colors hover:border-espresso/40"
                       >
                         <div className="min-w-0">
                           <p className="truncate font-medium text-navy">

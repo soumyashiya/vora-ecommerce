@@ -2,105 +2,70 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiChevronDown } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import { FAQS } from "@/lib/data";
-import { SectionHeading } from "./ui/Bits";
 
-function Item({
-  i,
-  q,
-  a,
-  open,
-  onToggle,
-}: {
-  i: number;
-  q: string;
-  a: string;
-  open: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 26 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="rounded-[22px] border border-sand bg-beige/70 p-2.5"
-    >
-      <button
-        onClick={onToggle}
-        className="flex w-full items-center justify-between gap-4 rounded-[16px] bg-white px-6 py-5 text-left transition-colors"
-      >
-        <span className="font-serif text-lg text-navy sm:text-xl">
-          {i + 1}. {q}
-        </span>
-        <motion.span
-          animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="grid h-8 w-8 flex-none place-items-center rounded-full text-navy"
-        >
-          <FiChevronDown size={20} />
-        </motion.span>
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <p className="px-6 py-5 text-[15px] leading-relaxed text-navy/70">{a}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
+const EASE = [0.22, 1, 0.36, 1] as const;
 
+/**
+ * Home FAQ: heading on the left, a narrow ruled list of questions on the
+ * right. One answer opens at a time; the plus turns into a cross.
+ */
 export default function FAQ() {
-  const [open, setOpen] = useState<number | null>(0);
-  const left = FAQS.filter((_, i) => i % 2 === 0);
-  const right = FAQS.filter((_, i) => i % 2 === 1);
+  const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="section-pad bg-ivory">
-      <div className="container-x">
-        <SectionHeading eyebrow="Our FAQ" title="Ask Questions" />
-
-        <div className="mt-16 grid gap-5 lg:grid-cols-2">
-          <div className="flex flex-col gap-5">
-            {left.map((f, idx) => {
-              const realIndex = idx * 2;
-              return (
-                <Item
-                  key={f.q}
-                  i={realIndex}
-                  q={f.q}
-                  a={f.a}
-                  open={open === realIndex}
-                  onToggle={() => setOpen(open === realIndex ? null : realIndex)}
-                />
-              );
-            })}
-          </div>
-          <div className="flex flex-col gap-5">
-            {right.map((f, idx) => {
-              const realIndex = idx * 2 + 1;
-              return (
-                <Item
-                  key={f.q}
-                  i={realIndex}
-                  q={f.q}
-                  a={f.a}
-                  open={open === realIndex}
-                  onToggle={() => setOpen(open === realIndex ? null : realIndex)}
-                />
-              );
-            })}
-          </div>
+    <section id="faq" className="section-pad border-t border-sand">
+      <div className="container-x grid gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] lg:gap-16">
+        <div>
+          <h2 className="display-3 font-serif text-espresso">Vora Labs FAQs</h2>
+          <p className="mt-3 text-[15px] font-light text-clay">
+            Want to know more? You&apos;re in the right place.
+          </p>
         </div>
+
+        <ul className="border-t border-sand">
+          {FAQS.map((f, i) => {
+            const isOpen = open === i;
+            return (
+              <li key={f.q} className="border-b border-sand">
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="flex w-full items-center justify-between gap-6 py-5 text-left"
+                >
+                  <span className="text-[15px] font-medium text-espresso sm:text-[16px]">
+                    {f.q}
+                  </span>
+                  <motion.span
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.3, ease: EASE }}
+                    className="flex-none text-espresso"
+                  >
+                    <FiPlus size={18} />
+                  </motion.span>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: EASE }}
+                      className="overflow-hidden"
+                    >
+                      <p className="max-w-[62ch] pb-5 text-[15px] font-light leading-relaxed text-clay">
+                        {f.a}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

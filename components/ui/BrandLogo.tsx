@@ -1,41 +1,56 @@
 import Link from "next/link";
-import { LuAtom } from "react-icons/lu";
 import { cn } from "@/lib/utils";
 
+/**
+ * Serif lowercase wordmark. The mark is purely typographic — no icon — so it
+ * sits quietly against photography in the header and reads as a masthead in
+ * the footer.
+ */
 export default function BrandLogo({
   dark = false,
   href = "/",
+  size = "md",
+  className,
 }: {
+  /** `true` when placed on a dark ground (footer, mobile overlay, hero). */
   dark?: boolean;
   href?: string;
+  size?: "md" | "lg";
+  className?: string;
 }) {
   return (
-    <Link href={href} className="group flex items-center gap-2.5">
+    <Link
+      href={href}
+      aria-label="Vora Labs — home"
+      className={cn("group inline-flex items-baseline gap-1.5", className)}
+    >
       <span
         className={cn(
-          "grid h-9 w-9 place-items-center rounded-xl transition-transform duration-500 ease-smooth group-hover:rotate-12",
-          dark ? "bg-lime text-navy" : "bg-navy text-lime"
+          "relative font-serif lowercase leading-none tracking-[-0.02em]",
+          size === "lg"
+            ? "text-[clamp(52px,7vw,88px)]"
+            : "text-[34px] lg:text-[40px]",
+          dark ? "text-cream" : "text-espresso"
         )}
       >
-        <LuAtom size={20} strokeWidth={2} />
+        vora
+        {/* Chartreuse full stop — the one colour note in the mark */}
+        <span
+          aria-hidden
+          className={cn(
+            "inline-block rounded-full bg-chartreuse align-baseline",
+            size === "lg" ? "ml-1 h-[0.14em] w-[0.14em]" : "ml-[3px] h-[6px] w-[6px] lg:h-[7px] lg:w-[7px]"
+          )}
+        />
       </span>
-      <span className="flex flex-col leading-none">
-        <span
-          className={cn(
-            "text-[21px] font-extrabold tracking-tight",
-            dark ? "text-ivory" : "text-navy"
-          )}
-        >
-          VORA
-        </span>
-        <span
-          className={cn(
-            "mt-0.5 text-[9px] font-semibold uppercase tracking-[0.34em]",
-            dark ? "text-ivory/55" : "text-navy/50"
-          )}
-        >
-          Labs
-        </span>
+      <span
+        className={cn(
+          "font-sans font-semibold uppercase leading-none transition-opacity duration-500",
+          size === "lg" ? "text-[13px] tracking-[0.34em]" : "text-[10px] tracking-[0.3em]",
+          dark ? "text-cream/60" : "text-clay"
+        )}
+      >
+        labs
       </span>
     </Link>
   );

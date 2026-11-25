@@ -27,10 +27,8 @@ export default function AccountButton({ dark = false }: { dark?: boolean }) {
   }, [open]);
 
   const btnCls = cn(
-    "grid h-11 w-11 place-items-center rounded-full border transition-colors",
-    dark
-      ? "border-white/20 bg-white/10 text-ivory hover:bg-white/20"
-      : "border-navy/15 bg-white text-navy hover:bg-navy hover:text-ivory"
+    "grid h-10 w-10 place-items-center transition-opacity hover:opacity-65",
+    dark ? "text-cream" : "text-espresso"
   );
 
   if (!isAuthenticated || !user) {
@@ -41,7 +39,7 @@ export default function AccountButton({ dark = false }: { dark?: boolean }) {
           onClick={() => setOpen((o) => !o)}
           className={btnCls}
         >
-          <FiUser size={18} />
+          <FiUser size={19} />
         </button>
 
         <AnimatePresence>
@@ -51,19 +49,19 @@ export default function AccountButton({ dark = false }: { dark?: boolean }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 6, scale: 0.98 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute right-0 top-[calc(100%+10px)] z-50 w-60 overflow-hidden rounded-2xl border border-sand bg-white p-2 shadow-[0_30px_80px_-40px_rgba(4,52,96,0.6)]"
+              className="absolute right-0 top-[calc(100%+12px)] z-50 w-64 overflow-hidden rounded-xl border border-sand bg-cream p-2 shadow-lift"
             >
               <Link
                 href="/login"
                 onClick={() => setOpen(false)}
-                className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-[15px] text-navy transition-colors hover:bg-beige"
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-left text-[14px] text-espresso transition-colors hover:bg-beige"
               >
                 <FiGrid size={16} /> Sign in for my orders
               </Link>
               <Link
                 href="/track"
                 onClick={() => setOpen(false)}
-                className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-[15px] text-navy transition-colors hover:bg-beige"
+                className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-left text-[14px] text-espresso transition-colors hover:bg-beige"
               >
                 <FiPackage size={16} /> Track an order
               </Link>
@@ -89,10 +87,10 @@ export default function AccountButton({ dark = false }: { dark?: boolean }) {
         aria-label="Account menu"
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "grid h-11 w-11 place-items-center rounded-full border text-[15px] font-semibold transition-colors",
+          "grid h-9 w-9 place-items-center rounded-full text-[14px] font-semibold transition-colors",
           dark
-            ? "border-white/20 bg-lime text-navy"
-            : "border-navy/15 bg-navy text-ivory hover:bg-navy-muted"
+            ? "bg-cream text-espresso"
+            : "bg-espresso text-cream hover:bg-espresso-soft"
         )}
       >
         {initial}
@@ -105,32 +103,36 @@ export default function AccountButton({ dark = false }: { dark?: boolean }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 6, scale: 0.98 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute right-0 top-[calc(100%+10px)] z-50 w-60 overflow-hidden rounded-2xl border border-sand bg-white p-2 shadow-[0_30px_80px_-40px_rgba(4,52,96,0.6)]"
+            className="absolute right-0 top-[calc(100%+12px)] z-50 w-64 overflow-hidden rounded-xl border border-sand bg-cream p-2 shadow-lift"
           >
             <div className="px-3 py-2.5">
-              <p className="text-[13px] text-navy/50">Signed in as</p>
-              <p className="truncate font-medium text-navy">{user.name || "Account"}</p>
-              <p className="truncate text-[13px] text-navy/55">{user.email}</p>
+              <p className="label-xs text-taupe">Signed in as</p>
+              <p className="mt-1.5 truncate text-[15px] font-medium text-espresso">
+                {user.name || "Account"}
+              </p>
+              <p className="truncate text-[13px] font-light text-clay">
+                {user.email}
+              </p>
             </div>
             <div className="my-1 h-px bg-sand" />
             <Link
               href="/account"
               onClick={() => setOpen(false)}
-              className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-[15px] text-navy transition-colors hover:bg-beige"
+              className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-left text-[14px] text-espresso transition-colors hover:bg-beige"
             >
               <FiGrid size={16} /> My account
             </Link>
             <Link
               href="/track"
               onClick={() => setOpen(false)}
-              className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-[15px] text-navy transition-colors hover:bg-beige"
+              className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-left text-[14px] text-espresso transition-colors hover:bg-beige"
             >
               <FiPackage size={16} /> Track an order
             </Link>
             <div className="my-1 h-px bg-sand" />
             <button
               onClick={doLogout}
-              className="flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-[15px] text-navy transition-colors hover:bg-beige"
+              className="flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-left text-[14px] text-espresso transition-colors hover:bg-beige"
             >
               <FiLogOut size={16} /> Log out
             </button>

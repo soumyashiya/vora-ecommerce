@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FiArrowRight, FiCheck } from "react-icons/fi";
+import { FiCheck } from "react-icons/fi";
 import ShopHeader from "./ShopHeader";
 import Footer from "@/components/Footer";
 
@@ -27,17 +27,14 @@ export default function OrderPlaced({ orderId }: { orderId: string }) {
           email is on its way. It is being prepared for release with full
           batch traceability.
         </p>
-        <div className="mt-8 rounded-2xl border border-sand bg-white px-8 py-5">
+        <div className="mt-8 rounded-[10px] bg-beige px-8 py-5">
           <p className="text-sm uppercase tracking-wider text-navy/50">
             Order Reference
           </p>
           <p className="mt-1 font-serif text-2xl text-navy">{orderId}</p>
         </div>
-        <Link href="/#products" className="btn-lime mt-10">
-          Continue Shopping
-          <span className="icon-circle">
-            <FiArrowRight size={16} />
-          </span>
+        <Link href="/products" className="btn-solid mt-10">
+          Continue shopping
         </Link>
       </div>
       <Footer />

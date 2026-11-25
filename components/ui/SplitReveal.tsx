@@ -10,19 +10,27 @@ import { cn } from "@/lib/utils";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 /**
- * Cinematic word-by-word reveal with a blur-to-focus transition.
- * Drives headings via SplitType + GSAP ScrollTrigger.
+ * Line-by-line mask reveal for display headings.
+ *
+ * Each line sits in an overflow-hidden wrapper and slides up from beneath it,
+ * which reads as an editorial typesetting effect rather than an animation.
+ * Supports an optional italic tail (`accent`) for the split headings this
+ * system uses — "Trusted by *Millions of Researchers*".
  */
 export default function SplitReveal({
   text,
+  accent,
   as: Tag = "h2",
   className,
+  accentClassName,
   trigger = true,
   delay = 0,
 }: {
   text: string;
+  accent?: string;
   as?: ElementType;
   className?: string;
+  accentClassName?: string;
   trigger?: boolean;
   delay?: number;
 }) {
@@ -36,33 +44,39 @@ export default function SplitReveal({
       ).matches;
 
       const split = new SplitType(ref.current, {
-        types: "lines,words",
+        types: "lines",
         tagName: "span",
+        lineClass: "split-line-inner",
       });
 
-      if (prefersReduced) {
-        gsap.set(split.words, { opacity: 1, y: 0, filter: "blur(0px)" });
+      if (prefersReduced || !split.lines) {
+        gsap.set(ref.current, { opacity: 1 });
         return;
       }
 
-      gsap.set(split.words, {
-        yPercent: 115,
-        opacity: 0,
-        filter: "blur(10px)",
+      // Wrap each line so it can be masked by its own clipping parent.
+      split.lines.forEach((line) => {
+        const wrap = document.createElement("span");
+        wrap.className = "split-line";
+        wrap.style.display = "block";
+        wrap.style.overflow = "hidden";
+        line.parentNode?.insertBefore(wrap, line);
+        wrap.appendChild(line);
+        (line as HTMLElement).style.display = "block";
       });
 
-      gsap.to(split.words, {
+      gsap.set(split.lines, { yPercent: 105 });
+
+      gsap.to(split.lines, {
         yPercent: 0,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 1.1,
-        ease: "power4.out",
-        stagger: 0.045,
+        duration: 1,
+        ease: "power3.out",
+        stagger: 0.09,
         delay,
         scrollTrigger: trigger
           ? {
               trigger: ref.current,
-              start: "top 85%",
+              start: "top 88%",
             }
           : undefined,
       });
@@ -71,12 +85,18 @@ export default function SplitReveal({
         split.revert();
       };
     },
-    { scope: ref, dependencies: [text] }
+    { scope: ref, dependencies: [text, accent] }
   );
 
   return (
-    <Tag ref={ref} className={cn("split-words", className)}>
+    <Tag ref={ref} className={cn(className)}>
       {text}
+      {accent ? (
+        <>
+          {" "}
+          <i className={cn("serif-italic", accentClassName)}>{accent}</i>
+        </>
+      ) : null}
     </Tag>
   );
 }

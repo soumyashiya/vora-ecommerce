@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiArrowRight, FiCheck } from "react-icons/fi";
+import { FiCheck } from "react-icons/fi";
 
 type Props = {
   open: boolean;
@@ -29,7 +29,7 @@ export default function OrderPlacedModal({ open, orderId, email }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-md overflow-hidden rounded-[28px] border border-sand bg-ivory p-8 text-center shadow-[0_50px_120px_-40px_rgba(4,52,96,0.7)] sm:p-10"
+            className="relative w-full max-w-md overflow-hidden rounded-[14px] border border-sand bg-cream p-8 text-center shadow-lift sm:p-10"
           >
             <motion.span
               initial={{ scale: 0 }}
@@ -58,18 +58,15 @@ export default function OrderPlacedModal({ open, orderId, email }: Props) {
               . It is being prepared for release with full batch traceability.
             </p>
 
-            <div className="mt-7 rounded-2xl border border-sand bg-white px-8 py-5">
+            <div className="mt-7 rounded-[10px] bg-beige px-8 py-5">
               <p className="text-sm uppercase tracking-wider text-navy/50">
                 Order Reference
               </p>
               <p className="mt-1 font-serif text-2xl text-navy">{orderId}</p>
             </div>
 
-            <Link href="/#products" className="btn-lime mt-8 w-full justify-center">
-              Continue Shopping
-              <span className="icon-circle">
-                <FiArrowRight size={16} />
-              </span>
+            <Link href="/products" className="btn-solid mt-8 w-full">
+              Continue shopping
             </Link>
           </motion.div>
         </motion.div>

@@ -1,55 +1,58 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
+import SplitReveal from "@/components/ui/SplitReveal";
 import { TESTIMONIALS } from "@/lib/data";
-import { SectionHeading } from "./ui/Bits";
 
-function Card({ t }: { t: (typeof TESTIMONIALS)[number] }) {
-  return (
-    <article className="flex w-[340px] flex-none flex-col rounded-[28px] border border-sand bg-white p-7 sm:w-[400px]">
-      <div className="flex items-center gap-4">
-        <span className="relative h-12 w-12 overflow-hidden rounded-full">
-          <Image src={t.avatar} alt={t.name} fill sizes="48px" className="object-cover" />
-        </span>
-        <div>
-          <p className="font-semibold text-navy">{t.name},</p>
-          <p className="text-[14px] text-navy/55">{t.sub}</p>
-        </div>
-      </div>
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-      {/* flex-1 lets the quote absorb the height difference between cards so
-          every "Verified Highlights" block starts on the same line */}
-      <p className="mt-6 flex-1 text-[15px] leading-relaxed text-navy/75">“{t.quote}”</p>
-
-      <p className="mt-7 font-serif text-2xl text-navy">Verified Highlights</p>
-      <div className="mt-4 grid grid-cols-2 gap-2.5">
-        {t.tags.map((tag) => (
-          <span key={tag} className="chip-lime chip text-center justify-center">
-            {tag}
-          </span>
-        ))}
-      </div>
-    </article>
-  );
-}
-
+/**
+ * Social proof as an editorial contact sheet: four tall portraits, each with
+ * the quote set in the display serif beneath it and the attribution as a
+ * tracked uppercase micro-label.
+ */
 export default function Testimonials() {
-  const loop = [...TESTIMONIALS, ...TESTIMONIALS];
+  const items = TESTIMONIALS.slice(0, 4);
+
   return (
-    <section id="verify" className="section-pad-sm relative overflow-hidden bg-ivory">
-      <div className="absolute inset-0 topo-grid opacity-50" />
-      <div className="container-x relative">
-        <SectionHeading eyebrow="Verification" title="What Researchers Say" />
-      </div>
+    <section id="testimonials" className="section-pad">
+      <div className="container-x">
+        <SplitReveal
+          text="Trusted by"
+          accent="Researchers Worldwide"
+          as="h2"
+          className="display-2 max-w-[20ch] font-serif text-espresso"
+        />
 
-      <div className="group relative mt-12 flex overflow-hidden">
-        {/* edge fades */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-ivory to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-ivory to-transparent" />
+        <div className="mt-10 grid grid-cols-2 gap-4 lg:mt-14 lg:grid-cols-4 lg:gap-5">
+          {items.map((t, i) => (
+            <motion.figure
+              key={t.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.7, delay: i * 0.07, ease: EASE }}
+              className="flex flex-col"
+            >
+              <div className="relative aspect-[3/4] overflow-hidden rounded-[6px] bg-beige">
+                <Image
+                  src={t.avatar}
+                  alt=""
+                  fill
+                  sizes="(max-width:1024px) 46vw, 23vw"
+                  className="object-cover"
+                />
+              </div>
 
-        <div className="flex w-max animate-marquee gap-6 px-3 group-hover:[animation-play-state:paused]">
-          {loop.map((t, i) => (
-            <Card key={i} t={t} />
+              <blockquote className="mt-5 font-serif text-[clamp(1.0625rem,1.5vw,1.3125rem)] leading-[1.3] tracking-display text-espresso">
+                &ldquo;{t.quote}&rdquo;
+              </blockquote>
+
+              <figcaption className="label-xs mt-5 text-espresso">
+                {t.name} · {t.sub}
+              </figcaption>
+            </motion.figure>
           ))}
         </div>
       </div>

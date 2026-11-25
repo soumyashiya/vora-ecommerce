@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FiArrowUpRight, FiCheck } from "react-icons/fi";
-import { LuLeaf } from "react-icons/lu";
+import { FiCheck } from "react-icons/fi";
 import { getProduct, relatedProducts, PRODUCTS } from "@/lib/products";
 import { pageMetadata, PRODUCT_SEO } from "@/lib/seo";
 import ShopHeader from "@/components/cart/ShopHeader";
@@ -11,6 +10,7 @@ import ProductGallery from "@/components/cart/ProductGallery";
 import AddToCart from "@/components/cart/AddToCart";
 import ProductInfoTabs from "@/components/cart/ProductInfoTabs";
 import JanoshikReportModal from "@/components/cart/JanoshikReportModal";
+import { StarRow } from "@/components/ui/Bits";
 import Footer from "@/components/Footer";
 
 export function generateStaticParams() {
@@ -46,219 +46,272 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const related = relatedProducts(slug);
-  const heading = PRODUCT_SEO[slug]?.h1 ?? product.name;
 
   return (
-    <main className="min-h-screen bg-ivory">
+    <main className="min-h-screen bg-cream">
       <ShopHeader />
 
-      <div className="container-x py-12 lg:py-16">
-        {/* breadcrumb */}
-        <nav className="mb-8 flex items-center gap-2 text-sm text-navy/50">
-          <Link href="/" className="hover:text-navy">
+      <div className="container-x pb-20 pt-8 lg:pt-10">
+        <nav className="mb-7 flex items-center gap-2 text-[12px] uppercase tracking-[0.06em] text-taupe">
+          <Link href="/" className="transition-colors hover:text-espresso">
             Home
           </Link>
-          <span>/</span>
-          <Link href="/#products" className="hover:text-navy">
-            Products
+          <span aria-hidden>/</span>
+          <Link
+            href="/products"
+            className="transition-colors hover:text-espresso"
+          >
+            Shop
           </Link>
-          <span>/</span>
-          <span className="text-navy/80">{product.name}</span>
+          <span aria-hidden>/</span>
+          <span className="text-clay">{product.name}</span>
         </nav>
 
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.18fr_0.82fr] lg:gap-14">
-          {/* LEFT — product image gallery */}
-          <div className="relative">
-            <ProductGallery images={product.gallery} alt={product.name} />
-          </div>
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_minmax(360px,420px)] lg:items-start lg:gap-14">
+          {/* ---------------- Gallery ---------------- */}
+          <ProductGallery
+            images={product.gallery}
+            alt={product.name}
+            fit={product.galleryFit}
+          />
 
-          {/* RIGHT — short details + cart */}
-          <div className="flex flex-col">
-            <span className="inline-flex w-fit rounded-full bg-beige px-4 py-1.5 text-[13px] font-semibold uppercase tracking-wider text-navy/70">
-              {product.category}
-            </span>
-            <h1 className="mt-5 font-serif text-4xl leading-tight text-navy lg:text-5xl">
-              {heading}
-            </h1>
-            {heading !== product.name && (
-              <p className="mt-3 font-serif text-2xl text-navy/70">
-                {product.name}
-              </p>
+          {/* ---------------- Buy panel ---------------- */}
+          <div className="flex flex-col lg:sticky lg:top-[82px]">
+            {product.purity && (
+              <StarRow count={product.purity} label="HPLC verified" />
             )}
-            <p className="mt-4 max-w-md text-[17px] leading-relaxed text-navy/70">
+
+            <h1 className="mt-4 font-sans text-[clamp(1.375rem,2.2vw,1.75rem)] font-bold uppercase leading-[1.15] tracking-[0.01em] text-espresso">
+              {product.name}
+            </h1>
+
+            <p className="mt-4 text-[16px] font-medium leading-relaxed text-espresso">
               {product.tagline}
             </p>
 
-            <div className="mt-6 flex items-end gap-3">
-              <span className="font-serif text-5xl text-navy">
-                {product.priceLabel}
-              </span>
-              <span className="mb-1.5 text-navy/50">USD</span>
-            </div>
-
-            {/* tags */}
-            <div className="mt-6 flex flex-wrap gap-2.5">
-              {product.tags.map((t) => (
-                <span
-                  key={t}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-[#f0fbd9] px-4 py-1.5 text-[13px] font-medium text-navy"
+            {/* Specification bullets */}
+            <ul className="mt-5 flex flex-col gap-2">
+              {product.specs.map((s) => (
+                <li
+                  key={s.label}
+                  className="flex gap-2 text-[15px] font-light leading-relaxed text-clay"
                 >
-                  <FiCheck size={13} /> {t}
-                </span>
+                  <span aria-hidden className="text-taupe">
+                    ·
+                  </span>
+                  <span>
+                    <span className="text-espresso">{s.label}:</span> {s.value}
+                  </span>
+                </li>
               ))}
+            </ul>
+
+            {/* Purchase block */}
+            <h2 className="mt-9 border-b border-sand pb-3 font-serif text-[22px] tracking-display text-espresso">
+              Start your order
+            </h2>
+
+            <div className="mt-5 overflow-hidden rounded-[10px] border border-espresso">
+              <p className="label-xs bg-espresso py-2.5 text-center text-cream">
+                {product.purity
+                  ? "Verified batch · COA included"
+                  : "Pre-filled research format"}
+              </p>
+              <div className="p-5">
+                <div className="flex items-baseline justify-between gap-4">
+                  <span className="text-[17px] font-semibold text-espresso">
+                    Single unit
+                  </span>
+                  <span className="text-[17px] text-espresso">
+                    {product.priceLabel}
+                  </span>
+                </div>
+                {product.batchNumber && (
+                  <p className="mt-1 text-[14px] font-light text-clay">
+                    {product.fillVolume} fill · batch {product.batchNumber}
+                  </p>
+                )}
+
+                <ul className="mt-4 flex flex-col gap-2 border-t border-sand pt-4">
+                  {product.tags.map((t) => (
+                    <li
+                      key={t}
+                      className="flex items-center gap-2 text-[14px] font-light text-clay"
+                    >
+                      <FiCheck size={14} className="flex-none text-espresso" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            {/* add to cart */}
-            <div className="mt-8">
+            <div className="mt-5">
               <AddToCart product={product} />
-              <p className="mt-3 text-[12px] uppercase tracking-[0.12em] text-navy/45">
-                For research use only — not for human or veterinary use
-              </p>
             </div>
 
-            {/* Description + Research Use Disclaimer */}
-            <div className="mt-8 rounded-2xl border border-sand bg-white/60 p-5 text-[15px] leading-relaxed text-navy/75">
-              <p>{product.description}</p>
-              <p className="mt-4 rounded-xl bg-[#fff6d6]/60 px-4 py-3 text-[13px] leading-relaxed text-navy/80">
-                <strong className="text-navy">Research Use Disclaimer:</strong>{" "}
-                For research purposes only. Not intended for human or veterinary use. Not intended
-                to diagnose, treat, cure or prevent any disease. Supplied strictly for laboratory
-                and analytical research conducted by qualified professionals.
-              </p>
-            </div>
+            <p className="label-xs mt-4 text-[11px] leading-relaxed text-taupe">
+              For research use only — not for human or veterinary use
+            </p>
 
-            {/* Janoshik Analytical Report button (opens modal) */}
             {product.janoshikUrl ? (
-              <JanoshikReportModal
-                reportUrl={product.janoshikUrl}
-                productName={product.name}
-                batchNumber={product.batchNumber}
-                sampleImages={product.janoshikSamples}
-              />
+              <div className="mt-6">
+                <JanoshikReportModal
+                  reportUrl={product.janoshikUrl}
+                  productName={product.name}
+                  batchNumber={product.batchNumber}
+                  sampleImages={product.janoshikSamples}
+                />
+              </div>
             ) : (
-              <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full border border-navy/15 bg-white/50 px-6 py-3 text-[14px] font-semibold text-navy/50">
-                <LuLeaf size={16} />
-                Janoshik Analytical Report — coming soon
-              </span>
-            )}
-
-            {/* Janoshik Third-Party Lab Analysis panel */}
-            <section className="mt-8 rounded-[24px] border border-sand bg-white p-6 sm:p-7">
-              <div className="text-center">
-                <h2 className="font-serif text-2xl text-navy">
-                  Janoshik Third-Party Lab Analysis
-                </h2>
-                <p className="mt-2 text-[14px] text-navy/60">
-                  Independently tested and verified by Janoshik Analytical.
-                </p>
-              </div>
-
-              <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                <StatCard label="Batch Number" value={product.batchNumber} />
-                <StatCard label="Fill Volume" value={product.fillVolume} />
-                <StatCard label="Purity" value={product.purity} />
-              </div>
-
-              <div className="mt-6 overflow-hidden rounded-2xl border border-sand">
-                <table className="w-full text-left text-[14px]">
-                  <thead>
-                    <tr className="bg-beige text-[12px] font-semibold uppercase tracking-[0.14em] text-navy/60">
-                      <th className="px-4 py-3">Compound</th>
-                      <th className="px-4 py-3">Concentration</th>
-                      <th className="px-4 py-3">Verified Content</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-sand bg-white text-navy">
-                    {product.analytes.map((a) => (
-                      <tr key={a.compound}>
-                        <td className="px-4 py-3.5 font-medium">{a.compound}</td>
-                        <td className="px-4 py-3.5">{a.concentration}</td>
-                        <td className="px-4 py-3.5">{a.verifiedContent}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <p className="mt-4 text-[12px] text-navy/55">
-                Concentration is measured per mL; verified content reflects the total
-                assayed mass across the stated fill volume.
+              <p className="mt-6 text-[14px] font-light text-taupe">
+                Janoshik analytical report — coming soon
               </p>
-            </section>
-
-            {/* Info tabs */}
-            <section className="mt-6 rounded-[24px] border border-sand bg-white p-6 sm:p-7">
-              <ProductInfoTabs
-                tabs={[
-                  {
-                    key: "package",
-                    label: "Package Contents",
-                    body: (
-                      <ul className="space-y-3">
-                        {product.packageContents.map((c) => (
-                          <li key={c} className="flex items-start gap-3">
-                            <span className="mt-1 grid h-5 w-5 flex-none place-items-center rounded-full bg-lime/50 text-navy">
-                              <FiCheck size={12} />
-                            </span>
-                            <span>{c}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ),
-                  },
-                  {
-                    key: "storage",
-                    label: "Storage Logic",
-                    body: <p>{product.storageLogic}</p>,
-                  },
-                  {
-                    key: "supply",
-                    label: "Supply Chain",
-                    body: <p>{product.supplyChain}</p>,
-                  },
-                ]}
-              />
-            </section>
+            )}
           </div>
         </div>
 
-        {/* RELATED PRODUCTS */}
-        <section className="mt-24">
-          <div className="mb-10 flex items-end justify-between">
-            <h2 className="font-serif text-3xl text-navy lg:text-4xl">
-              Related Products
+        {/* ---------------- Detail band ---------------- */}
+        <section className="mt-20 grid grid-cols-1 gap-10 lg:mt-28 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="display-3 font-serif text-espresso">
+              About this compound
+            </h2>
+            <p className="mt-5 text-[16px] font-light leading-relaxed text-clay">
+              {product.description}
+            </p>
+            <p className="mt-6 rounded-[10px] bg-beige px-5 py-4 text-[14px] font-light leading-relaxed text-clay">
+              <span className="font-medium text-espresso">
+                Research use disclaimer:
+              </span>{" "}
+              For research purposes only. Not intended for human or veterinary
+              use. Not intended to diagnose, treat, cure or prevent any disease.
+              Supplied strictly for laboratory and analytical research conducted
+              by qualified professionals.
+            </p>
+          </div>
+
+          <div>
+            <ProductInfoTabs
+              tabs={[
+                {
+                  key: "package",
+                  label: "Package contents",
+                  body: (
+                    <ul className="flex flex-col gap-3">
+                      {product.packageContents.map((c) => (
+                        <li key={c} className="flex items-start gap-2.5">
+                          <FiCheck
+                            size={14}
+                            className="mt-1 flex-none text-espresso"
+                          />
+                          <span>{c}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ),
+                },
+                {
+                  key: "storage",
+                  label: "Storage",
+                  body: <p>{product.storageLogic}</p>,
+                },
+                {
+                  key: "supply",
+                  label: "Supply chain",
+                  body: <p>{product.supplyChain}</p>,
+                },
+              ]}
+            />
+          </div>
+        </section>
+
+        {/* ---------------- Lab analysis ---------------- */}
+        {product.analytes.length > 0 && (
+        <section className="mt-20 rounded-[14px] bg-beige px-6 py-12 sm:px-10 lg:mt-24">
+          <div className="mx-auto max-w-[42ch] text-center">
+            <h2 className="display-3 font-serif text-espresso">
+              Janoshik Third-Party Analysis
+            </h2>
+            <p className="mt-3 text-[15px] font-light text-clay">
+              Independently tested and verified by Janoshik Analytical.
+            </p>
+          </div>
+
+          <dl className="mx-auto mt-10 grid max-w-3xl gap-px overflow-hidden rounded-[10px] bg-sand sm:grid-cols-3">
+            <Stat label="Batch number" value={product.batchNumber} />
+            <Stat label="Fill volume" value={product.fillVolume} />
+            <Stat label="Purity" value={product.purity} />
+          </dl>
+
+          <div className="mx-auto mt-5 max-w-3xl overflow-x-auto rounded-[10px] bg-cream">
+            <table className="w-full min-w-[460px] text-left text-[15px]">
+              <thead>
+                <tr className="border-b border-sand">
+                  <th className="label-xs px-5 py-4 text-clay">Compound</th>
+                  <th className="label-xs px-5 py-4 text-clay">
+                    Concentration
+                  </th>
+                  <th className="label-xs px-5 py-4 text-clay">
+                    Verified content
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-sand text-espresso">
+                {product.analytes.map((a) => (
+                  <tr key={a.compound}>
+                    <td className="px-5 py-4 font-medium">{a.compound}</td>
+                    <td className="px-5 py-4 font-light">{a.concentration}</td>
+                    <td className="px-5 py-4 font-light">
+                      {a.verifiedContent}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="mx-auto mt-4 max-w-3xl text-[13px] font-light text-taupe">
+            Concentration is measured per mL; verified content reflects the
+            total assayed mass across the stated fill volume.
+          </p>
+        </section>
+        )}
+
+        {/* ---------------- Related ---------------- */}
+        <section className="mt-20 lg:mt-28">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <h2 className="display-3 font-serif text-espresso">
+              You may also need
             </h2>
             <Link
-              href="/#products"
-              className="group hidden items-center gap-2 text-[15px] font-medium text-navy/70 hover:text-navy sm:flex"
+              href="/products"
+              className="label-xs border-b border-espresso pb-1 text-espresso"
             >
               View all
-              <FiArrowUpRight className="transition-transform duration-300 group-hover:rotate-45" />
             </Link>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-x-6 gap-y-10 xs:grid-cols-2 lg:grid-cols-3">
             {related.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/products/${p.slug}`}
-                className="group rounded-[26px] border border-sand bg-white p-4 transition-all duration-500 ease-smooth hover:-translate-y-1.5 hover:shadow-[0_40px_70px_-50px_rgba(4,52,96,0.5)]"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[18px] bg-beige">
+              <Link key={p.slug} href={`/products/${p.slug}`} className="group">
+                <div className="relative aspect-square overflow-hidden rounded-[6px] bg-beige">
                   <Image
                     src={p.image}
                     alt={p.name}
                     fill
-                    sizes="(max-width:1024px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-[1.2s] ease-smooth group-hover:scale-105"
+                    sizes="(max-width:1024px) 46vw, 31vw"
+                    className="object-cover transition-transform duration-[1.4s] ease-smooth group-hover:scale-[1.04]"
                   />
                 </div>
-                <div className="flex items-center justify-between gap-3 px-2 pb-1 pt-5">
-                  <div>
-                    <p className="font-serif text-xl text-navy">{p.name}</p>
-                    <p className="mt-1 text-sm text-navy/50">{p.category}</p>
-                  </div>
-                  <span className="font-serif text-2xl text-navy">
+                <h3 className="mt-4 font-sans text-[15px] font-semibold uppercase tracking-[0.02em] text-espresso">
+                  {p.name}
+                </h3>
+                <div className="mt-1 flex items-center justify-between gap-3">
+                  <p className="text-[15px] font-light text-clay">
+                    {p.category}
+                  </p>
+                  <span className="text-[15px] text-espresso">
                     {p.priceLabel}
                   </span>
                 </div>
@@ -273,13 +326,13 @@ export default async function ProductPage({
   );
 }
 
-function StatCard({ label, value }: { label: string; value: string }) {
+function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-sand bg-beige/40 p-4">
-      <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-navy/50">
-        {label}
-      </p>
-      <p className="mt-1.5 font-serif text-lg text-navy">{value}</p>
+    <div className="bg-cream px-5 py-5">
+      <dt className="label-xs text-taupe">{label}</dt>
+      <dd className="mt-2 font-serif text-[22px] tracking-display text-espresso">
+        {value}
+      </dd>
     </div>
   );
 }

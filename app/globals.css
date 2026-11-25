@@ -2,14 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Warm editorial supplement-brand system: cream paper, espresso ink, a single
+   chartreuse accent, high-contrast display serif over a geometric-humanist
+   sans. Legacy token names (ivory/navy/lime) are kept as aliases so every
+   existing component picks up the new palette without being rewritten.
+--------------------------------------------------------------------------- */
 :root {
-  --ivory: #fffbf3;
-  --beige: #f3f0eb;
-  --sand: #e9e4db;
-  --navy: #043460;
-  --navy-muted: #3d6081;
-  --lime: #e1fcad;
-  --lime-btn: #d9f58c;
+  --cream: #fffdf5;
+  --cream-2: #fbf6ea;
+  --sand: #f2e9db;
+  --sand-line: #e8dcc9;
+  --taupe: #b6b1aa;
+  --clay: #6b5b49;
+  --espresso: #21180e;
+  --espresso-soft: #3e2f1e;
+  --chartreuse: #d0e067;
+  --chartreuse-bright: #c1df16;
+
+  /* legacy aliases */
+  --ivory: var(--cream);
+  --beige: var(--sand);
+  --navy: var(--espresso);
+  --navy-muted: var(--clay);
+  --lime: var(--chartreuse);
+  --lime-btn: var(--chartreuse);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 * {
@@ -39,30 +60,30 @@ html.lenis body {
 }
 
 body {
-  background-color: var(--ivory);
-  color: var(--navy);
-  font-family: var(--font-inter-tight), "Inter Tight", system-ui, sans-serif;
+  background-color: var(--cream);
+  color: var(--espresso);
+  font-family: var(--font-figtree), "Figtree", system-ui, sans-serif;
   /* clip (not hidden) so it doesn't create a scroll container that breaks
      position: sticky on the stacking cards */
   overflow-x: clip;
-  font-size: 18px;
-  line-height: 1.7;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
 }
 
 ::selection {
-  background: var(--lime);
-  color: var(--navy);
+  background: var(--chartreuse);
+  color: var(--espresso);
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--ivory);
+  background: var(--cream);
 }
 ::-webkit-scrollbar-thumb {
-  background: #cdbfae;
+  background: #d8cbb6;
   border-radius: 999px;
 }
 
@@ -71,179 +92,426 @@ body {
   h2,
   h3,
   h4 {
-    font-family: var(--font-playfair), "Playfair Display", serif;
+    font-family: var(--font-instrument), "Instrument Serif", Georgia,
+      "Times New Roman", serif;
     font-weight: 400;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.03em;
+  }
+
+  /* Form controls inherit the warm system rather than UA chrome */
+  input,
+  textarea,
+  select {
+    font-family: inherit;
   }
 }
 
 @layer components {
   .container-x {
     width: 100%;
-    /* match the header pill width + inner padding so every section's content
-       lines up exactly with the navbar */
-    max-width: 1320px;
+    max-width: 1440px;
     margin-inline: auto;
-    padding-left: max(clamp(22px, 5vw, 28px), env(safe-area-inset-left));
-    padding-right: max(clamp(22px, 5vw, 28px), env(safe-area-inset-right));
+    padding-left: max(clamp(20px, 3.2vw, 44px), env(safe-area-inset-left));
+    padding-right: max(clamp(20px, 3.2vw, 44px), env(safe-area-inset-right));
   }
 
-  /* Pill subtitle badge */
+  /* Narrower rail for long-form reading pages (policies, articles) */
+  .container-prose {
+    width: 100%;
+    max-width: 860px;
+    margin-inline: auto;
+    padding-inline: clamp(20px, 5vw, 44px);
+  }
+
+  /* ---- micro-label -------------------------------------------------- */
+  /* The reference uses plain tracked uppercase labels, not pill badges. */
   .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #fff;
-    border: 1px solid var(--sand);
-    color: var(--navy);
-    border-radius: 999px;
-    padding: 10px 22px;
-    font-size: 15px;
-    letter-spacing: 0.01em;
-    box-shadow: 0 8px 30px -18px rgba(4, 52, 96, 0.35);
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: inherit;
   }
 
   .eyebrow-dark {
-    background: #fff;
-    color: var(--navy);
-    border: none;
+    color: var(--espresso);
   }
 
-  /* Primary lime pill button */
-  .btn-lime {
+  .label-xs {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  /* ---- buttons ------------------------------------------------------- */
+  .btn-base {
     display: inline-flex;
     align-items: center;
-    gap: 14px;
-    background: var(--lime-btn);
-    color: var(--navy);
+    justify-content: center;
+    gap: 10px;
     border-radius: 999px;
-    padding: 10px 12px 10px 26px;
-    font-weight: 600;
-    font-size: 16px;
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s;
-  }
-  .btn-lime:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 22px 40px -22px rgba(4, 52, 96, 0.5);
-    background: #e6f9a6;
-  }
-  .btn-lime .icon-circle {
-    background: var(--navy);
-    color: var(--lime-btn);
+    padding: 15px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background-color 0.45s var(--ease-out),
+      color 0.45s var(--ease-out), border-color 0.45s var(--ease-out),
+      transform 0.45s var(--ease-out);
   }
 
-  /* Outline / white pill button */
+  /* Outlined cream pill — the reference's default CTA */
+  .btn-outline,
   .btn-ghost {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    background: #fff;
-    color: var(--navy);
-    border: 1px solid var(--sand);
+    justify-content: center;
+    gap: 10px;
     border-radius: 999px;
-    padding: 12px 26px;
-    font-weight: 600;
-    font-size: 16px;
-    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    border: 1px solid rgba(33, 24, 14, 0.35);
+    background: var(--cream);
+    color: var(--espresso);
+    padding: 15px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background-color 0.45s var(--ease-out),
+      color 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
   }
+  .btn-outline:hover,
   .btn-ghost:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 22px 40px -24px rgba(4, 52, 96, 0.4);
+    background: var(--espresso);
+    border-color: var(--espresso);
+    color: var(--cream);
+  }
+
+  /* Solid espresso pill */
+  .btn-solid,
+  .btn-lime {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 999px;
+    border: 1px solid var(--espresso);
+    background: var(--espresso);
+    color: var(--cream);
+    padding: 15px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background-color 0.45s var(--ease-out),
+      color 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
+  }
+  .btn-solid:hover,
+  .btn-lime:hover {
+    background: transparent;
+    color: var(--espresso);
+  }
+
+  /* Accent pill, used sparingly */
+  .btn-accent {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 999px;
+    border: 1px solid var(--chartreuse);
+    background: var(--chartreuse);
+    color: var(--espresso);
+    padding: 15px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: filter 0.45s var(--ease-out);
+  }
+  .btn-accent:hover {
+    filter: brightness(1.06);
+  }
+
+  /* Outlined pill on a dark/photographic ground */
+  .btn-on-dark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 253, 245, 0.55);
+    background: transparent;
+    color: var(--cream);
+    padding: 15px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background-color 0.45s var(--ease-out),
+      color 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
+  }
+  .btn-on-dark:hover {
+    background: var(--cream);
+    border-color: var(--cream);
+    color: var(--espresso);
+  }
+
+  .btn-sm {
+    padding: 11px 22px;
+    font-size: 12px;
   }
 
   .icon-circle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 999px;
     flex: none;
   }
 
-  /* Tag chip */
+  /* Small round control used on carousels and cards */
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid var(--sand-line);
+    background: var(--cream);
+    color: var(--espresso);
+    transition: background-color 0.4s var(--ease-out),
+      color 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
+  }
+  .icon-btn:hover {
+    background: var(--espresso);
+    border-color: var(--espresso);
+    color: var(--cream);
+  }
+
+  /* ---- chips --------------------------------------------------------- */
   .chip {
     display: inline-flex;
     align-items: center;
     border-radius: 999px;
-    padding: 8px 18px;
-    font-size: 14px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    border: 1px solid var(--sand-line);
+    background: var(--cream);
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--espresso);
   }
   .chip-soft {
-    background: var(--beige);
-    color: var(--navy);
-    border: 1px solid var(--sand);
+    background: var(--sand);
+    border-color: transparent;
+    color: var(--espresso);
   }
   .chip-lime {
-    background: #f0fbd9;
-    color: var(--navy);
-    border: 1px solid #dff0b4;
+    background: var(--chartreuse);
+    border-color: transparent;
+    color: var(--espresso);
+  }
+
+  /* Pill badge floating over product photography */
+  .badge-float {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: var(--cream);
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--espresso);
+  }
+
+  /* ---- surfaces ------------------------------------------------------ */
+  .card {
+    border-radius: 14px;
+    background: var(--cream);
+    border: 1px solid var(--sand-line);
+  }
+
+  .panel {
+    border-radius: 14px;
+    background: var(--sand);
+  }
+
+  /* Underlined section tab, as used on the category switcher */
+  .tab-link {
+    position: relative;
+    padding-bottom: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--clay);
+    transition: color 0.35s var(--ease-out);
+  }
+  .tab-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 0;
+    background: var(--espresso);
+    transition: width 0.45s var(--ease-out);
+  }
+  .tab-link:hover {
+    color: var(--espresso);
+  }
+  .tab-link[data-active="true"] {
+    color: var(--espresso);
+    font-weight: 500;
+  }
+  .tab-link[data-active="true"]::after {
+    width: 100%;
+  }
+
+  /* Underlined text input, as used in the footer signup */
+  .field-line {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    padding: 10px 0 12px;
+    font-size: 15px;
+    outline: none;
+  }
+  .field-line::placeholder {
+    color: inherit;
+    opacity: 0.75;
+  }
+
+  /* Boxed input for forms (auth, checkout) */
+  .field-box {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--sand-line);
+    background: var(--cream);
+    padding: 14px 16px;
+    font-size: 15px;
+    color: var(--espresso);
+    outline: none;
+    transition: border-color 0.3s var(--ease-out);
+  }
+  .field-box::placeholder {
+    color: var(--taupe);
+  }
+  .field-box:focus {
+    border-color: var(--espresso);
   }
 }
 
-/* Fluid section spacing */
+/* ---- section rhythm ---------------------------------------------------- */
 .section-pad {
-  padding-block: clamp(80px, 12vw, 200px);
+  padding-block: clamp(56px, 6.5vw, 104px);
 }
 .section-pad-sm {
-  padding-block: clamp(60px, 8vw, 130px);
+  padding-block: clamp(40px, 4.5vw, 72px);
 }
 
-/* serif display sizing helpers */
+/* ---- display type ------------------------------------------------------ */
+/* Reference scale at 1440px: 80 / 56 / 40 / 32 / 24, line-height 0.98–1.15,
+   tracking -0.03em throughout. */
 .display-1 {
-  font-size: clamp(3.2rem, 9vw, 7.25rem);
-  line-height: 0.98;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.75rem, 5.6vw, 5rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
 }
-/* one step down from display-1, for longer hero headlines */
 .display-1-sm {
-  font-size: clamp(2.8rem, 7.4vw, 5.9rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-/* Phones only — the clamp() above floors at 2.8rem, which is too large below
-   ~605px and doesn't shrink further, wrapping long headlines into 5+ tall
-   lines. Desktop/tablet (640px+) keep the rule above, untouched. */
-@media (max-width: 640px) {
-  .display-1-sm {
-    font-size: clamp(2.15rem, 9vw, 2.8rem);
-    line-height: 1.05;
-  }
+  font-size: clamp(2.375rem, 4.6vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
 }
 .display-2 {
-  font-size: clamp(2.5rem, 6.2vw, 5rem);
-  line-height: 1.04;
-  letter-spacing: -0.01em;
+  font-size: clamp(2.125rem, 3.9vw, 3.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
 }
-/* one step down from display-2, for long section headings */
 .display-2-sm {
-  font-size: clamp(2rem, 4.4vw, 3.5rem);
-  line-height: 1.08;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.875rem, 3vw, 2.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
 }
 .display-3 {
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(1.625rem, 2.6vw, 2.5rem);
   line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.display-4 {
+  font-size: clamp(1.375rem, 1.9vw, 2rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
 }
 
-/* SplitType helpers */
+@media (max-width: 640px) {
+  .display-1-sm {
+    font-size: clamp(2rem, 8.4vw, 2.6rem);
+    line-height: 1.1;
+  }
+}
+
+/* Italic serif accent, used for the second line of split headings */
+.serif-italic {
+  font-family: var(--font-instrument), "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+/* Lead paragraph under a display heading */
+.lead {
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--clay);
+}
+
+/* ---- photographic grade ------------------------------------------------
+   The reference's photography is uniformly warm, which is what lets its
+   cream/espresso palette read as one surface. Our source imagery is cool
+   and clinical, so lifestyle/background shots get a warm grade to sit in
+   the same light. Product packshots are deliberately excluded — their
+   colour has to stay true. */
+.warm-grade {
+  filter: sepia(0.42) saturate(1.45) hue-rotate(-8deg) brightness(1.04)
+    contrast(0.98);
+}
+.warm-grade-soft {
+  filter: sepia(0.26) saturate(1.25) hue-rotate(-6deg) brightness(1.02);
+}
+
+/* ---- reveal helpers ---------------------------------------------------- */
 .split-line {
   overflow: hidden;
 }
 .reveal-word {
   display: inline-block;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .topo-grid {
   background-image: radial-gradient(
       circle at 50% 50%,
-      rgba(4, 52, 96, 0.05) 1px,
+      rgba(33, 24, 14, 0.05) 1px,
       transparent 1px
     );
   background-size: 38px 38px;
@@ -255,4 +523,29 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Horizontal rails snap like the reference carousels */
+.snap-rail {
+  scroll-snap-type: x mandatory;
+  /* Keep snapped cards aligned with the page gutter instead of the edge. */
+  scroll-padding-inline: max(20px, 3.2vw);
+}
+@media (min-width: 1024px) {
+  .snap-rail {
+    scroll-padding-inline: 0;
+  }
+}
+.snap-rail > * {
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,152 +1,135 @@
 "use client";
 
-import { useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { LuSparkles, LuArrowLeftToLine } from "react-icons/lu";
+import { motion } from "framer-motion";
 import { IMG } from "@/lib/data";
-import { LimeButton } from "./ui/Bits";
-import ScrollReveal from "./ui/ScrollReveal";
-import Reveal from "./ui/Reveal";
+import { cn } from "@/lib/utils";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-      const obj = { v: 0 };
-      gsap.to(obj, {
-        v: to,
-        duration: 2,
-        ease: "power2.out",
-        scrollTrigger: { trigger: el, start: "top 90%" },
-        onUpdate: () => {
-          el.textContent = Math.round(obj.v) + suffix;
-        },
-      });
-    },
-    { scope: ref }
-  );
-  return <span ref={ref}>0{suffix}</span>;
-}
+const PILLARS = [
+  {
+    word: "Formulation",
+    title: "100% Batches Tested",
+    body: "Each batch is analysed for purity, identity and verified content before any unit is released.",
+    img: "/new-images/rigor-card1.png",
+  },
+  {
+    word: "Purity",
+    title: "99%+ HPLC Verified",
+    body: "Analytical HPLC confirms purity percentage and content against specification on every fill.",
+    img: "/new-images/riger-card2.png",
+  },
+  {
+    word: "Traceability",
+    title: "Batch-Level Certificates",
+    body: "Representative samples are independently certified by Janoshik, and every COA is published.",
+    img: "/new-images/rigor-card3.png",
+    // Shift the crop down so the pen sits higher in the frame.
+    pos: "object-[center_100%]",
+  },
+];
 
+/**
+ * Process band. The photograph runs full-bleed behind everything; the
+ * heading anchors the top-left, a vertical pillar list sits low on the left,
+ * and three sand cards overlap the lower right of the image.
+ */
 export default function About() {
-  const root = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      const prefersReduced = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
-
-      // Reveal in deliberate reading order: eyebrow → heading → description → CTA,
-      // independent of DOM/column placement.
-      const order = [".ab-eyebrow", ".ab-cta"]
-        .map((s) => root.current?.querySelector(s))
-        .filter(Boolean) as HTMLElement[];
-      if (!order.length) return;
-
-      if (prefersReduced) {
-        gsap.set(order, { opacity: 1, y: 0 });
-        return;
-      }
-
-      gsap.set(order, { opacity: 0, y: 42 });
-      gsap.to(order, {
-        opacity: 1,
-        y: 0,
-        duration: 1.1,
-        ease: "power3.out",
-        stagger: 0.16,
-        scrollTrigger: { trigger: root.current, start: "top 78%" },
-      });
-    },
-    { scope: root }
-  );
+  const [active, setActive] = useState(0);
 
   return (
-    <section id="about" className="section-pad-sm relative overflow-hidden bg-ivory">
-      <div ref={root} className="container-x relative">
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.6fr] lg:gap-16">
-          <div className="flex flex-col justify-between gap-12">
-            <span className="ab-eyebrow eyebrow self-start">
-              <LuSparkles className="text-navy" size={15} />
-              About Vora Labs
-            </span>
+    <section id="about" className="relative isolate overflow-hidden">
+      <div className="absolute inset-0">
+        <Image
+          src={IMG.aboutB}
+          alt=""
+          fill
+          quality={90}
+          sizes="100vw"
+          className="object-cover object-right"
+        />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-br from-espresso/75 via-espresso/40 to-espresso/25" />
 
-            <div className="flex flex-col items-start gap-8">
-              {/* decorative oversized arrow, sat directly above the CTA */}
-              <LuArrowLeftToLine
-                aria-hidden
-                strokeWidth={1.6}
-                className="pointer-events-none hidden h-auto w-[clamp(190px,17vw,310px)] select-none text-sand lg:block"
-              />
+      <div className="container-x relative py-[clamp(48px,6vw,80px)]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="max-w-[min(560px,92%)]"
+        >
+          <h2 className="display-3 font-serif text-cream">
+            The Rigor Behind Every Batch
+          </h2>
+          <p className="mt-4 max-w-[44ch] text-[16px] font-light leading-relaxed text-cream/80">
+            We stay focused on identity, purity and documentation at every step,
+            so your results rest on material you can account for.
+          </p>
+        </motion.div>
 
-              <div className="ab-cta">
-                <LimeButton href="/about">Explore More</LimeButton>
-              </div>
-            </div>
-          </div>
+        <div className="mt-10 grid items-end gap-8 lg:mt-16 lg:grid-cols-[minmax(170px,230px)_1fr] lg:gap-10">
+          {/* Pillar list */}
+          <ul className="hidden flex-col gap-1 lg:flex">
+            {PILLARS.map((p, i) => (
+              <li key={p.word}>
+                <button
+                  type="button"
+                  onMouseEnter={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  onClick={() => setActive(i)}
+                  className={cn(
+                    "font-serif text-[clamp(1.5rem,2.1vw,2.125rem)] leading-[1.35] tracking-display transition-colors duration-300",
+                    active === i ? "text-cream" : "text-cream/55"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "border-b pb-1 transition-colors duration-300",
+                      active === i ? "border-cream" : "border-transparent"
+                    )}
+                  >
+                    {p.word}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
 
-          <div>
-            <ScrollReveal
-              as="h2"
-              text="We develop, fill, and independently verify high-quality research compounds through a science-driven approach to testing and quality."
-              className="display-2-sm max-w-[24ch] text-navy"
-            />
-
-            <ScrollReveal
-              as="p"
-              text="Every Vora Labs compound is synthesized, filled, and independently verified before release, with each batch supported by documented purity, potency, and stability data you can review yourself."
-              className="mt-6 max-w-xl text-[17px] leading-relaxed"
-            />
-
-            <div className="mt-10 grid gap-5 sm:grid-cols-2">
-              <Reveal className="overflow-hidden rounded-[28px]">
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[28px]">
+          {/* Cards */}
+          <div className="grid gap-4 sm:grid-cols-3 lg:gap-5">
+            {PILLARS.map((p, i) => (
+              <motion.article
+                key={p.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: i * 0.08, ease: EASE }}
+                onMouseEnter={() => setActive(i)}
+                className={cn(
+                  "rounded-[14px] bg-beige p-3.5 transition-shadow duration-500",
+                  active === i ? "shadow-lift" : ""
+                )}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[8px] bg-sand">
                   <Image
-                    src={IMG.aboutA}
-                    alt="Vora Labs analysts reviewing a research sample in the laboratory"
+                    src={p.img}
+                    alt=""
                     fill
-                    sizes="(max-width:768px) 100vw, 40vw"
-                    className="object-cover transition-transform duration-[1.2s] ease-smooth hover:scale-105"
+                    sizes="(max-width:640px) 92vw, 30vw"
+                    className={cn("object-cover", "pos" in p && p.pos)}
                   />
                 </div>
-              </Reveal>
-
-              <Reveal delay={0.1} className="rounded-[28px] border border-sand bg-white p-9">
-                <p className="font-serif text-5xl text-navy sm:text-6xl lg:text-7xl">
-                  <Counter to={99} suffix="%" />
+                <h3 className="mt-4 font-sans text-[14px] font-semibold tracking-[0.01em] text-espresso">
+                  {p.title}
+                </h3>
+                <p className="mb-1 mt-2 text-[15px] font-light leading-relaxed text-clay">
+                  {p.body}
                 </p>
-                <div className="mt-6 h-px w-full bg-sand" />
-                <p className="mt-5 text-navy/80">Average Verified Purity</p>
-              </Reveal>
-
-              <Reveal delay={0.15} className="rounded-[28px] border border-sand bg-white p-9">
-                <p className="font-serif text-5xl text-navy sm:text-6xl lg:text-7xl">
-                  <Counter to={56} suffix="" />
-                </p>
-                <div className="mt-6 h-px w-full bg-sand" />
-                <p className="mt-5 text-navy/80">Days Room-Temp Stability</p>
-              </Reveal>
-
-              <Reveal delay={0.2} className="overflow-hidden rounded-[28px]">
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[28px]">
-                  <Image
-                    src={IMG.aboutB}
-                    alt="Vora Labs analyst reviewing sample data in the laboratory"
-                    fill
-                    sizes="(max-width:768px) 100vw, 40vw"
-                    className="object-cover transition-transform duration-[1.2s] ease-smooth hover:scale-105"
-                  />
-                </div>
-              </Reveal>
-            </div>
+              </motion.article>
+            ))}
           </div>
         </div>
       </div>

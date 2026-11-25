@@ -2,16 +2,20 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import SplitType from "split-type";
-import { IMG, AVATARS } from "@/lib/data";
-import { LimeButton } from "./ui/Bits";
+import { IMG } from "@/lib/data";
+import { OnDarkButton } from "./ui/Bits";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+/**
+ * Full-bleed editorial hero: one photograph running edge to edge and under
+ * the header, with a left-aligned eyebrow / display heading / lead / pill
+ * stack sitting in the lower third. No cards, no badges — the image carries
+ * the page and the type sits quietly on top of it.
+ */
 export default function Hero() {
   const root = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
@@ -22,125 +26,87 @@ export default function Hero() {
         "(prefers-reduced-motion: reduce)"
       ).matches;
 
-      const h1 = root.current?.querySelector("h1");
-      let split: SplitType | null = null;
-
       const tl = gsap.timeline({
-        defaults: { ease: "power4.out" },
-        delay: 0.35,
+        defaults: { ease: "power3.out", duration: 1 },
+        delay: 0.2,
       });
 
-      if (h1 && !prefersReduced) {
-        split = new SplitType(h1, { types: "lines,words", tagName: "span" });
-        gsap.set(split.words, { yPercent: 120, opacity: 0, filter: "blur(12px)" });
-        tl.to(split.words, {
-          yPercent: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 1.25,
-          stagger: 0.08,
-        });
-      }
+      tl.from(".hero-rise", {
+        y: prefersReduced ? 0 : 26,
+        opacity: 0,
+        stagger: 0.1,
+      });
 
-      // Hero image scale-in
-      if (imgRef.current) {
+      if (imgRef.current && !prefersReduced) {
         gsap.fromTo(
           imgRef.current,
-          { scale: prefersReduced ? 1 : 1.12 },
+          { scale: 1.08 },
           { scale: 1, duration: 1.8, ease: "power3.out" }
         );
-        // Slow parallax drift on scroll
-        if (!prefersReduced) {
-          gsap.to(imgRef.current, {
-            yPercent: 12,
-            ease: "none",
-            scrollTrigger: {
-              trigger: root.current,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          });
-        }
+        // Slow parallax drift as the hero leaves the viewport.
+        gsap.to(imgRef.current, {
+          yPercent: 10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: root.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
       }
-
-      tl.from(
-        ".hero-fade",
-        { y: 40, opacity: 0, duration: 1, stagger: 0.14 },
-        prefersReduced ? 0 : "-=0.7"
-      );
-
-      return () => split?.revert();
     },
     { scope: root }
   );
 
   return (
-    <section id="top" ref={root} className="px-2 pt-0 sm:px-4">
-      <div className="relative mx-auto min-h-[100svh] w-full max-w-none overflow-hidden rounded-[24px] sm:rounded-[32px]">
-        {/* Background image */}
-        <div ref={imgRef} className="absolute inset-0">
-          <Image
-            src={IMG.hero}
-            alt="Vora Labs research compound presentation"
-            fill
-            priority
-            quality={95}
-            sizes="100vw"
-            className="object-cover object-[78%_center] sm:object-center"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/85 via-navy/40 to-navy/5" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy/35 via-transparent to-transparent" />
+    <section
+      id="top"
+      ref={root}
+      className="relative h-[min(100svh,860px)] min-h-[560px] w-full overflow-hidden"
+    >
+      {/* The shot is 2:1 with the pack on the right, so a tall hero crops the
+          sides hard. Anchor right of centre as the viewport narrows: the pack
+          stays whole and the empty left third keeps holding the type. */}
+      <div ref={imgRef} className="absolute inset-0">
+        <Image
+          src={IMG.hero}
+          alt="Retatrutide 40mg carton and pre-filled pen in warm studio light"
+          fill
+          priority
+          quality={95}
+          // The hero is far taller than the 2:1 source, so `cover` scales the
+          // image to the container HEIGHT — it needs well over 100vw of pixels.
+          // These hints stop Next serving a soft, upscaled 640px file.
+          sizes="(max-width: 480px) 400vw, (max-width: 900px) 230vw, (max-width: 1280px) 140vw, 120vw"
+          className="object-cover object-[64%_center] md:object-[80%_center] xl:object-[88%_center]"
+        />
+      </div>
 
-        {/* Content */}
-        <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[1320px] flex-col justify-between px-5 pb-12 pt-32 sm:px-7 sm:pb-24 sm:pt-44">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-3 self-start rounded-full bg-white/90 py-2.5 pl-3 pr-6 backdrop-blur"
-          >
-            <div className="flex -space-x-3">
-              {AVATARS.map((a, i) => (
-                <span
-                  key={i}
-                  className="relative h-9 w-9 overflow-hidden rounded-full ring-2 ring-white"
-                >
-                  <Image src={a} alt="" fill className="object-cover" sizes="36px" />
-                </span>
-              ))}
-            </div>
-            <div className="text-navy">
-              <p className="text-[15px] font-semibold leading-tight">1,200+ Labs Supplied</p>
-              <p className="text-[12px] uppercase tracking-wider text-navy/70">
-                Independently Verified
-              </p>
-            </div>
-          </motion.div>
+      {/* Scrim: just enough to hold the type, weighted to the left column.
+          On phones the crop puts the white carton behind the headline, so the
+          bottom half of the scrim carries more weight below sm. */}
+      <div className="absolute inset-0 bg-gradient-to-r from-espresso/70 via-espresso/25 to-transparent" />
+      <div className="absolute inset-0 bg-espresso/30 sm:hidden" />
+      <div className="absolute inset-0 bg-gradient-to-t from-espresso/85 via-espresso/30 to-espresso/25 sm:from-espresso/40 sm:via-transparent sm:to-espresso/20" />
 
-          {/* Headline block */}
-          <div className="mt-auto max-w-5xl">
-            <h1 className="display-1-sm font-serif text-ivory">
-              Premium Research Peptides for Laboratory R&amp;D
-            </h1>
+      <div className="container-x relative flex h-full flex-col justify-end pb-[clamp(56px,9vh,110px)]">
+        <div className="max-w-[min(640px,92%)]">
+          <p className="hero-rise eyebrow text-cream">Now Supplying</p>
 
-            <div className="mt-7 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-xl">
-                <p className="hero-fade text-lg text-ivory/85">
-                  Vora Labs Research-Grade Peptides Independently Verified for
-                  Quality &amp; Purity
-                </p>
-                <div className="hero-fade mt-7 flex flex-wrap items-center gap-3">
-                  <LimeButton href="#products">Browse peptides</LimeButton>
-                </div>
-                <p className="hero-fade mt-6 text-[12px] uppercase tracking-[0.16em] text-ivory/55">
-                  For laboratory use only. Not intended for human or veterinary
-                  consumption.
-                </p>
-              </div>
-            </div>
+          <h1 className="hero-rise display-1 mt-5 font-serif text-cream">
+            Research Peptides,
+            <br />
+            Independently Verified
+          </h1>
+
+          <p className="hero-rise mt-6 max-w-[46ch] text-[17px] font-light leading-relaxed text-cream/85">
+            Every batch HPLC analysed, Janoshik certified and released with a
+            certificate of analysis you can check yourself.
+          </p>
+
+          <div className="hero-rise mt-9">
+            <OnDarkButton href="/products">Shop now</OnDarkButton>
           </div>
         </div>
       </div>

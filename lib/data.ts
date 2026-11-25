@@ -4,23 +4,46 @@
 export const COMPLIANCE =
   "For laboratory research & development use only · Not for human or veterinary consumption";
 
-export const NAV_LINKS = [
-  { label: "Home", href: "/#top" },
-  { label: "Shop", href: "/products" },
-  { label: "About", href: "/about" },
-  { label: "Why Us", href: "/why-us" },
+export type NavLink = {
+  label: string;
+  href: string;
+  /** Desktop hover panel opened by this item, if any. */
+  menu?: "shop" | "learn";
+};
+
+// The wordmark links home, so the bar carries only shopping paths.
+export const NAV_LINKS: NavLink[] = [
+  { label: "Shop", href: "/products", menu: "shop" },
+  { label: "Learn", href: "/why-us", menu: "learn" },
+  { label: "Find your compound", href: "/find-your-compound" },
+];
+
+export const LEARN_LINKS = [
+  { label: "Why Vora Labs", href: "/why-us" },
+  { label: "About us", href: "/about" },
+  { label: "Press", href: "/press-release" },
+  { label: "Shipping policy", href: "/shipping-policy" },
+  { label: "Track an order", href: "/track" },
+  { label: "Wholesale enquiries", href: "/wholesale" },
 ];
 
 const ALLUVI = "https://alluvi.bz/images";
 
 export const IMG = {
-  hero: "/images/update-img/updated.webp",
+  // Warm studio hero — the palette depends on the photography sitting in the
+  // same light as the cream/espresso surface around it. Shot wide with the
+  // product on the right so the left third stays clear for the type stack.
+  // hero@2x is the 3200px master (lanczos upscale of hero.png) so retina
+  // viewports get real pixels across a full-bleed section.
+  hero: "/new-images/hero@2x.webp",
   heroVid1:
     "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80",
   heroVid2:
     "https://images.unsplash.com/photo-1579165466949-3180a3d056d5?auto=format&fit=crop&w=800&q=80",
-  aboutA: "/images/update-img/verified-seo.webp",
-  aboutB: "/images/update-img/room-temp-seo.webp",
+  // aboutA backs the guided finder, aboutB the process band. Both are warm
+  // studio shots so the full-bleed sections sit in the same light as the page.
+  aboutA: "/new-images/find.png",
+  aboutB: "/new-images/The Rigor-bg.png",
 
   // Real Vora Labs product imagery (saved locally in /public/images/products)
   tirz: "/images/products/tirzepatide.jpeg",
@@ -31,28 +54,33 @@ export const IMG = {
   nad: "/images/products/nad.jpeg",
   app: `${ALLUVI}/Holding-iPhone_1Holding-iPhone.webp`,
 
-  fac1: "/images/update-img/synthesis-seo.webp",
-  fac2: "/images/update-img/fill-seo.webp",
-  fac3: "/images/update-img/hplc-seo.webp",
-  fac4: "/images/update-img/chain-storage.png",
-  fac5: "/images/update-img/stability-seo.webp",
-  fac6: "/images/update-img/dispatch-seo.webp",
-  blog1:
-    "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80",
-  blog2:
-    "https://images.unsplash.com/photo-1614935151651-0bea6508db6b?auto=format&fit=crop&w=900&q=80",
-  blog3:
-    "https://images.unsplash.com/photo-1581595219315-a187dd40c322?auto=format&fit=crop&w=900&q=80",
-  cta: "/images/update-img/compound-seo.webp",
+  // Capability imagery. fac1/3/4 back the process cards, fac2 the story
+  // split, fac3/5/6 the category tiles — all shot in the same warm light.
+  fac1: "/images/update-img/fac1-warm.png",
+  fac2: "/images/update-img/suite-warm.png",
+  fac3: "/images/update-img/fac3-warm.png",
+  fac4: "/images/update-img/fac4-warm.png",
+  fac5: "/images/update-img/tile3-warm.png",
+  fac6: "/images/update-img/tile4-warm.png",
+  tile1: "/images/update-img/tile1-warm.png",
+  tile2: "/images/update-img/tile2-warm.png",
+  // Journal cards run 3:4, so these are the 4:5 portraits cropped lightly.
+  blog1: "/new-images/journal1.png",
+  blog2: "/new-images/journal4.png",
+  blog3: "/new-images/journal2.png",
+  // Subscription still backs the commitment band — same 3200px master
+  // treatment as the hero so the full-bleed crop stays sharp.
+  cta: "/new-images/subscription@2x.webp",
   team1: "/images/update-img/team1-seo.webp",
   team2: "/images/update-img/team2-seo.webp",
   team3: "/images/update-img/team3-seo.webp",
 };
 
 export const AVATARS = [
-  "/images/update-img/testimonial-1-seo.webp",
-  "/images/update-img/testimonial-2-seo.webp",
-  "/images/update-img/testimonial-3-seo.webp",
+  "/new-images/review/Smiling by the breakfast window-2.png",
+  "/new-images/review/Relaxed Woman in Bedroom Doorway-2.png",
+  "/new-images/review/Soft morning sofa selfie-3.png",
+  "/new-images/review/Thoughtful smile by the doorway-4.png",
 ];
 
 // Research compounds (Products section — sticky stacking cards)
@@ -209,7 +237,7 @@ export const PRICING = [
 // Verification / researcher notes (Testimonials)
 export const TESTIMONIALS = [
   {
-    name: "Daniel R.",
+    name: "Hannah R.",
     sub: "Verified Buyer",
     avatar: AVATARS[0],
     quote:
@@ -225,7 +253,7 @@ export const TESTIMONIALS = [
     tags: ["Batch Verified", "Premium Formulation", "Trusted", "Consistent"],
   },
   {
-    name: "James T.",
+    name: "Jessica T.",
     sub: "Verified Buyer",
     avatar: AVATARS[2],
     quote:
@@ -235,13 +263,13 @@ export const TESTIMONIALS = [
   {
     name: "Aisha K.",
     sub: "Verified Buyer",
-    avatar: AVATARS[0],
+    avatar: AVATARS[3],
     quote:
       "Ordering was smooth and the purity was exactly as listed on the certificate. Customer support answered within the hour. Couldn't ask for more.",
     tags: ["Smooth Order", "Quick Support", "Accurate", "Recommended"],
   },
   {
-    name: "Marcus L.",
+    name: "Megan L.",
     sub: "Returning Client",
     avatar: AVATARS[1],
     quote:

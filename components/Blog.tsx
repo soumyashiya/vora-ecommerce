@@ -1,56 +1,69 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { FiArrowUpRight } from "react-icons/fi";
 import { BLOG } from "@/lib/data";
-import { SectionHeading } from "./ui/Bits";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/**
+ * Editorial index. Heading and lead sit flush left above three tall image
+ * cards; each card carries a tracked category label, a serif headline and a
+ * byline rule.
+ */
 export default function Blog() {
   return (
-    <section id="blog" className="section-pad bg-ivory">
+    <section id="journal" className="section-pad">
       <div className="container-x">
-        <SectionHeading eyebrow="Research & Insights" title="From The Lab" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.75, ease: EASE }}
+        >
+          <h2 className="display-2 font-serif text-espresso">
+            The Vora Journal
+          </h2>
+          <p className="lead mt-4 max-w-[46ch]">
+            Method notes and verification guidance to help you read what you
+            receive.
+          </p>
+        </motion.div>
 
-        <div className="mt-16 grid gap-7 md:grid-cols-3">
-          {BLOG.map((b, i) => (
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3 lg:gap-7">
+          {BLOG.map((post, i) => (
             <motion.article
-              key={b.title}
-              initial={{ opacity: 0, y: 44 }}
+              key={post.title}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.7, delay: i * 0.08, ease: EASE }}
               className="group flex flex-col"
             >
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[26px]">
-                <Image
-                  src={b.img}
-                  alt={b.title}
-                  fill
-                  sizes="(max-width:768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-[1.4s] ease-smooth group-hover:scale-110"
-                />
-                <span className="absolute left-4 top-4 rounded-full bg-white/90 px-4 py-1.5 text-[13px] font-semibold text-navy backdrop-blur">
-                  {b.category}
-                </span>
-              </div>
+              <Link href="/press-release" className="flex flex-col">
+                <div className="relative aspect-[3/4] overflow-hidden rounded-[6px] bg-beige">
+                  <Image
+                    src={post.img}
+                    alt=""
+                    fill
+                    sizes="(max-width:640px) 92vw, (max-width:1024px) 46vw, 31vw"
+                    className="object-cover transition-transform duration-[1.4s] ease-smooth group-hover:scale-[1.04]"
+                  />
+                  <span className="badge-float absolute left-4 top-4">
+                    {post.category}
+                  </span>
+                </div>
 
-              <div className="mt-5 flex items-center gap-3 text-[13px] text-navy/55">
-                <span>{b.date}</span>
-                <span className="h-1 w-1 rounded-full bg-navy/30" />
-                <span>{b.read} Read</span>
-              </div>
+                <h3 className="mt-5 font-serif text-[clamp(1.25rem,1.8vw,1.625rem)] leading-[1.15] tracking-display text-espresso">
+                  {post.title}
+                </h3>
 
-              <h3 className="mt-3 font-serif text-2xl leading-snug text-navy transition-colors group-hover:text-navy-muted">
-                {b.title}
-              </h3>
-
-              <div className="mt-5 flex items-center justify-between border-t border-sand pt-5">
-                <span className="text-[14px] text-navy/70">By {b.author}</span>
-                <span className="grid h-11 w-11 place-items-center rounded-full border border-sand text-navy transition-all duration-500 group-hover:bg-navy group-hover:text-lime">
-                  <FiArrowUpRight size={18} />
-                </span>
-              </div>
+                <div className="mt-4 flex items-center justify-between border-t border-sand pt-3.5">
+                  <span className="label-xs text-clay">{post.author}</span>
+                  <span className="label-xs text-taupe">{post.read} read</span>
+                </div>
+              </Link>
             </motion.article>
           ))}
         </div>

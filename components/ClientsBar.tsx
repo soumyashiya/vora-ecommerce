@@ -1,63 +1,42 @@
 "use client";
 
-import { motion } from "framer-motion";
-import {
-  LuBadgeCheck,
-  LuShield,
-  LuAward,
-  LuFileCheck,
-  LuFlaskConical,
-  LuScanBarcode,
-  LuMicroscope,
-} from "react-icons/lu";
-import type { IconType } from "react-icons";
+import { TRUST_ITEMS } from "@/lib/data";
 
-const ITEMS: { label: string; icon: IconType }[] = [
-  { label: "Janoshik Tested", icon: LuBadgeCheck },
-  { label: "Independent Verification", icon: LuShield },
-  { label: "99%+ Verified Purity", icon: LuAward },
-  { label: "Certificate of Analysis", icon: LuFileCheck },
-  { label: "HPLC Verified", icon: LuFlaskConical },
-  { label: "Batch Traceability", icon: LuScanBarcode },
-  { label: "Research Grade", icon: LuMicroscope },
-];
-
+/**
+ * Quiet assurance strip directly under the hero: one continuous line of
+ * tracked uppercase claims separated by hairline rules. It reads as a
+ * caption to the hero rather than a section of its own.
+ */
 export default function ClientsBar() {
-  const loop = [...ITEMS, ...ITEMS];
+  const loop = [...TRUST_ITEMS, ...TRUST_ITEMS];
+
   return (
-    <section className="bg-ivory pb-6 pt-12 sm:pb-8 sm:pt-14">
-      <div className="container-x">
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mb-8 text-center text-[13px] uppercase tracking-[0.22em] text-navy/45"
-        >
-          Independently verified &amp; trusted across the research community
-        </motion.p>
+    <section className="bg-chartreuse">
+      {/* Desktop: static, evenly distributed */}
+      <div className="container-x hidden py-5 lg:block">
+        <ul className="flex items-center justify-between">
+          {TRUST_ITEMS.map((item) => (
+            <li
+              key={item}
+              className="label-xs whitespace-nowrap text-[12px] font-medium text-espresso"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
 
-        <div className="group relative overflow-hidden rounded-[30px] border border-sand bg-beige/70 py-6">
-          {/* edge fades */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-beige to-transparent sm:w-32" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-beige to-transparent sm:w-32" />
-
-          <div className="flex w-max animate-marquee items-center group-hover:[animation-play-state:paused]">
-            {loop.map((item, i) => {
-              const Icon = item.icon;
-              return (
-                <span
-                  key={i}
-                  className="flex flex-none items-center gap-2.5 px-7 text-navy/35 transition-colors duration-300 hover:text-navy/70 sm:px-9"
-                >
-                  <Icon size={26} strokeWidth={1.75} />
-                  <span className="whitespace-nowrap text-lg font-semibold tracking-tight sm:text-xl">
-                    {item.label}
-                  </span>
-                </span>
-              );
-            })}
-          </div>
+      {/* Mobile: the same line, scrolling */}
+      <div className="overflow-hidden py-4 lg:hidden">
+        <div className="flex w-max animate-marquee items-center">
+          {loop.map((item, i) => (
+            <span key={i} className="flex flex-none items-center">
+              <span className="label-xs whitespace-nowrap px-5 text-[11px] font-medium text-espresso">
+                {item}
+              </span>
+              <span aria-hidden className="h-1 w-1 rounded-full bg-espresso/50" />
+            </span>
+          ))}
         </div>
       </div>
     </section>

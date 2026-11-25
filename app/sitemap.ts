@@ -9,6 +9,7 @@ const CONTENT_PAGES: { path: string; priority: number }[] = [
   { path: "/", priority: 1 },
   { path: "/products", priority: 0.9 },
   { path: "/about", priority: 0.7 },
+  { path: "/find-your-compound", priority: 0.6 },
   { path: "/why-us", priority: 0.7 },
   { path: "/wholesale", priority: 0.7 },
   { path: "/press-release", priority: 0.5 },

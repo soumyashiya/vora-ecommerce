@@ -1,7 +1,7 @@
 "use client";
 
 // Minimal toast system (context + portal), styled to match the site design
-// (ivory/navy/lime, rounded pills, framer-motion). No external deps.
+// (cream/espresso/chartreuse, small radii, framer-motion). No external deps.
 
 import {
   createContext,
@@ -62,15 +62,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="pointer-events-auto flex w-full max-w-md items-start gap-3 rounded-2xl border border-sand bg-white px-4 py-3 shadow-[0_30px_80px_-40px_rgba(4,52,96,0.6)]"
+              className="pointer-events-auto flex w-full max-w-md items-start gap-3 rounded-[10px] border border-sand bg-cream px-4 py-3 shadow-lift"
             >
               <span
                 className={`mt-0.5 grid h-6 w-6 flex-none place-items-center rounded-full ${
                   t.type === "success"
-                    ? "bg-lime text-navy"
+                    ? "bg-chartreuse text-espresso"
                     : t.type === "error"
-                    ? "bg-red-100 text-red-600"
-                    : "bg-beige text-navy"
+                    ? "bg-[#F6D9D2] text-[#9A3B28]"
+                    : "bg-beige text-espresso"
                 }`}
               >
                 {t.type === "error" ? (
@@ -79,11 +79,11 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                   <FiCheck size={14} />
                 )}
               </span>
-              <p className="flex-1 text-[14px] text-navy">{t.message}</p>
+              <p className="flex-1 text-[14px] text-espresso">{t.message}</p>
               <button
                 onClick={() => remove(t.id)}
                 aria-label="Dismiss"
-                className="grid h-6 w-6 flex-none place-items-center rounded-full text-navy/40 hover:bg-beige hover:text-navy"
+                className="grid h-6 w-6 flex-none place-items-center rounded-full text-taupe transition-colors hover:bg-beige hover:text-espresso"
               >
                 <FiX size={14} />
               </button>

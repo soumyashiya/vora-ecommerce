@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { ABOUT_PAGE } from "@/lib/pages";
 import { pageMetadata } from "@/lib/seo";
-import InfoPage from "@/components/marketing/InfoPage";
+import ShopHeader from "@/components/cart/ShopHeader";
+import AboutContent from "@/components/about/AboutContent";
+import AssuranceStrip from "@/components/AssuranceStrip";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = pageMetadata({
   path: "/about",
@@ -11,5 +13,12 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function AboutPage() {
-  return <InfoPage content={ABOUT_PAGE} />;
+  return (
+    <main className="min-h-screen bg-cream">
+      <ShopHeader />
+      <AboutContent />
+      <AssuranceStrip />
+      <Footer />
+    </main>
+  );
 }

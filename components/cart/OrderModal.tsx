@@ -86,7 +86,7 @@ export default function OrderModal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-md overflow-hidden rounded-[28px] border border-sand bg-ivory p-7 shadow-[0_50px_120px_-40px_rgba(4,52,96,0.7)] sm:p-9"
+            className="relative w-full max-w-md overflow-hidden rounded-[14px] border border-sand bg-cream p-7 shadow-lift sm:p-9"
           >
             <button
               onClick={() => !loading && onClose()}
@@ -131,7 +131,7 @@ export default function OrderModal({
                 placeholder="+44 ..."
               />
 
-              <div className="mt-1 flex items-center justify-between rounded-2xl bg-beige px-5 py-3.5">
+              <div className="mt-1 flex items-center justify-between rounded-[10px] bg-beige px-5 py-3.5">
                 <span className="text-[15px] text-navy/70">Total</span>
                 <span className="font-serif text-2xl text-navy">${total.toFixed(2)} USD</span>
               </div>
@@ -143,7 +143,7 @@ export default function OrderModal({
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-lime-btn px-8 py-4 font-semibold text-navy transition-all duration-500 ease-smooth hover:-translate-y-0.5 hover:bg-[#e6f9a6] disabled:opacity-70"
+                className="btn-solid mt-1 w-full disabled:opacity-70"
               >
                 {loading ? (
                   <>
@@ -187,7 +187,7 @@ function Field({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-sand bg-white px-4 py-3 text-[15px] text-navy outline-none transition-colors placeholder:text-navy/30 focus:border-navy/40"
+        className="field-box"
       />
     </label>
   );

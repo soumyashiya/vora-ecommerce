@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Inter_Tight } from "next/font/google";
+import { Instrument_Serif, Figtree } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import { CartProvider } from "@/components/cart/CartContext";
@@ -8,17 +8,21 @@ import { ToastProvider } from "@/components/ui/Toast";
 import Preloader from "@/components/Preloader";
 import { SITE_URL } from "@/lib/seo";
 
-const playfair = Playfair_Display({
+// Display serif — high-contrast, narrow, with a true italic for the
+// second line of split headings.
+const instrument = Instrument_Serif({
   subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-playfair",
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
   display: "swap",
 });
 
-const interTight = Inter_Tight({
+// Geometric-humanist sans for body copy and the tracked uppercase labels.
+const figtree = Figtree({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter-tight",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-figtree",
   display: "swap",
 });
 
@@ -26,7 +30,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#FFFBF3",
+  themeColor: "#FFFDF5",
 };
 
 // Fallback metadata for routes that do not declare their own (cart, checkout,
@@ -42,7 +46,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${playfair.variable} ${interTight.variable}`}>
+    <html lang="en" className={`${instrument.variable} ${figtree.variable}`}>
       <body>
         <Preloader />
         <AuthProvider>
