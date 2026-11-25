@@ -144,8 +144,8 @@ export const BENEFITS = [
     desc: "Our in-house formulation process maintains documented stability for up to 56 days at room temperature, outperforming conventional vial formats.",
   },
   {
-    title: "Tracked UK Shipping",
-    desc: "Discreet, fully tracked USA dispatch with batch-level traceability on every order.",
+    title: "Fast, Tracked Shipping",
+    desc: "Order by 3 PM ET on a business day for same-day dispatch. US orders typically arrive in 1–3 business days, fully tracked.",
   },
 ];
 
@@ -331,9 +331,16 @@ export const BLOG = [
   },
 ];
 
-export const FAQS = [
+export const FAQS = [  {
+    q: "How fast will my order ship?",
+    a: "Orders paid before 3 PM (US Eastern) on a business day are typically dispatched the same day. US orders usually arrive within 1–3 business days, and you'll get a tracking number as soon as your order ships.",
+  },
   {
-    q: "Are these products safe to use on humans?",
+    q: "What is your returns policy?",
+    a: "If something arrives damaged or incorrect, contact us within 48 hours of delivery. Return requests must be made within 7 days of delivery, and approved refunds go back to your original payment method within 5–10 business days. See our Refund Policy for full details.",
+  },
+  {
+    q: "Are these products for human use?",
     a: "No. Every Vora Labs compound is supplied strictly for laboratory research and in-vitro study. Nothing we sell is intended or approved for human or veterinary consumption.",
   },
   {
@@ -350,7 +357,7 @@ export const FAQS = [
   },
   {
     q: "Do you offer wholesale or bulk supply?",
-    a: "Yes. Research groups and labs can request wholesale pricing and scheduled supply. Reach out through the contact section and our team will arrange terms.",
+    a: "Yes. Labs and research groups can get volume pricing and scheduled supply. Request a quote on our Wholesale page and our team will come back with rates.",
   },
   {
     q: "Does Vora Labs operate on social media?",

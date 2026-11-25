@@ -64,7 +64,9 @@ export default function JanoshikReportModal({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.98 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="relative flex max-h-[92vh] w-full max-w-[880px] flex-col overflow-hidden rounded-[14px] bg-cream shadow-lift"
+              // svh, not vh: with the mobile browser chrome showing, 92vh is
+              // taller than the visible area and buries the close control.
+              className="relative flex max-h-[92svh] w-full max-w-[880px] flex-col overflow-hidden rounded-[14px] bg-cream shadow-lift"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
@@ -91,7 +93,7 @@ export default function JanoshikReportModal({
               </div>
 
               {/* Certificate image + sample photos */}
-              <div className="flex-1 overflow-y-auto bg-beige p-4 sm:p-6">
+              <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain bg-beige p-4 sm:p-6">
                 <div className="mx-auto flex w-full max-w-[720px] flex-col gap-4">
                   <div className="relative overflow-hidden rounded-[8px] bg-cream">
                     <Image

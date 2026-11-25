@@ -12,22 +12,22 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const POINTS = [
   {
     label: "Independent Janoshik Testing",
-    img: "/new-images/ALLUVI-Cocoa-Retatrutide-20mg.png",
+    img: "/new-images/where vora labs/Sunlit Garden Tirzepatide Portrait-2.png",
     tags: ["Janoshik tested", "Batch COA", "Published results"],
   },
   {
     label: "99%+ HPLC Verified Purity",
-    img: "/new-images/413c7df2-66a0-40b9-b8e0-b317780b20ed-ALLUVI-Cocoa-MOTS-C.png",
+    img: "/new-images/where vora labs/Sunlit garden portrait with BPC-157 & TB-500-3.png",
     tags: ["HPLC verified", "99%+ purity", "Identity confirmed"],
   },
   {
     label: "Pre-Filled Precision Pens",
-    img: "/new-images/ALLUVI-Cocoa-Glow.png",
+    img: "/new-images/where vora labs/Golden Lemons with Carton and Pen-3.png",
     tags: ["Exact concentration", "No reconstitution", "Dose increments"],
   },
   {
     label: "56-Day Stability Hold",
-    img: "/new-images/958a2cbe-8fd1-48a7-b949-4233184f5cd5-ALLUVI-Cocoa-CJC-1295.png",
+    img: "/new-images/where vora labs/Golden hour CJC-1295 garden portrait-1.png",
     tags: ["Room-temp hold", "2–8°C storage", "Batch traceable"],
   },
 ];
@@ -56,8 +56,8 @@ export default function Comparison() {
             Where Vora Labs Stands Apart
           </h2>
           <p className="mt-4 max-w-[46ch] text-[16px] font-light leading-relaxed text-espresso/85">
-            Hint: it&apos;s in the paperwork. Every compound is batch
-            documented, independently verified and supplied ready to use.
+            Here&apos;s what comes with every order: independent testing, a
+            batch-level certificate and a pen that&apos;s ready to use.
           </p>
         </motion.div>
 
@@ -67,7 +67,7 @@ export default function Comparison() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: EASE }}
-          className="relative aspect-[4/5] overflow-hidden rounded-[10px] bg-[#2B150C] xs:aspect-[4/3] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:aspect-[5/4]"
+          className="relative aspect-square overflow-hidden rounded-[10px] bg-[#2B150C] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-start"
         >
           <AnimatePresence initial={false}>
             <motion.div
@@ -84,7 +84,7 @@ export default function Comparison() {
                 fill
                 quality={90}
                 sizes="(max-width:1024px) 100vw, 50vw"
-                className="object-cover object-[35%_center]"
+                className="object-cover object-center"
               />
             </motion.div>
           </AnimatePresence>

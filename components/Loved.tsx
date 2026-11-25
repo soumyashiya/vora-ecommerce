@@ -53,8 +53,8 @@ export default function Loved() {
       <div className="container-x">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="display-3 font-serif text-espresso">
-            Loved by{" "}
-            <span className="serif-italic">Researchers Worldwide</span>
+            Why Customers{" "}
+            <span className="serif-italic">Love Vora Labs</span>
           </h2>
 
           <div className="flex gap-2">

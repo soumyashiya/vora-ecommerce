@@ -67,7 +67,9 @@ export default function Benefits() {
                 {/* Keeps the label legible over lighter parts of the photo */}
                 <span className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-black/35 to-transparent" />
 
-                <span className="absolute left-4 right-14 top-4 z-10 font-sans [text-shadow:0_1px_8px_rgba(0,0,0,0.35)] text-[14px] font-semibold uppercase leading-tight tracking-[0.04em] text-cream xs:text-[15px] sm:left-5 sm:top-5 sm:text-[17px] lg:text-[15px] xl:text-[17px]">
+                {/* The arrow grows at sm, so the label's gutter grows with it
+                    and returns to its desktop value at lg. */}
+                <span className="absolute left-4 right-14 top-4 z-10 font-sans [text-shadow:0_1px_8px_rgba(0,0,0,0.35)] text-[14px] font-semibold uppercase leading-tight tracking-[0.04em] text-cream xs:text-[15px] sm:left-5 sm:right-[4.25rem] sm:top-5 sm:text-[17px] lg:right-14 lg:text-[15px] xl:text-[17px]">
                   {tile.title}
                 </span>
 

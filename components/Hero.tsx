@@ -37,6 +37,10 @@ export default function Hero() {
         stagger: 0.1,
       });
 
+      // Phones stack the photo above the copy, so the drift would push the
+      // image into the text block — keep the parallax to the overlay layout.
+      const overlay = window.matchMedia("(min-width: 768px)").matches;
+
       if (imgRef.current && !prefersReduced) {
         gsap.fromTo(
           imgRef.current,
@@ -44,7 +48,7 @@ export default function Hero() {
           { scale: 1, duration: 1.8, ease: "power3.out" }
         );
         // Slow parallax drift as the hero leaves the viewport.
-        gsap.to(imgRef.current, {
+        if (overlay) gsap.to(imgRef.current, {
           yPercent: 10,
           ease: "none",
           scrollTrigger: {
@@ -63,50 +67,61 @@ export default function Hero() {
     <section
       id="top"
       ref={root}
-      className="relative h-[min(100svh,860px)] min-h-[560px] w-full overflow-hidden"
+      className="relative w-full overflow-hidden bg-espresso md:h-[min(100svh,860px)] md:min-h-[560px]"
     >
       {/* The shot is 2:1 with the pack on the right, so a tall hero crops the
           sides hard. Anchor right of centre as the viewport narrows: the pack
           stays whole and the empty left third keeps holding the type. */}
-      <div ref={imgRef} className="absolute inset-0">
+      {/* Phones: the 2:1 shot can't fill a tall screen without blowing the
+          pack up past the edges, so it gets its own block on top — square,
+          anchored right, which frames exactly the pack and pen — and the copy
+          sits below it. From md the photo runs full-bleed behind the type. */}
+      <div ref={imgRef} className="relative aspect-square w-full sm:aspect-[4/3] md:absolute md:inset-0 md:aspect-auto">
         <Image
           src={IMG.hero}
           alt="Retatrutide 40mg carton and pre-filled pen in warm studio light"
           fill
           priority
-          quality={95}
+          // 95 cost 428KB on a phone for an SSIM of 0.979 against 90 — no
+          // visible difference on a photograph, nearly half the bytes.
+          quality={90}
           // The hero is far taller than the 2:1 source, so `cover` scales the
           // image to the container HEIGHT — it needs well over 100vw of pixels.
           // These hints stop Next serving a soft, upscaled 640px file.
-          sizes="(max-width: 480px) 400vw, (max-width: 900px) 230vw, (max-width: 1280px) 140vw, 120vw"
-          className="object-cover object-[64%_center] md:object-[80%_center] xl:object-[88%_center]"
+          sizes="(max-width: 639px) 200vw, (max-width: 767px) 150vw, (max-width: 1280px) 140vw, 120vw"
+          className="object-cover object-right md:object-[80%_center] xl:object-[88%_center]"
         />
+        {/* Phones: darken under the header and melt the bottom edge into the
+            copy block below. */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-espresso/60 to-transparent md:hidden" />
+        <div className="absolute inset-x-0 bottom-0 h-[12%] bg-gradient-to-t from-espresso to-transparent md:hidden" />
       </div>
 
       {/* Scrim: just enough to hold the type, weighted to the left column.
-          On phones the crop puts the white carton behind the headline, so the
-          bottom half of the scrim carries more weight below sm. */}
-      <div className="absolute inset-0 bg-gradient-to-r from-espresso/70 via-espresso/25 to-transparent" />
-      <div className="absolute inset-0 bg-espresso/30 sm:hidden" />
-      <div className="absolute inset-0 bg-gradient-to-t from-espresso/85 via-espresso/30 to-espresso/25 sm:from-espresso/40 sm:via-transparent sm:to-espresso/20" />
+          Only from lg does the crop leave the left third clear — below that
+          the white carton sits behind the headline and lead, so the bottom
+          half of the scrim carries the extra weight. */}
+      <div className="absolute inset-0 hidden bg-gradient-to-r from-espresso/70 via-espresso/25 to-transparent md:block" />
+      <div className="absolute inset-0 hidden bg-espresso/22 md:block lg:hidden" />
+      <div className="absolute inset-0 hidden md:block bg-gradient-to-t from-espresso/85 via-espresso/30 to-espresso/25 lg:from-espresso/40 lg:via-transparent lg:to-espresso/20" />
 
-      <div className="container-x relative flex h-full flex-col justify-end pb-[clamp(56px,9vh,110px)]">
+      <div className="container-x relative flex flex-col justify-end pb-12 pt-4 md:h-full md:pb-[clamp(56px,9vh,110px)] md:pt-0">
         <div className="max-w-[min(640px,92%)]">
-          <p className="hero-rise eyebrow text-cream">Now Supplying</p>
+          <p className="hero-rise eyebrow text-cream">Lab tested · Same-day dispatch</p>
 
           <h1 className="hero-rise display-1 mt-5 font-serif text-cream">
-            Research Peptides,
+            Vora Labs Peptides,
             <br />
-            Independently Verified
+            Verified Every Batch
           </h1>
 
           <p className="hero-rise mt-6 max-w-[46ch] text-[17px] font-light leading-relaxed text-cream/85">
-            Every batch HPLC analysed, Janoshik certified and released with a
-            certificate of analysis you can check yourself.
+            99%+ HPLC purity, independent Janoshik testing and a certificate of
+            analysis with every order. Ready-to-use pens, shipped tracked.
           </p>
 
           <div className="hero-rise mt-9">
-            <OnDarkButton href="/products">Shop now</OnDarkButton>
+            <OnDarkButton href="/products">Shop all products</OnDarkButton>
           </div>
         </div>
       </div>

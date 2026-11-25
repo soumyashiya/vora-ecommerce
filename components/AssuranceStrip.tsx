@@ -4,7 +4,7 @@ const ASSURANCES = [
   { icon: FiShield, label: "Janoshik Independent Testing" },
   { icon: FiActivity, label: "99%+ HPLC Verified Purity" },
   { icon: FiFileText, label: "Batch-Level Certificate of Analysis" },
-  { icon: FiTruck, label: "Tracked, Discreet Dispatch" },
+  { icon: FiTruck, label: "Same-Day Tracked Dispatch" },
 ];
 
 /** Dark four-point trust band shown above the footer on shop pages. */

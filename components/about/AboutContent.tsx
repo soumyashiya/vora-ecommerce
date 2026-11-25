@@ -71,7 +71,7 @@ export default function AboutContent() {
           alt=""
           fill
           priority
-          quality={95}
+          quality={90}
           sizes="(max-width:640px) 280vw, (max-width:1024px) 170vw, (max-width:1280px) 130vw, 100vw"
           className="object-cover object-center"
         />
@@ -107,9 +107,8 @@ export default function AboutContent() {
         </motion.div>
 
         <motion.div {...fadeUp}>
-          <h2 className="font-serif text-[clamp(2.25rem,4vw,3.5rem)] leading-none tracking-display text-espresso">
-            Our Manifesto
-          </h2>
+          <h2 className="font-serif text-[clamp(2.25rem,4vw,3.5rem)] leading-none tracking-display text-espresso">            The Vora Labs Manifesto
+</h2>
           <div className="mt-6 flex flex-col gap-5 text-[16px] font-light leading-relaxed text-espresso/85">
             <p>
               Research should rest on material you can account for. We supply
@@ -140,7 +139,7 @@ export default function AboutContent() {
       <section className="container-x flex flex-col gap-4">
         <motion.div
           {...fadeUp}
-          className="sticky top-[40px] grid aspect-[4/5] place-items-center overflow-hidden rounded-[12px] bg-espresso sm:aspect-[16/10] lg:aspect-[15/8]"
+          className="sticky top-[40px] grid aspect-[4/5] place-items-end justify-items-center overflow-hidden sm:place-items-center rounded-[12px] bg-espresso sm:aspect-[16/10] lg:aspect-[15/8]"
         >
           <Image
             src="/new-images/bpc/Woman Holding Alluvi Carton and Pen.png"
@@ -151,10 +150,13 @@ export default function AboutContent() {
             className="object-cover"
           />
           <span className="absolute inset-0 bg-espresso/25" />
-          <h2 className="relative text-center font-serif text-[clamp(3.25rem,8vw,7rem)] leading-[0.9] tracking-display text-cream [text-shadow:0_2px_24px_rgba(0,0,0,0.35)]">
-            Meet the
+          {/* Phones: the face fills the centre, so the title drops to the
+              foot of the card over a darker fade. */}
+          <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-espresso/85 to-transparent sm:hidden" />
+          <h2 className="relative pb-8 text-center sm:pb-0 font-serif text-[clamp(3.25rem,8vw,7rem)] leading-[0.9] tracking-display text-cream [text-shadow:0_2px_24px_rgba(0,0,0,0.35)]">
+            Meet the Vora
             <br />
-            <span className="serif-italic">Team</span>
+            <span className="serif-italic">Labs Team</span>
           </h2>
         </motion.div>
 
@@ -178,7 +180,9 @@ export default function AboutContent() {
                   alt=""
                   fill
                   quality={90}
-                  sizes="100vw"
+                  // From lg the photo occupies 62% of the card, not the
+                  // viewport, so 100vw pulled roughly twice the pixels needed.
+                  sizes="(max-width:1024px) 100vw, 58vw"
                   className="object-cover"
                 />
                 <span
@@ -216,7 +220,7 @@ export default function AboutContent() {
           {...fadeUp}
           className="text-center font-serif text-[clamp(2rem,3.6vw,3rem)] leading-none tracking-display text-espresso"
         >
-          How Every Batch Comes Together
+          How Every Vora Labs Batch Comes Together
         </motion.h2>
 
         <div className="snap-rail no-scrollbar -mx-[max(20px,3.2vw)] mt-10 flex gap-4 overflow-x-auto px-[max(20px,3.2vw)] pb-2 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0">
@@ -256,7 +260,7 @@ export default function AboutContent() {
       <section className="container-x pb-[clamp(56px,7vw,104px)]">
         <motion.div {...fadeUp}>
           <h2 className="font-serif text-[clamp(2.25rem,4vw,3.5rem)] leading-none tracking-display text-espresso">
-            Highlights &amp; Insights
+            Vora Labs Highlights &amp; Insights
           </h2>
           <p className="mt-4 max-w-[46ch] text-[16px] font-light leading-relaxed text-espresso/85">
             Read the thinking behind our process in the Vora Labs Journal.

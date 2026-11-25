@@ -38,8 +38,8 @@ export default function Programs() {
     <section id="products" className="section-pad">
       <div className="container-x">
         <SplitReveal
-          text="Targeted Compounds for"
-          accent="Precise Research"
+          text="Shop Vora Labs"
+          accent="Best Sellers"
           as="h2"
           className="display-2 mx-auto max-w-[20ch] text-center font-serif text-espresso"
         />
@@ -81,6 +81,9 @@ export default function Programs() {
                 product={p}
                 index={i}
                 className="w-[78vw] flex-none xs:w-[66vw] sm:w-[44vw] lg:w-[calc((100%-48px)/3)]"
+                // Mirrors the card widths on the left — the rail card is far
+                // wider than a catalogue cell, so it needs its own hint.
+                sizes="(max-width:480px) 78vw, (max-width:640px) 66vw, (max-width:1024px) 44vw, 31vw"
               />
             ))}
           </motion.div>

@@ -6,6 +6,7 @@ import { CartProvider } from "@/components/cart/CartContext";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ToastProvider } from "@/components/ui/Toast";
 import Preloader from "@/components/Preloader";
+import PartnerModal from "@/components/PartnerModal";
 import { SITE_URL } from "@/lib/seo";
 
 // Display serif — high-contrast, narrow, with a true italic for the
@@ -53,6 +54,7 @@ export default function RootLayout({
           <ToastProvider>
             <CartProvider>
               <SmoothScroll>{children}</SmoothScroll>
+              <PartnerModal />
             </CartProvider>
           </ToastProvider>
         </AuthProvider>

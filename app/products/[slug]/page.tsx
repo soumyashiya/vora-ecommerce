@@ -8,6 +8,7 @@ import { pageMetadata, PRODUCT_SEO } from "@/lib/seo";
 import ShopHeader from "@/components/cart/ShopHeader";
 import ProductGallery from "@/components/cart/ProductGallery";
 import AddToCart from "@/components/cart/AddToCart";
+import LabResultsModal from "@/components/cart/LabResultsModal";
 import ProductInfoTabs from "@/components/cart/ProductInfoTabs";
 import JanoshikReportModal from "@/components/cart/JanoshikReportModal";
 import { StarRow } from "@/components/ui/Bits";
@@ -53,13 +54,13 @@ export default async function ProductPage({
 
       <div className="container-x pb-20 pt-8 lg:pt-10">
         <nav className="mb-7 flex items-center gap-2 text-[12px] uppercase tracking-[0.06em] text-taupe">
-          <Link href="/" className="transition-colors hover:text-espresso">
+          <Link href="/" className="tap-pad transition-colors hover:text-espresso">
             Home
           </Link>
           <span aria-hidden>/</span>
           <Link
             href="/products"
-            className="transition-colors hover:text-espresso"
+            className="tap-pad transition-colors hover:text-espresso"
           >
             Shop
           </Link>
@@ -85,7 +86,11 @@ export default async function ProductPage({
               {product.name}
             </h1>
 
-            <p className="mt-4 text-[16px] font-medium leading-relaxed text-espresso">
+            <p className="mt-2 text-[20px] font-medium text-espresso">
+              {product.priceLabel}
+            </p>
+
+            <p className="mt-3 text-[16px] font-medium leading-relaxed text-espresso">
               {product.tagline}
             </p>
 
@@ -172,10 +177,10 @@ export default async function ProductPage({
         </div>
 
         {/* ---------------- Detail band ---------------- */}
-        <section className="mt-20 grid grid-cols-1 gap-10 lg:mt-28 lg:grid-cols-2 lg:gap-16">
+        <section className="mt-14 grid grid-cols-1 gap-10 sm:mt-20 lg:mt-28 lg:grid-cols-2 lg:gap-16">
           <div>
             <h2 className="display-3 font-serif text-espresso">
-              About this compound
+              About This Vora Labs Compound
             </h2>
             <p className="mt-5 text-[16px] font-light leading-relaxed text-clay">
               {product.description}
@@ -228,47 +233,57 @@ export default async function ProductPage({
 
         {/* ---------------- Lab analysis ---------------- */}
         {product.analytes.length > 0 && (
-        <section className="mt-20 rounded-[14px] bg-beige px-6 py-12 sm:px-10 lg:mt-24">
+        <section className="mt-14 rounded-[14px] bg-beige px-4 py-10 sm:mt-20 sm:px-10 sm:py-12 lg:mt-24">
           <div className="mx-auto max-w-[42ch] text-center">
             <h2 className="display-3 font-serif text-espresso">
-              Janoshik Third-Party Analysis
+              Vora Labs Third-Party Janoshik Results
             </h2>
             <p className="mt-3 text-[15px] font-light text-clay">
               Independently tested and verified by Janoshik Analytical.
             </p>
           </div>
 
-          <dl className="mx-auto mt-10 grid max-w-3xl gap-px overflow-hidden rounded-[10px] bg-sand sm:grid-cols-3">
-            <Stat label="Batch number" value={product.batchNumber} />
+          <dl className="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-px overflow-hidden rounded-[10px] bg-sand sm:mt-10 sm:grid-cols-3">
+            <Stat label="Batch number" value={product.batchNumber} wide />
             <Stat label="Fill volume" value={product.fillVolume} />
             <Stat label="Purity" value={product.purity} />
           </dl>
 
-          <div className="mx-auto mt-5 max-w-3xl overflow-x-auto rounded-[10px] bg-cream">
-            <table className="w-full min-w-[460px] text-left text-[15px]">
-              <thead>
-                <tr className="border-b border-sand">
-                  <th className="label-xs px-5 py-4 text-clay">Compound</th>
-                  <th className="label-xs px-5 py-4 text-clay">
-                    Concentration
-                  </th>
-                  <th className="label-xs px-5 py-4 text-clay">
-                    Verified content
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-sand text-espresso">
-                {product.analytes.map((a) => (
-                  <tr key={a.compound}>
-                    <td className="px-5 py-4 font-medium">{a.compound}</td>
-                    <td className="px-5 py-4 font-light">{a.concentration}</td>
-                    <td className="px-5 py-4 font-light">
-                      {a.verifiedContent}
-                    </td>
+          {/* The assay table needs 460px of width; below that it scrolls, so
+              a fade on the trailing edge says the third column is there. */}
+          <div className="relative mx-auto mt-5 max-w-3xl">
+            <div className="overflow-x-auto rounded-[10px] bg-cream">
+              <table className="w-full min-w-[460px] text-left text-[15px]">
+                <thead>
+                  <tr className="border-b border-sand">
+                    <th className="label-xs px-5 py-4 text-clay">Compound</th>
+                    <th className="label-xs px-5 py-4 text-clay">
+                      Concentration
+                    </th>
+                    <th className="label-xs px-5 py-4 text-clay">
+                      Verified content
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-sand text-espresso">
+                  {product.analytes.map((a) => (
+                    <tr key={a.compound}>
+                      <td className="px-5 py-4 font-medium">{a.compound}</td>
+                      <td className="px-5 py-4 font-light">
+                        {a.concentration}
+                      </td>
+                      <td className="px-5 py-4 font-light">
+                        {a.verifiedContent}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-y-0 right-0 w-10 rounded-r-[10px] bg-gradient-to-l from-cream to-transparent sm:hidden"
+            />
           </div>
 
           <p className="mx-auto mt-4 max-w-3xl text-[13px] font-light text-taupe">
@@ -279,10 +294,10 @@ export default async function ProductPage({
         )}
 
         {/* ---------------- Related ---------------- */}
-        <section className="mt-20 lg:mt-28">
+        <section className="mt-14 sm:mt-20 lg:mt-28">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <h2 className="display-3 font-serif text-espresso">
-              You may also need
+              More From Vora Labs
             </h2>
             <Link
               href="/products"
@@ -292,26 +307,31 @@ export default async function ProductPage({
             </Link>
           </div>
 
-          <div className="mt-10 grid gap-x-6 gap-y-10 xs:grid-cols-2 lg:grid-cols-3">
-            {related.map((p) => (
-              <Link key={p.slug} href={`/products/${p.slug}`} className="group">
+          <div className="mt-8 grid grid-cols-2 gap-x-3 gap-y-8 sm:mt-10 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3">
+            {related.map((p, i) => (
+              // Two columns below lg, so the third card would sit alone.
+              <Link
+                key={p.slug}
+                href={`/products/${p.slug}`}
+                className={`group ${i === 2 ? "hidden lg:block" : ""}`}
+              >
                 <div className="relative aspect-square overflow-hidden rounded-[6px] bg-beige">
                   <Image
                     src={p.image}
                     alt={p.name}
                     fill
-                    sizes="(max-width:1024px) 46vw, 31vw"
+                    sizes="(max-width:1024px) 48vw, 31vw"
                     className="object-cover transition-transform duration-[1.4s] ease-smooth group-hover:scale-[1.04]"
                   />
                 </div>
-                <h3 className="mt-4 font-sans text-[15px] font-semibold uppercase tracking-[0.02em] text-espresso">
+                <h3 className="mt-3 font-sans text-[13px] font-semibold uppercase leading-snug tracking-[0.02em] text-espresso sm:mt-4 sm:text-[15px]">
                   {p.name}
                 </h3>
-                <div className="mt-1 flex items-center justify-between gap-3">
-                  <p className="text-[15px] font-light text-clay">
+                <div className="mt-1 flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                  <p className="line-clamp-1 text-[13px] font-light text-clay sm:text-[15px]">
                     {p.category}
                   </p>
-                  <span className="text-[15px] text-espresso">
+                  <span className="text-[14px] font-medium text-espresso sm:text-[15px] sm:font-normal">
                     {p.priceLabel}
                   </span>
                 </div>
@@ -322,15 +342,16 @@ export default async function ProductPage({
       </div>
 
       <Footer />
+      <LabResultsModal product={product} />
     </main>
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value, wide }: { label: string; value: string; wide?: boolean }) {
   return (
-    <div className="bg-cream px-5 py-5">
+    <div className={`bg-cream px-4 py-4 sm:px-5 sm:py-5 ${wide ? "col-span-2 sm:col-span-1" : ""}`}>
       <dt className="label-xs text-taupe">{label}</dt>
-      <dd className="mt-2 font-serif text-[22px] tracking-display text-espresso">
+      <dd className="mt-2 break-words font-serif text-[20px] tracking-display text-espresso sm:text-[22px]">
         {value}
       </dd>
     </div>

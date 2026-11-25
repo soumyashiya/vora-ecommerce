@@ -26,8 +26,8 @@ export default function Blog() {
             The Vora Journal
           </h2>
           <p className="lead mt-4 max-w-[46ch]">
-            Method notes and verification guidance to help you read what you
-            receive.
+            Buying guides, storage tips and how to read the certificate that
+            comes with your order.
           </p>
         </motion.div>
 

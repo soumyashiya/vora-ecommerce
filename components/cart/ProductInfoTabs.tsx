@@ -28,7 +28,7 @@ export default function ProductInfoTabs({ tabs }: { tabs: Tab[] }) {
               role="tab"
               aria-selected={isActive}
               onClick={() => setActive(t.key)}
-              className={`relative flex-none whitespace-nowrap pb-3 text-[12px] sm:text-[13px] font-medium uppercase tracking-[0.06em] transition-colors ${
+              className={`tap-pad relative flex-none whitespace-nowrap pb-3 text-[12px] sm:text-[13px] font-medium uppercase tracking-[0.06em] transition-colors ${
                 isActive ? "text-espresso" : "text-clay hover:text-espresso"
               }`}
             >

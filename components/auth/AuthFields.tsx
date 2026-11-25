@@ -83,7 +83,7 @@ export function PasswordField({
         {forgotHref && (
           <a
             href={forgotHref}
-            className="normal-case tracking-normal text-clay underline underline-offset-4 transition-colors hover:text-espresso"
+            className="tap-pad normal-case tracking-normal text-clay underline underline-offset-4 transition-colors hover:text-espresso"
           >
             Forgot?
           </a>

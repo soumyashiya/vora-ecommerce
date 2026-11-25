@@ -20,14 +20,23 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  * description, and a rating / price row. Nothing is boxed — the photograph
  * is the card.
  */
+/**
+ * The card is used at very different widths — a 78vw swipe card on the home
+ * rail, a 43vw grid cell on the catalogue — so the caller declares what the
+ * packshot will actually occupy. The default matches the catalogue grid.
+ */
+const GRID_SIZES = "(max-width:1024px) 45vw, 31vw";
+
 export default function ProductCard({
   product,
   index = 0,
   className,
+  sizes = GRID_SIZES,
 }: {
   product: Product;
   index?: number;
   className?: string;
+  sizes?: string;
 }) {
   const { add } = useCart();
   const [added, setAdded] = useState(false);
@@ -69,7 +78,7 @@ export default function ProductCard({
             alt={product.name}
             fill
             quality={90}
-            sizes="(max-width:640px) 60vw, (max-width:1024px) 45vw, 31vw"
+            sizes={sizes}
             className="origin-[50%_55%] object-cover transition-transform duration-[1.4s] ease-smooth group-hover:scale-[1.05]"
           />
         </Link>
@@ -86,7 +95,7 @@ export default function ProductCard({
         <button
           onClick={handleAdd}
           aria-label={`Add ${product.name} to cart`}
-          className="absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-[6px] sm:right-4 sm:top-4 bg-cream text-espresso transition-colors duration-300 hover:bg-espresso hover:text-cream"
+          className="tap-pad absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-[6px] sm:right-4 sm:top-4 bg-cream text-espresso transition-colors duration-300 hover:bg-espresso hover:text-cream"
         >
           <AnimatePresence mode="wait" initial={false}>
             {added ? (
@@ -129,7 +138,7 @@ export default function ProductCard({
           {product.tagline}
         </p>
 
-        <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 sm:mt-3">
+        <div className="mt-2.5 flex flex-col items-start gap-1 sm:mt-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-4">
           {product.purity ? (
             <StarRow count={product.purity} label="Verified" />
           ) : (

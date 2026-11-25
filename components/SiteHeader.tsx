@@ -272,7 +272,13 @@ export default function SiteHeader({
                 </button>
               </div>
 
-              <nav className="flex-1 overflow-y-auto px-6 py-8">
+              <nav
+                data-lenis-prevent
+                className="flex-1 overflow-y-auto overscroll-contain px-6 pt-8"
+                style={{
+                  paddingBottom: "max(2rem, env(safe-area-inset-bottom))",
+                }}
+              >
                 <ul className="flex flex-col">
                   {NAV_LINKS.map((link, i) => (
                     <motion.li

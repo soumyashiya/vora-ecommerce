@@ -20,7 +20,7 @@ export default function FAQ() {
         <div>
           <h2 className="display-3 font-serif text-espresso">Vora Labs FAQs</h2>
           <p className="mt-3 text-[15px] font-light text-clay">
-            Want to know more? You&apos;re in the right place.
+            Shipping, returns, testing and storage — answered.
           </p>
         </div>
 

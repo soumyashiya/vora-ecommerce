@@ -109,8 +109,11 @@ export default function ProductGallery({
                     alt=""
                     aria-hidden
                     fill
-                    quality={75}
-                    sizes="50vw"
+                    // This copy only ever ships behind a 2xl blur at 60%
+                    // opacity, so a thumbnail carries it. Asking for 50vw
+                    // pulled a full half-viewport file to smear into a ground.
+                    quality={40}
+                    sizes="48px"
                     className="scale-110 object-cover opacity-60 blur-2xl"
                   />
                   <Image
@@ -146,7 +149,7 @@ export default function ProductGallery({
                 aria-label={`Show image ${i + 1}`}
                 aria-current={current === i}
                 onClick={() => goTo(i)}
-                className="grid h-8 w-8 place-items-center"
+                className="tap-pad grid h-8 w-8 place-items-center"
               >
                 <span
                   className={`block h-1.5 rounded-full transition-all duration-300 ${

@@ -105,7 +105,7 @@ export default function CartPage() {
 
                         <button
                           onClick={() => remove(it.slug)}
-                          className="flex items-center gap-1.5 text-[13px] font-light text-clay underline-offset-4 transition-colors hover:text-espresso hover:underline"
+                          className="tap-pad flex items-center gap-1.5 text-[13px] font-light text-clay underline-offset-4 transition-colors hover:text-espresso hover:underline"
                         >
                           <FiTrash2 size={14} /> Remove
                         </button>
@@ -146,7 +146,7 @@ export default function CartPage() {
                 </Link>
                 <Link
                   href="/products"
-                  className="mt-4 block text-center text-[13px] font-light text-clay underline underline-offset-4 transition-colors hover:text-espresso"
+                  className="tap-pad mt-4 block text-center text-[13px] font-light text-clay underline underline-offset-4 transition-colors hover:text-espresso"
                 >
                   Continue shopping
                 </Link>

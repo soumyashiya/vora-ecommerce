@@ -99,10 +99,13 @@ export default function ShopGrid() {
       {/* Collection tabs + Filter & Sort */}
       <div className="container-x mt-8 lg:mt-10">
         <div className="flex items-center gap-4 border-b border-sand">
+          {/* Phones: the tabs get the full row and scroll; a fade on the
+              trailing edge says there are more. Filter moves to the count row. */}
+          <div className="relative min-w-0 flex-1">
           <div
             role="tablist"
             aria-label="Collections"
-            className="no-scrollbar flex flex-1 items-center gap-6 overflow-x-auto pb-3 pt-1 lg:gap-10"
+            className="no-scrollbar flex items-center gap-6 overflow-x-auto pb-3 pr-8 pt-1 lg:gap-10"
           >
             {COLLECTIONS.map((c) => (
               <button
@@ -118,26 +121,45 @@ export default function ShopGrid() {
               </button>
             ))}
           </div>
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-cream to-transparent"
+          />
+          </div>
 
           <button
             type="button"
             onClick={() => setDrawerOpen(true)}
-            className="mb-2 flex flex-none items-center gap-2 rounded-full bg-beige px-4 py-2.5 text-[12px] font-medium uppercase tracking-[0.06em] text-espresso transition-colors hover:bg-sand sm:px-5"
+            // Below xs the label is hidden and only the icon remains, which
+            // would otherwise leave the control unnamed.
+            aria-label="Filter and sort"
+            className="mb-2 hidden flex-none items-center gap-2 rounded-full bg-beige px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.06em] text-espresso transition-colors hover:bg-sand sm:flex"
           >
-            <span className="hidden xs:inline">Filter &amp; Sort</span>
+            <span>Filter &amp; Sort</span>
             <FiSliders size={14} />
           </button>
         </div>
 
-        <p className="mt-5 text-[13px] font-light text-clay">
-          {items.length} {items.length === 1 ? "product" : "products"}
-          {sort !== "featured" && (
-            <> · sorted by {SORTS.find((s) => s.key === sort)?.label.toLowerCase()}</>
-          )}
-        </p>
+        <div className="mt-4 flex items-center justify-between gap-3 sm:mt-5">
+          <p className="text-[13px] font-light text-clay">
+            {items.length} {items.length === 1 ? "product" : "products"}
+            {sort !== "featured" && (
+              <> · sorted by {SORTS.find((s) => s.key === sort)?.label.toLowerCase()}</>
+            )}
+          </p>
+          <button
+            type="button"
+            onClick={() => setDrawerOpen(true)}
+            aria-label="Filter and sort"
+            className="flex flex-none items-center gap-2 rounded-full border border-sand px-4 py-2.5 text-[12px] font-medium uppercase tracking-[0.06em] text-espresso sm:hidden"
+          >
+            <span>Filter &amp; Sort</span>
+            <FiSliders size={14} />
+          </button>
+        </div>
 
         {/* Grid */}
-        <div className="mt-6 grid grid-cols-2 gap-x-3 gap-y-9 sm:gap-x-5 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
+        <div className="mt-5 grid grid-cols-2 gap-x-3 gap-y-9 sm:gap-x-5 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
           {items.map((p, i) => (
             <Fragment key={p.slug}>
               <ProductCard product={p} index={i} />
@@ -238,7 +260,7 @@ function PromoTile() {
         className="object-cover object-right transition-transform duration-[1.4s] ease-smooth group-hover:scale-[1.03]"
       />
       <span className="absolute inset-0 bg-gradient-to-r from-[#2B150C]/90 via-[#2B150C]/40 to-transparent" />
-      <span className="absolute inset-0 bg-[#2B150C]/40 sm:hidden" />
+      <span className="absolute inset-0 bg-gradient-to-t from-[#2B150C]/70 via-[#2B150C]/50 to-[#2B150C]/30 sm:hidden" />
 
       <div className="relative flex h-full flex-col justify-between p-6 sm:p-8 lg:p-10">
         <div>
@@ -247,7 +269,7 @@ function PromoTile() {
             <br />
             independently verified.
           </p>
-          <p className="mt-3 max-w-[32ch] text-[15px] font-light text-cream/80">
+          <p className="mt-3 max-w-[32ch] text-[15px] font-light text-cream/90 sm:text-cream/80">
             Janoshik tested, 99%+ HPLC purity and a published certificate of
             analysis.
           </p>
@@ -317,7 +339,7 @@ function FilterDrawer({
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-6 py-6">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-6 py-6">
               <DrawerGroup title="Sort by">
                 {SORTS.map((s) => (
                   <OptionRow
@@ -342,7 +364,10 @@ function FilterDrawer({
               </DrawerGroup>
             </div>
 
-            <div className="flex gap-3 border-t border-sand px-6 py-5">
+            <div
+              className="flex gap-3 border-t border-sand px-6 pt-5"
+              style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
+            >
               <button
                 type="button"
                 onClick={() => {

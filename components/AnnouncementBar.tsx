@@ -8,7 +8,7 @@ const MESSAGES = [
   "Research use only — not for human or veterinary consumption",
   "Every batch independently Janoshik tested · 99%+ HPLC purity",
   "Batch-level certificate of analysis with every order",
-  "Tracked, discreet dispatch on all orders",
+  "Order by 3 PM ET for same-day dispatch · US delivery in 1–3 days",
 ];
 
 const INTERVAL = 5000;
@@ -39,17 +39,20 @@ export default function AnnouncementBar() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="container-x flex h-8 items-center justify-between gap-3">
+      {/* The longest message is 59 characters — far more than a phone can hold
+          on one line, so the strip is two lines deep there and snaps back to a
+          single 32px row from sm, where it has always fitted. */}
+      <div className="container-x flex h-11 items-center justify-between gap-2 sm:h-8 sm:gap-3">
         <button
           type="button"
           aria-label="Previous message"
           onClick={() => go(-1)}
-          className="grid h-7 w-7 flex-none place-items-center transition-opacity hover:opacity-60"
+          className="-ml-2 grid h-10 w-10 flex-none place-items-center transition-opacity hover:opacity-60 sm:ml-0 sm:h-7 sm:w-7"
         >
           <FiArrowLeft size={14} />
         </button>
 
-        <div className="relative h-full flex-1 overflow-hidden" aria-live="polite">
+        <div className="relative h-full min-w-0 flex-1 overflow-hidden" aria-live="polite">
           <AnimatePresence initial={false} custom={dir} mode="popLayout">
             <motion.p
               key={index}
@@ -58,7 +61,7 @@ export default function AnnouncementBar() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: dir * -24 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0 flex items-center justify-center truncate text-center text-[11px] font-semibold uppercase leading-none tracking-[0.06em] sm:text-[12px]"
+              className="absolute inset-0 flex items-center justify-center text-balance text-center text-[11px] font-semibold uppercase leading-[1.25] tracking-[0.06em] sm:truncate sm:leading-none sm:text-[12px]"
             >
               {MESSAGES[index]}
             </motion.p>
@@ -69,7 +72,7 @@ export default function AnnouncementBar() {
           type="button"
           aria-label="Next message"
           onClick={() => go(1)}
-          className="grid h-7 w-7 flex-none place-items-center transition-opacity hover:opacity-60"
+          className="-mr-2 grid h-10 w-10 flex-none place-items-center transition-opacity hover:opacity-60 sm:mr-0 sm:h-7 sm:w-7"
         >
           <FiArrowRight size={14} />
         </button>

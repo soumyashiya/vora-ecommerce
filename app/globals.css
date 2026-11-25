@@ -104,6 +104,19 @@ body {
   select {
     font-family: inherit;
   }
+
+  /* Batch numbers, order references and emails are long unbroken tokens;
+     let them break rather than push a narrow column sideways. */
+  h1,
+  h2,
+  h3,
+  h4,
+  p,
+  li,
+  dd,
+  dt {
+    overflow-wrap: break-word;
+  }
 }
 
 @layer components {
@@ -120,7 +133,8 @@ body {
     width: 100%;
     max-width: 860px;
     margin-inline: auto;
-    padding-inline: clamp(20px, 5vw, 44px);
+    padding-left: max(clamp(20px, 5vw, 44px), env(safe-area-inset-left));
+    padding-right: max(clamp(20px, 5vw, 44px), env(safe-area-inset-right));
   }
 
   /* ---- micro-label -------------------------------------------------- */
@@ -538,6 +552,50 @@ body {
 }
 .snap-rail > * {
   scroll-snap-align: start;
+}
+
+/* ---- touch input ------------------------------------------------------- */
+/* Everything below is keyed to `pointer: coarse`, so a mouse-driven desktop
+   renders exactly as it did before. */
+@media (pointer: coarse) {
+  /* iOS Safari zooms the whole page when a focused control is set below 16px,
+     and never zooms back out. The field scale stays 15px for pointers. */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select:not([size]),
+  textarea:not([hidden]) {
+    font-size: 16px;
+  }
+
+  /* Grow the hit area of small text controls without moving a pixel of the
+     layout: a transparent overlay, not extra padding. */
+  /* Only establish a containing block when the element has none of its own —
+     several of these are already absolutely positioned. */
+  .tap-pad:not(.absolute):not(.relative):not(.fixed):not(.sticky) {
+    position: relative;
+  }
+  .tap-pad::before {
+    content: "";
+    position: absolute;
+    inset: -11px -8px;
+  }
+
+  /* Catalogue filters are the primary control on the shop pages and sit at
+     26px of type height on their own. */
+  .tab-link::before {
+    content: "";
+    position: absolute;
+    inset: -10px -6px;
+  }
+
+  /* `overflow-x: auto` forces the used value of `overflow-y` to `auto` too, so
+     every horizontal rail becomes a vertical scroll container and swallows an
+     upward swipe instead of passing it to the page. The product rail is ~500px
+     tall on a phone, so a thumb landing on one left the page stuck. Pinning
+     overflow-y restores the chain and leaves the x-axis snap untouched.
+     Elements that genuinely scroll both ways are excluded. */
+  .overflow-x-auto:not(.overflow-y-auto):not(.overflow-y-scroll) {
+    overflow-y: hidden;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

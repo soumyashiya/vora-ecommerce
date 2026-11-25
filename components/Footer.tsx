@@ -94,9 +94,9 @@ export default function Footer() {
         {/* Signup block */}
         <div className="mt-16 grid gap-10 lg:mt-20 lg:grid-cols-2 lg:gap-16">
           <h3 className="display-3 max-w-[15ch] font-serif text-cream">
-            Batch releases, new{" "}
-            <i className="serif-italic">certificates</i> and restock alerts,
-            straight to your inbox.
+            Join Vora Labs for new releases, restock alerts and{" "}
+            <i className="serif-italic">early access</i>, straight to your
+            inbox.
           </h3>
 
           <form
@@ -149,7 +149,7 @@ export default function Footer() {
             )}
 
             <p className="mt-6 max-w-[48ch] text-[13px] font-light leading-relaxed text-cream/60">
-              By submitting, you agree to receive research updates from Vora
+              By submitting, you agree to receive product updates from Vora
               Labs. Consent isn&apos;t required for purchase. Unsubscribe at any
               time —{" "}
               <Link href="/privacy-policy" className="underline">

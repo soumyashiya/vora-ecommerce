@@ -25,16 +25,12 @@ export default function Team() {
             className="relative aspect-[4/3] overflow-hidden rounded-[6px] bg-beige sm:aspect-[16/11]"
           >
             <Image
-              src="/new-images/ourstory.png"
-              alt="Athlete training beside the BPC-157 & TB-500 kit"
+              src="/new-images/our-story-new.png"
+              alt="Athlete on a training bench holding the Retatrutide 40mg kit"
               fill
               sizes="(max-width:1024px) 100vw, 58vw"
               className="object-cover"
             />
-            <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-espresso/65 to-transparent" />
-            <span className="absolute bottom-5 left-6 right-6 font-serif text-[clamp(1.75rem,4.4vw,3.75rem)] leading-none tracking-display text-cream">
-              United States
-            </span>
           </motion.div>
 
           <motion.div
@@ -44,15 +40,15 @@ export default function Team() {
             transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
           >
             <h2 className="display-2-sm font-serif text-espresso">
-              Raising the Standard for Research Supply
+              Vora Labs Quality You Can Check Before You Buy
             </h2>
 
             <p className="mt-6 text-[16px] font-light leading-relaxed text-clay">
-              Vora Labs was built on a simple position: research material should
-              be as accountable as the work it supports. Every compound is
-              synthesised to specification, filled in a controlled environment,
-              HPLC analysed in house and then independently verified before it
-              is released — with the certificate published, not promised.
+              Vora Labs started with one rule: you should know exactly what you
+              are buying. Every compound is made to specification, filled in a
+              controlled environment, HPLC tested in house and independently
+              verified before release — and the certificate is published for
+              you to check.
             </p>
 
             <ul className="mt-8 flex flex-col gap-3 border-t border-sand pt-6">

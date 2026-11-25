@@ -142,7 +142,7 @@ export default function Facilities() {
               ) : (
                 <>
                   <h2 className="font-serif text-[clamp(2rem,3.2vw,2.75rem)] leading-[1.05] tracking-display text-espresso">
-                    Find the Compound That Fits Your Work
+                    Find the Vora Labs Compound That Fits Your Work
                   </h2>
                   <p className="serif-italic mt-1 font-serif text-[clamp(1.5rem,2.4vw,2.25rem)] leading-tight text-espresso">
                     {current.title}
