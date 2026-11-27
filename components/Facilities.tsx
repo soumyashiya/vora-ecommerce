@@ -75,7 +75,7 @@ export default function Facilities() {
         >
           <Image
             src={IMG.aboutA}
-            alt="Glow GHK-Cu research kit and pen"
+            alt="Athlete in a gym behind the Tirzepatide 40mg kit and pen"
             fill
             sizes="(max-width:1024px) 100vw, 50vw"
             className="object-cover object-[center_65%]"

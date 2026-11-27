@@ -42,7 +42,7 @@ export const IMG = {
     "https://images.unsplash.com/photo-1579165466949-3180a3d056d5?auto=format&fit=crop&w=800&q=80",
   // aboutA backs the guided finder, aboutB the process band. Both are warm
   // studio shots so the full-bleed sections sit in the same light as the page.
-  aboutA: "/new-images/find.webp",
+  aboutA: "/new-images/find-new.webp",
   aboutB: "/new-images/The Rigor-bg.webp",
 
   // Real Vora Labs product imagery (saved locally in /public/images/products)
@@ -77,10 +77,10 @@ export const IMG = {
 };
 
 export const AVATARS = [
-  "/new-images/review/Smiling by the breakfast window-2.webp",
-  "/new-images/review/Relaxed Woman in Bedroom Doorway-2.webp",
-  "/new-images/review/Soft morning sofa selfie-3.webp",
-  "/new-images/review/Thoughtful smile by the doorway-4.webp",
+  "/new-images/review-new/Smiling woman in a sunlit kitchen-2.png",
+  "/new-images/review-new/Woman at the bedroom doorway-1.png",
+  "/new-images/review-new/Restored portrait with a lime cushion-4.png",
+  "/new-images/review-new/Smiling woman at a wooden doorway-3.png",
 ];
 
 // Research compounds (Products section — sticky stacking cards)

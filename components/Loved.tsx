@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   FiArrowLeft,
   FiArrowRight,
   FiCheck,
+  FiLoader,
   FiPause,
   FiPlay,
   FiVolume2,
@@ -15,25 +17,30 @@ import { TESTIMONIALS } from "@/lib/data";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const VIDEO_DIR = "/new-images/review-video";
+const VIDEO_DIR = "/new-images";
 
-/** Short clips paired with the customer quotes, in order. */
+const GYM_HOODIE =
+  "41d359a3-501f-4301-adc3-9562460d00cb-custom_boss-five-lime-green-2026-11-26_gym-v3-zip-training-hoodie-video.mp4";
+
+/**
+ * Short clips paired with the customer quotes, in order. There are five
+ * clips for six quotes, so the gym clip appears twice, resting on a
+ * different frame each time.
+ */
 const VIDEOS = [
-  "dressing_corner_morning_247-video (1).mp4",
-  "evening_kitchen_kettle_246-video (3).mp4",
-  "climbing_gym_bench_255-video (4) (1).mp4",
-  "cabin_porch_mist_245-video (3) (1).mp4",
-  "beach_towel_midday_207-video (1) (1).mp4",
-  "custom_boss-five-v3-real-settings-2026-11-07_outdoor-v3-trench-park-video (1).mp4",
+  GYM_HOODIE,
+  "c6867390-83a5-49a8-bea4-13ac7c2e31c1-custom_boss-five-lime-green-2026-11-26_kitchen-v3-cable-knit-video.mp4",
+  "custom_lime-brasserie-reload-for-olivia-2026-11_restaurant-v3-shirt-video.mp4",
+  "custom_lime-green-gym-and-park-extra-2026-11-26_gym-lime-quarter-zip-run-top-video.mp4",
+  "custom_lime-green-gym-and-park-extra-2026-11-26_outdoor-lime-knit-cardigan-park-video.mp4",
+  GYM_HOODIE,
 ].map((f) => encodeURI(`${VIDEO_DIR}/${f}`));
 
-/** Still frames pulled from each clip, shown until the clip is played. */
-const POSTERS = VIDEOS.map((_, i) => `${VIDEO_DIR}/posters/review-${i}.webp`);
+/** Still frames pulled from each card's clip at STILL_AT, shown until played. */
+const POSTERS = VIDEOS.map((_, i) => `/new-images/review-posters/card-${i}.webp`);
 
-/** Each card rests on a different frame so the row doesn't look uniform. */
-// Picked by hand: each lands on a different scene (wall, doorway, gym mat,
-// porch post, shoreline, tulips) rather than the product hold.
-const STILL_AT = [6.1, 24.3, 8.6, 9.4, 8.1, 8.1];
+/** Picked by hand: each card rests on a frame of the customer holding the kit. */
+const STILL_AT = [16.1, 19.9, 1.1, 15.5, 18.5, 6.5];
 
 /**
  * Social-proof rail: tall video cards with the quote and name beneath,
@@ -125,6 +132,10 @@ function ReviewVideo({
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
+  // The thumbnail stays over the clip until its first frames are actually
+  // showing; `loading` covers the gap while the clip downloads.
+  const [started, setStarted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Seek to this card's still frame once the clip's duration is known.
   const showStill = () => {
@@ -148,8 +159,18 @@ function ReviewVideo({
   const toggle = () => {
     const video = ref.current;
     if (!video) return;
-    if (video.paused) video.play().catch(() => {});
-    else video.pause();
+    if (!video.paused) {
+      video.pause();
+      return;
+    }
+    setLoading(true);
+    video.play().catch(() => {
+      // Some browsers refuse playback with sound; fall back to muted
+      // rather than leaving the tap doing nothing.
+      video.muted = true;
+      setMuted(true);
+      video.play().catch(() => setLoading(false));
+    });
   };
 
   return (
@@ -166,9 +187,31 @@ function ReviewVideo({
         preload="none"
         onLoadedMetadata={showStill}
         onPlay={() => setPlaying(true)}
-        onPause={() => setPlaying(false)}
+        onPlaying={() => {
+          setLoading(false);
+          setStarted(true);
+        }}
+        onWaiting={() => setLoading(true)}
+        onPause={() => {
+          setPlaying(false);
+          setLoading(false);
+        }}
+        onError={() => setLoading(false)}
         aria-label={`Video review from ${label}`}
         className="absolute inset-0 h-full w-full object-cover"
+      />
+
+      {/* Thumbnail as a real image: optimised and lazy-loaded like the rest of
+          the site, and reliable on phones where a video's own poster can
+          render black. Fades out once the clip starts. */}
+      <Image
+        src={poster}
+        alt=""
+        fill
+        sizes="(max-width:480px) 70vw, (max-width:640px) 52vw, (max-width:1024px) 38vw, 23vw"
+        className={`pointer-events-none object-cover transition-opacity duration-500 ${
+          started ? "opacity-0" : "opacity-100"
+        }`}
       />
 
       <button
@@ -179,10 +222,16 @@ function ReviewVideo({
       >
         <span
           className={`grid h-14 w-14 place-items-center rounded-full bg-cream/85 text-espresso shadow-lg backdrop-blur-sm transition-all duration-300 group-hover/play:scale-105 ${
-            playing ? "opacity-0 group-hover/play:opacity-100" : "opacity-100"
+            playing && !loading ? "opacity-0 group-hover/play:opacity-100" : "opacity-100"
           }`}
         >
-          {playing ? <FiPause size={20} /> : <FiPlay size={20} className="ml-0.5" />}
+          {loading ? (
+            <FiLoader size={20} className="animate-spin" />
+          ) : playing ? (
+            <FiPause size={20} />
+          ) : (
+            <FiPlay size={20} className="ml-0.5" />
+          )}
         </span>
       </button>
 

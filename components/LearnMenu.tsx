@@ -21,6 +21,9 @@ const FEATURES = [
   },
 ];
 
+/** Photos for the header to fetch before the panel is first opened. */
+export const LEARN_MENU_IMAGES = FEATURES.map((f) => ({ src: f.img, sizes: "30vw" }));
+
 /** Desktop "Learn" panel: link list on the left, two feature cards right. */
 export default function LearnMenu({ onNavigate }: { onNavigate: () => void }) {
   return (

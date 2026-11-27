@@ -12,12 +12,18 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const POINTS = [
   {
     label: "Independent Janoshik Testing",
-    img: "/new-images/where vora labs/Sunlit Garden Tirzepatide Portrait-2.webp",
+    img: "/new-images/over-the-shoulder-glow.webp",
+    // Landscape shot in a square frame: shift right so the face and the
+    // pen in her hand both stay in view.
+    position: "60% center",
     tags: ["Janoshik tested", "Batch COA", "Published results"],
   },
   {
     label: "99%+ HPLC Verified Purity",
-    img: "/new-images/where vora labs/Sunlit garden portrait with BPC-157 & TB-500-3.webp",
+    // Portrait photo widened to a square (Higgsfield outpaint, original pen
+    // pasted back so its label stays sharp): fills the frame uncropped and
+    // keeps the pen above the tag pills.
+    img: "/new-images/pale-pear-square.webp",
     tags: ["HPLC verified", "99%+ purity", "Identity confirmed"],
   },
   {
@@ -27,7 +33,10 @@ const POINTS = [
   },
   {
     label: "56-Day Stability Hold",
-    img: "/new-images/where vora labs/Golden hour CJC-1295 garden portrait-1.webp",
+    img: "/new-images/Chartreuse studio portrait with TESAMORELIN pen-2.png",
+    // Landscape studio shot in a square frame: nudge right so the figure and
+    // the pen she's holding stay centred in the crop.
+    position: "55% center",
     tags: ["Room-temp hold", "2–8°C storage", "Batch traceable"],
   },
 ];
@@ -84,12 +93,13 @@ export default function Comparison() {
                 fill
                 quality={90}
                 sizes="(max-width:1024px) 100vw, 50vw"
-                className="object-cover object-center"
+                className="object-cover"
+                style={{ objectPosition: point.position ?? "center" }}
               />
             </motion.div>
           </AnimatePresence>
 
-          <div className="absolute inset-x-0 bottom-0 flex flex-wrap justify-center gap-2 px-4 pb-4 sm:gap-3 sm:pb-6">
+          <div className="absolute inset-x-0 bottom-0 flex flex-wrap justify-center gap-2 px-2 pb-3 sm:gap-3 sm:px-4 sm:pb-6">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={point.label}
@@ -97,12 +107,14 @@ export default function Comparison() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.35, ease: EASE }}
-                className="flex flex-wrap justify-center gap-2 sm:gap-3"
+                // Phones: smaller pills so all three fit on one row and don't stack up
+                // over the product near the bottom of the photo.
+                className="flex flex-wrap justify-center gap-1 xs:gap-1.5 sm:gap-3"
               >
                 {point.tags.map((t) => (
                   <span
                     key={t}
-                    className="rounded-[6px] bg-cream/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.06em] text-espresso backdrop-blur-sm sm:text-[13px]"
+                    className="whitespace-nowrap rounded-[6px] bg-cream/90 px-1.5 py-1 text-[10px] font-medium uppercase tracking-[0.02em] xs:px-2 xs:tracking-[0.04em] text-espresso backdrop-blur-sm sm:px-3 sm:py-1.5 sm:text-[13px] sm:tracking-[0.06em]"
                   >
                     {t}
                   </span>

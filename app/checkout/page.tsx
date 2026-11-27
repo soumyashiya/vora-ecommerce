@@ -11,6 +11,7 @@ import Footer from "@/components/Footer";
 import { validatePromo } from "@/services/promo.service";
 import { submitCheckout, sendOrderConfirmationEmail } from "@/services/checkout.service";
 import { useToast } from "@/components/ui/Toast";
+import { ApiError } from "@/lib/apiClient";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -146,7 +147,15 @@ export default function CheckoutPage() {
         orderNumber
       );
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Could not place order";
+      // The order service answers every failure with a bare 500 "Request
+      // failed", so give the shopper something they can act on instead.
+      const status = err instanceof ApiError ? err.status : 0;
+      const msg =
+        status >= 500
+          ? "We couldn’t place your order right now — our order system is having a problem. Your cart is saved; please try again in a few minutes."
+          : err instanceof Error
+            ? err.message
+            : "Could not place order";
       setError(msg);
       toast.error(msg);
     } finally {

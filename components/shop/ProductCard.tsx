@@ -25,7 +25,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  * rail, a 43vw grid cell on the catalogue — so the caller declares what the
  * packshot will actually occupy. The default matches the catalogue grid.
  */
-const GRID_SIZES = "(max-width:1024px) 45vw, 31vw";
+const GRID_SIZES = "(max-width:767px) 45vw, 31vw";
 
 export default function ProductCard({
   product,

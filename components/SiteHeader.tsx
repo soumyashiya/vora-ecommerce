@@ -11,8 +11,11 @@ import { useCart } from "@/components/cart/CartContext";
 import BrandLogo from "@/components/ui/BrandLogo";
 import AccountButton from "@/components/auth/AccountButton";
 import AnnouncementBar from "@/components/AnnouncementBar";
-import ShopMegaMenu from "@/components/ShopMegaMenu";
-import LearnMenu from "@/components/LearnMenu";
+import ShopMegaMenu, { SHOP_MENU_IMAGES } from "@/components/ShopMegaMenu";
+import LearnMenu, { LEARN_MENU_IMAGES } from "@/components/LearnMenu";
+import MenuImagePreload from "@/components/MenuImagePreload";
+
+const MENU_IMAGES = [...SHOP_MENU_IMAGES, ...LEARN_MENU_IMAGES];
 import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -224,6 +227,7 @@ export default function SiteHeader({
                 <LearnMenu key="learn" onNavigate={() => setMenu(null)} />
               )}
             </AnimatePresence>
+            <MenuImagePreload images={MENU_IMAGES} />
           </div>
         </header>
 

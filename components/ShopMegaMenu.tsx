@@ -12,12 +12,12 @@ const DIR = "/new-images/header-shop-hover";
 
 /** Photograph for each collection tile, keyed by collection slug. */
 const GOAL_IMAGES: Record<string, string> = {
-  "weight-management": "/new-images/weight (2).webp",
-  "fitness-endurance": `${DIR}/Alluvi MOTS-C Box and Pen (1).png`,
-  "growth-performance": `${DIR}/Golden tagliatelle and Alluvi studio set-4.png`,
-  "energy-longevity": `${DIR}/MOTS-C Carton with Amber Iced Coffees-3.png`,
-  "recovery-repair": `${DIR}/Teal Pebbles, Driftwood, and ALLUVI Carton-6.png`,
-  "skin-hair-care": `${DIR}/Champagne-lit GLOW carton with flowing hair-5.png`,
+  "weight-management": "/new-images/weigh-management.webp",
+  "fitness-endurance": `${DIR}/Alluvi MOTS-C Box and Pen (1).webp`,
+  "growth-performance": `${DIR}/Golden tagliatelle and Alluvi studio set-4.webp`,
+  "energy-longevity": "/new-images/energy.webp",
+  "recovery-repair": `${DIR}/Teal Pebbles, Driftwood, and ALLUVI Carton-6.webp`,
+  "skin-hair-care": `${DIR}/Champagne-lit GLOW carton with flowing hair-5.webp`,
 };
 
 /** Tile order mirrors the reference layout: metabolic first, beauty last. */
@@ -28,6 +28,15 @@ const GOAL_ORDER = [
   "energy-longevity",
   "recovery-repair",
   "skin-hair-care",
+];
+
+const PROMO_IMAGE = "/new-images/ALLUVI-Cocoa-Retatrutide-20mg.webp";
+
+/** Every photo the panel shows, with the same `sizes` the panel uses, so the
+ *  header can fetch them before the menu is first opened. */
+export const SHOP_MENU_IMAGES = [
+  { src: PROMO_IMAGE, sizes: "22vw" },
+  ...GOAL_ORDER.map((slug) => ({ src: GOAL_IMAGES[slug], sizes: "16vw" })),
 ];
 
 const GOALS = GOAL_ORDER.map((slug) =>
@@ -66,7 +75,7 @@ export default function ShopMegaMenu({ onNavigate }: { onNavigate: () => void })
         >
           <div className="relative w-[22%] min-w-[160px] flex-none">
             <Image
-              src="/new-images/ALLUVI-Cocoa-Retatrutide-20mg.webp"
+              src={PROMO_IMAGE}
               alt=""
               fill
               sizes="22vw"

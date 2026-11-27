@@ -37,8 +37,8 @@ const TABS: {
       "Every fill is analysed in house and independently confirmed before it is released.",
     bg: "/new-images/purity.webp",
     // Head sits at the top edge of the shot, so anchor the crop to the top
-    // on wide screens; on phones centre on the pen and face.
-    bgPos: "object-[58%_center] lg:object-[70%_top]",
+    // on wide screens; on phones keep both the pen and her face in frame.
+    bgPos: "object-[80%_center] lg:object-[70%_top]",
   },
   {
     key: "traceability",
@@ -47,6 +47,8 @@ const TABS: {
     intro:
       "Each compound carries a batch number you can match to its published certificate of analysis.",
     bg: "/new-images/tracability-bg.webp",
+    // Phones: the whole pen, cap to "ALLUVI" end, stays in the narrower frame.
+    bgPos: "object-[82%_center] lg:object-right",
   },
 ];
 
@@ -122,7 +124,9 @@ export default function About() {
     <section id="about" className="relative isolate overflow-hidden bg-espresso">
       {/* Background — crossfades per tab. Below lg it is a photo block above
           the copy instead of sitting behind it. */}
-      <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/9] lg:absolute lg:inset-0 lg:aspect-auto">
+      {/* The photos are very wide, so phones get a wider 16:10 block (instead
+          of 4:3) to keep each product whole rather than cropping into it. */}
+      <div className="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9] lg:absolute lg:inset-0 lg:aspect-auto">
       <AnimatePresence initial={false}>
         <motion.div
           key={tab.bg}
@@ -179,7 +183,7 @@ export default function About() {
         <div
           role="tablist"
           aria-label="Our process"
-          className="no-scrollbar mt-6 flex gap-6 overflow-x-auto lg:absolute lg:bottom-[clamp(48px,6vw,80px)] lg:mt-0 lg:flex-col lg:gap-1 lg:overflow-visible"
+          className="no-scrollbar mt-6 flex gap-5 overflow-x-auto sm:gap-6 lg:absolute lg:bottom-[clamp(48px,6vw,80px)] lg:mt-0 lg:flex-col lg:gap-1 lg:overflow-visible"
         >
           {TABS.map((t, i) => (
             <button
@@ -189,7 +193,7 @@ export default function About() {
               aria-selected={active === i}
               onClick={() => setActive(i)}
               className={cn(
-                "flex-none text-left font-serif text-[clamp(1.5rem,2.1vw,2.125rem)] leading-[1.35] tracking-display transition-colors duration-300",
+                "flex-none text-left font-serif text-[1.375rem] leading-[1.35] tracking-display transition-colors duration-300 sm:text-[clamp(1.5rem,2.1vw,2.125rem)]",
                 active === i ? "text-cream" : "text-cream/55 hover:text-cream/80"
               )}
             >

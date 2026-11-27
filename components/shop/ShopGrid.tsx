@@ -159,7 +159,9 @@ export default function ShopGrid() {
         </div>
 
         {/* Grid */}
-        <div className="mt-5 grid grid-cols-2 gap-x-3 gap-y-9 sm:gap-x-5 sm:gap-y-10 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
+        {/* Two up on phones, three from tablet — at 768–1023 a two-column
+            grid left the cards nearly 350px wide with only four on screen. */}
+        <div className="mt-5 grid grid-cols-2 gap-x-3 gap-y-9 sm:gap-x-5 sm:gap-y-10 md:grid-cols-3 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
           {items.map((p, i) => (
             <Fragment key={p.slug}>
               <ProductCard product={p} index={i} />
@@ -201,13 +203,19 @@ export default function ShopGrid() {
 /**
  * Shop banner. The same full shop artwork stays in place for every
  * collection; only the copy over it changes. Desktop: the artwork at its
- * own 1600×535 shape with the copy over its empty left side. Phones: the
- * full artwork on top, then the copy on the dark ground beneath it.
+ * own 1600×535 shape with the copy over its empty left side. Below that:
+ * the full artwork on top, then the copy on the dark ground beneath it.
+ *
+ * The overlay only holds together once the banner is wide enough for the
+ * copy well to clear the packshots. At the 1600/535 shape a 900px viewport
+ * is a 300px-tall banner whose clear left third is ~300px wide — the blurb
+ * cannot shrink to fit that and still be readable, so it ran across the
+ * boxes. Stacking through to lg avoids the collision entirely.
  */
 function CollectionBanner({ collection }: { collection: (typeof COLLECTIONS)[number] }) {
   return (
-    <section className="relative flex flex-col bg-[#2B150C] md:block md:aspect-[1600/535]">
-      <div className="relative aspect-[1600/535] md:absolute md:inset-0 md:aspect-auto">
+    <section className="relative flex flex-col bg-[#2B150C] lg:block lg:aspect-[1600/535]">
+      <div className="relative aspect-[1600/535] lg:absolute lg:inset-0 lg:aspect-auto">
         <Image
           src={SHOP_BANNER}
           alt=""
@@ -217,21 +225,23 @@ function CollectionBanner({ collection }: { collection: (typeof COLLECTIONS)[num
           sizes="100vw"
           className="object-cover"
         />
-        <span className="absolute inset-y-0 left-0 hidden w-1/2 bg-gradient-to-r from-[#2B150C]/70 to-transparent md:block" />
+        <span className="absolute inset-y-0 left-0 hidden w-1/2 bg-gradient-to-r from-[#2B150C]/70 to-transparent lg:block" />
       </div>
 
-      <div className="container-x relative flex h-full items-center py-10 md:absolute md:inset-0 md:py-0">
+      <div className="container-x relative flex h-full items-center py-10 lg:absolute lg:inset-0 lg:py-0">
         <motion.div
           key={collection.slug}
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: EASE }}
-          className="max-w-[30rem] md:max-w-[34%]"
+          className="max-w-[30rem] lg:max-w-[34%]"
         >
           <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-chartreuse">
             {collection.eyebrow}
           </p>
-          <h1 className="mt-4 font-serif text-[clamp(2.25rem,4.4vw,4rem)] leading-[1.02] tracking-display text-cream">
+          {/* While the banner is stacked the headline gets its own scale —
+              4.4vw bottoms out at 36px, which is far too heavy on a phone. */}
+          <h1 className="mt-4 font-serif text-[clamp(1.75rem,7vw,2.5rem)] leading-[1.02] tracking-display text-cream lg:text-[clamp(2.25rem,4.4vw,4rem)]">
             {collection.headline}
           </h1>
           <p className="mt-4 max-w-[40ch] text-[15px] font-light leading-relaxed text-cream/80 lg:text-[16px]">

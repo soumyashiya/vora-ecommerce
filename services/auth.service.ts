@@ -2,7 +2,7 @@
 // No business logic beyond mapping requests/responses and persisting the session.
 
 import { apiClient } from "@/lib/apiClient";
-import { setSession, clearSession } from "@/lib/session";
+import { setSession, clearSession, getToken } from "@/lib/session";
 import type {
   AuthResponse,
   AuthUser,
@@ -32,6 +32,8 @@ export async function loginUser(
 
 /** Validate the stored JWT against the service; returns the fresh user or null. */
 export async function verifyUser(): Promise<AuthUser | null> {
+  // Guests have no token — skip the call instead of logging a 401 on every page.
+  if (!getToken()) return null;
   try {
     const data = await apiClient.get<VerifyResponse>("/api/auth/verify", {
       auth: true,
